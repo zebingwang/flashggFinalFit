@@ -89,15 +89,22 @@ To run combine with the previously created signal and background models:
 
 cd Signal
 cmsenv
-make
-. HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -c # run combine with this signal model, and background model existing in Background directory
+cp CMS-HGG_sigfit.root CMS-HGG_sigfit_data_ggF_HHWWggTag_0.root
+cp ../Background/HHWWgg_Background.root CMS-HGG_mva_13TeV_multipdf.root
+cp datacardName CMS-HGG_mva_13TeV_datacard.txt
+
+combine CMS-HGG_mva_13TeV_datacard.txt -m 125 -M AsymptoticLimits --run=blind -v 2
+
+cp higgsCombineTest.AsymptoticLimits.mH125.root ../Plots/FinalResults/
+
+
 
 Plot
 ============
 To plot the limit, after copying the proper files to the Plots/FinalResults repository (this needs to be updated to be more flexible code, currently hardcoded):
 
-cd flashggFinalFit/Plots/FinalResults
+cd flashggFinalFit/Plots/FinalResults/
 cmsenv
 make
-python plot_limits.py
+python plot_limits.py -CMSC
 If everything worked properly, there should be an output file called UpperLimit.pdf.
