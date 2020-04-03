@@ -24,7 +24,17 @@ This repository contains flashgg final fit scripts and instructions specific to 
 
 Cloning the Repository
 ==========================
-export SCRAM_ARCH=slc7_amd64_gcc700 cmsrel CMSSW_10_2_13 cd CMSSW_10_2_13/src cmsenv git cms-init
+```
+export SCRAM_ARCH=slc7_amd64_gcc700 
+
+cmsrel CMSSW_10_2_13 
+
+cd CMSSW_10_2_13/src 
+
+cmsenv 
+
+git cms-init
+```
 
 Install the GBRLikelihood package which contains the RooDoubleCBFast implementation
 
