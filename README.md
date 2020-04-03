@@ -65,6 +65,7 @@ cd Background
 cmsenv 
 make
 ./bin/fTest -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/Data.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f SL --isData 1
+
 Combine
 =============
 Note: In order to run this you need combine built with CMSSW_10_2_13 in a separate repository, the path of which is defined by the variable combineDir in the script flashggFinalFit/Signal/HHWWgg_Signal_Fit_Steps.sh
@@ -75,6 +76,7 @@ cd Signal
 cmsenv
 make
 . HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -c # run combine with this signal model, and background model existing in Background directory
+
 Plot
 ============
 To plot the limit, after copying the proper files to the Plots/FinalResults repository (this needs to be updated to be more flexible code, currently hardcoded):
