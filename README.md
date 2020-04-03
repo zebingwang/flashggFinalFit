@@ -36,6 +36,7 @@ Install Flashgg Final Fit packages
 ===========================
 cd .. git clone https://github.com/chuwang1/flashggFinalFit.git
 cd flashggFinalFit/
+
 HHWWgg_v2-2
 -----------
 This section describes instructions specific to the HHWWgg_v2-2 tag. The HHWWgg_v2-2 tag is used to mark the point in the anlaysis where the 95% CL limit on the HH cross section was placed on the 250 GeV semileptonically decaying Radion using the HHWWgg tagger plugin with workspaceStd.py WITHOUT systematics. The purpose of the tag is to document everything used to obtain this very preliminary result.
@@ -64,9 +65,12 @@ Background Model
 These are the commands to create a background model with Background directory using the X250, qqlnu output from the HHWWgg_v2-2 tag of HHWWgg_dev:
 
 cd Background 
+
 cmsenv 
-make
-./bin/fTest -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/Data.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f SL --isData 1
+
+make clean
+
+./bin/fTest -i ../Data_tagged.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag0 --isData 1
 
 Combine
 =============
