@@ -8,12 +8,18 @@ Toyoko Orimoto - Toyoko.Orimoto@cern.ch
 Presentations:
 
 21 October 2019 Analysis Status
+
 11 November 2019 Analysis Update
+
 Repositories:
+------------
 
 HHWWgg Development
+
 HHWWgg MicroAOD Production
+
 HHWWgg Private MC Production
+
 This repository contains flashgg final fit scripts and instructions specific to the HHWWgg analysis.
 
 Cloning the Repository
@@ -29,12 +35,19 @@ Install Combine as per the documentation here: cms-analysis.github.io/HiggsAnaly
 git clone git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
 
 Compile external libraries
+-----------------------
+cd HiggsAnalysis 
 
-cd HiggsAnalysis cmsenv scram b -j
+cmsenv 
+
+scram b -j
 
 Install Flashgg Final Fit packages
 ===========================
-cd .. git clone https://github.com/chuwang1/flashggFinalFit.git
+cd .. 
+
+git clone https://github.com/chuwang1/flashggFinalFit.git
+
 cd flashggFinalFit/
 
 HHWWgg_v2-2
@@ -52,9 +65,11 @@ and to use combine:
 combineDir (default:"/afs/cern.ch/work/a/atishelm/4NovCombineUpdated/CMSSW_10_2_13/src/HiggsAnalysis/CombinedLimit")
 
 cd Signal
+
 cmsenv
 
 make clean
+
 make
 
 ./bin/signalFTest -i Signal_X250.root  -p ggF -f HHWWggTag_0 -o fTestOutput/ --datfilename datfilename.dat --HHWWggLabel X250_WWgg_qqlnugg # ftest 
@@ -63,7 +78,7 @@ python shiftHiggsDatasets.py ./ #shift signal to 120 130
 
 ./bin/SignalFit -i ./X_signal_250_120_HHWWgg_qqlnu.root,./X_signal_250_125_HHWWgg_qqlnu.root,./X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
 
- ./bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal (crashes but produces pdf) 
+ ./bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal model
 
  python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5# produce datacard
 
@@ -77,6 +92,7 @@ cd Background
 cmsenv 
 
 make clean
+
 make
 
 ./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1
@@ -88,9 +104,13 @@ Note: In order to run this you need combine built with CMSSW_10_2_13 in a separa
 To run combine with the previously created signal and background models:
 
 cd Signal
+
 cmsenv
+
 cp CMS-HGG_sigfit.root CMS-HGG_sigfit_data_ggF_HHWWggTag_0.root
+
 cp ../Background/HHWWgg_Background.root CMS-HGG_mva_13TeV_multipdf.root
+
 cp datacardName CMS-HGG_mva_13TeV_datacard.txt
 
 combine CMS-HGG_mva_13TeV_datacard.txt -m 125 -M AsymptoticLimits --run=blind -v 2
