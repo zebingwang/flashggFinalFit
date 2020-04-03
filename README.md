@@ -29,6 +29,7 @@ Install Combine as per the documentation here: cms-analysis.github.io/HiggsAnaly
 git clone git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
 
 Compile external libraries
+
 cd HiggsAnalysis cmsenv scram b -j
 
 Install Flashgg Final Fit packages
@@ -36,6 +37,7 @@ Install Flashgg Final Fit packages
 cd .. git clone https://github.com/chuwang1/flashggFinalFit.git
 cd flashggFinalFit/
 HHWWgg_v2-2
+-----------
 This section describes instructions specific to the HHWWgg_v2-2 tag. The HHWWgg_v2-2 tag is used to mark the point in the anlaysis where the 95% CL limit on the HH cross section was placed on the 250 GeV semileptonically decaying Radion using the HHWWgg tagger plugin with workspaceStd.py WITHOUT systematics. The purpose of the tag is to document everything used to obtain this very preliminary result.
 
 Signal Model
