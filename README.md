@@ -61,9 +61,9 @@ make
 
 python shiftHiggsDatasets.py ./ #shift signal to 120 130
 
-./bin/SignalFit -i ./X_signal_250_120_HHWWgg_qqlnu.root,./X_signal_250_125_HHWWgg_qqlnu.root,./X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename -s empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1# signal fit  
+./bin/SignalFit -i ./X_signal_250_120_HHWWgg_qqlnu.root,./X_signal_250_125_HHWWgg_qqlnu.root,./X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename -s empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
 
-# plot signal (crashes but produces pdf) 
+            # plot signal (crashes but produces pdf) 
 
  python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5# produce datacard
 
