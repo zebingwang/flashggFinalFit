@@ -53,11 +53,19 @@ combineDir (default:"/afs/cern.ch/work/a/atishelm/4NovCombineUpdated/CMSSW_10_2_
 
 cd Signal
 cmsenv
+
+make clean
 make
-. HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -f # ftest 
-. HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -k # signal fit  
-. HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -p # plot signal (crashes but produces pdf) 
-. HHWWgg_Signal_Fit_Steps.sh -i /eos/user/a/atishelm/ntuples/HHWWgg_v2-2/X250_HHWWgg_qqlnu.root -r HHWWgg_v2-2_X250_qqlnu -d # produce datacard
+
+./bin/signalFTest -i Signal_X250.root  -p ggF -f HHWWggTag_0 -o fTestOutput/ --datfilename datfilename.dat --HHWWggLabel X250_WWgg_qqlnugg # ftest 
+
+python shiftHiggsDatasets.py ./ #shift signal to 120 130
+
+./bin/SignalFit -i ./X_signal_250_120_HHWWgg_qqlnu.root,./X_signal_250_125_HHWWgg_qqlnu.root,./X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename -s empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1# signal fit  
+
+# plot signal (crashes but produces pdf) 
+
+ python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5# produce datacard
 
 
 Background Model
