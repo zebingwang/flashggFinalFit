@@ -1079,7 +1079,7 @@ int main(int argc, char *argv[]){
       finalModel.setWVdatasets(datasetsWV);
       finalModel.setFITRVdatasets(FITdatasetsRV);
       finalModel.setFITWVdatasets(FITdatasetsWV);
-      finalModel.setSTDdatasets(datasets);
+      //finalModel.setSTDdatasets(datasets);
       finalModel.makeSTDdatasets();
      
  finalModel.makeFITdatasets();
