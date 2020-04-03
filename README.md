@@ -69,8 +69,9 @@ cd Background
 cmsenv 
 
 make clean
+make
 
-./bin/fTest -i ../Data_tagged.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag0 --isData 1
+./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1
 
 Combine
 =============
