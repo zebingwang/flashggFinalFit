@@ -92,7 +92,7 @@ python shiftHiggsDatasets.py ./ #shift signal to 120 130
 
  ./bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal model
 
- python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5# produce datacard
+ python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5 # produce datacard
 ```
 
 Background Model
