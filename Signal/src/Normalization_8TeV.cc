@@ -23,7 +23,7 @@ int Normalization_8TeV::Init(int sqrtS){
     }
     TPython::Eval(Form("buildSMHiggsSignalXSBR.Init%dTeV()", sqrtS));
     
-    for (double mH=120;mH<=130.05;mH+=0.1){ // Do we need this up to 250 ?
+    for (double mH=120;mH<=135.;mH+=0.1){ // Do we need this up to 250 ?
 	// double valBR    =  (double)TPython::Eval(Form("buildSMHiggsSignalXSBR.getBR(%f)",mH));
 	double valBR    =  1.; // set equal to 1 because for HHWWgg for now, don't want to apply branching ratio 
 	double valXSggH =  (double)TPython::Eval(Form("buildSMHiggsSignalXSBR.getXS(%f,'%s')",mH,"ggH"));
