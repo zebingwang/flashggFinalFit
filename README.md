@@ -107,7 +107,9 @@ make clean
 
 make
 
-./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1
+./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1 #ftest
+./bin/makeBkgPlots -b HHWWgg_Background.root -d BKGplot -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 -L 100 -H 180 -f HHWWggTag_0 --intLumi 41.5
+
 ```
 Combine
 -----
