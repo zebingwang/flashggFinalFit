@@ -83,16 +83,17 @@ cmsenv
 make clean
 
 make
+mkdir WorkDir
+cd WorkDir
+../bin/signalFTest -i ../Signal_X250.root  -p ggF -f HHWWggTag_0 -o fTestOutput/ --datfilename datfilename.dat --HHWWggLabel X250_WWgg_qqlnugg # ftest 
 
-./bin/signalFTest -i Signal_X250.root  -p ggF -f HHWWggTag_0 -o fTestOutput/ --datfilename datfilename.dat --HHWWggLabel X250_WWgg_qqlnugg # ftest 
+python ../shiftHiggsDatasets.py ../ #shift signal to 120 130
 
-python shiftHiggsDatasets.py ./ #shift signal to 120 130
+./bin/SignalFit -i ../X_signal_250_120_HHWWgg_qqlnu.root,../X_signal_250_125_HHWWgg_qqlnu.root,../X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s ../empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
 
-./bin/SignalFit -i ./X_signal_250_120_HHWWgg_qqlnu.root,./X_signal_250_125_HHWWgg_qqlnu.root,./X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
+ ../bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal model
 
- ./bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal model
-
- python test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales empty.dat --isMultiPdf --intLumi 41.5 # produce datacard
+ python ../test_makeParametricModelDatacardFLASHgg.py -i CMS-HGG_sigfit.root -o datacardName -p ggF -c HHWWggTag_0 --photonCatScales ../empty.dat --isMultiPdf --intLumi 41.5 # produce datacard
 ```
 
 Background Model
@@ -107,8 +108,11 @@ make clean
 
 make
 
-./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1 #ftest
-./bin/makeBkgPlots -b HHWWgg_Background.root -d BKGplot -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 -L 100 -H 180 -f HHWWggTag_0 --intLumi 41.5
+mkdir WorkDir
+
+cd WorkDir
+../bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1 #ftest
+../bin/makeBkgPlots -b HHWWgg_Background.root -d BKGplot -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 -L 100 -H 180 -f HHWWggTag_0 --intLumi 41.5
 
 ```
 Combine
@@ -117,19 +121,19 @@ Note: In order to run this you need combine built with CMSSW_10_2_13 in a separa
 
 To run combine with the previously created signal and background models:
 ```
-cd Signal
+cd ../../Signal/WorkDir
 
 cmsenv
 
 cp CMS-HGG_sigfit.root CMS-HGG_sigfit_data_ggF_HHWWggTag_0.root
 
-cp ../Background/HHWWgg_Background.root CMS-HGG_mva_13TeV_multipdf.root
+cp ../../Background/HHWWgg_Background.root CMS-HGG_mva_13TeV_multipdf.root
 
 cp datacardName CMS-HGG_mva_13TeV_datacard.txt
 
 combine CMS-HGG_mva_13TeV_datacard.txt -m 125 -M AsymptoticLimits --run=blind -v 2
 
-cp higgsCombineTest.AsymptoticLimits.mH125.root ../Plots/FinalResults/
+cp higgsCombineTest.AsymptoticLimits.mH125.root ../../Plots/FinalResults/Plot/
 ```
 
 
@@ -137,7 +141,7 @@ Plot
 --------
 To plot the limit, after copying the proper files to the Plots/FinalResults repository (this needs to be updated to be more flexible code, currently hardcoded):
 ```
-cd flashggFinalFit/Plots/FinalResults/
+cd flashggFinalFit/Plots/FinalResults/Plot
 
 cmsenv
 
