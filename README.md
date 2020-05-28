@@ -89,7 +89,7 @@ cd WorkDir
 
 python ../shiftHiggsDatasets.py ../ #shift signal to 120 130
 
-./bin/SignalFit -i ../X_signal_250_120_HHWWgg_qqlnu.root,../X_signal_250_125_HHWWgg_qqlnu.root,../X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s ../empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
+../bin/SignalFit -i ../X_signal_250_120_HHWWgg_qqlnu.root,../X_signal_250_125_HHWWgg_qqlnu.root,../X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s ../empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
 
  ../bin/makeParametricSignalModelPlots -i CMS-HGG_sigfit.root  -o SignalModel/ -p ggF -f HHWWggTag_0     # plot signal model
 
@@ -108,11 +108,8 @@ make clean
 
 make
 
-mkdir WorkDir
-
-cd WorkDir
-../bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1 #ftest
-../bin/makeBkgPlots -b HHWWgg_Background.root -d BKGplot -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 -L 100 -H 180 -f HHWWggTag_0 --intLumi 41.5
+./bin/fTest -i ../DataFile.root --saveMultiPdf HHWWgg_Background.root  -D HHWWgg_Background -f HHWWggTag_0 --isData 1 #ftest
+./bin/makeBkgPlots -b HHWWgg_Background.root -d BKGplot -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 -L 100 -H 180 -f HHWWggTag_0 --intLumi 41.5
 
 ```
 Combine
