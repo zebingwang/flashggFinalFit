@@ -87,7 +87,11 @@ mkdir WorkDir
 cd WorkDir
 ../bin/signalFTest -i ../Signal_X250.root  -p ggF -f HHWWggTag_0 -o fTestOutput/ --datfilename datfilename.dat --HHWWggLabel X250_WWgg_qqlnugg # ftest 
 
+Before shift,you should edit the ../shiftHiggsDatasets.py file line 19, to change the input file name to yours.
+
 python ../shiftHiggsDatasets.py ../ #shift signal to 120 130
+
+Tips:the first ../ means the directory of shiftHiggsDatasets.py the second one is the directory of your signal file.
 
 ../bin/SignalFit -i ../X_signal_250_120_HHWWgg_qqlnu.root,../X_signal_250_125_HHWWgg_qqlnu.root,../X_signal_250_130_HHWWgg_qqlnu.root -p ggF -f HHWWggTag_0 -d datfilename.dat -s ../empty.dat --procs ggF --changeIntLumi 1 --HHWWggLabel 250  --verbose 2 --useSSF 1 # signal fit  
 
