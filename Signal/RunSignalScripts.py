@@ -41,6 +41,8 @@ if opt.inputConfig != '':
     #Extract options
     options['inputWSDir']   = _cfg['inputWSDir']
     options['procs']        = _cfg['procs']
+    options['doHHWWgg']     = _cfg['doHHWWgg']
+    options['HHWWggLabel']  = _cfg['HHWWggLabel']
     options['cats']         = _cfg['cats']
     options['ext']          = _cfg['ext']
     options['analysis']     = _cfg['analysis']

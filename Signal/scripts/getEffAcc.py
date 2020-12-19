@@ -41,6 +41,7 @@ else:
   leave()
 
 # Define dataframe to store yields: cow = centralObjectWeight
+print "No NOTAG cats"
 if opt.skipCOWCorr: columns_data = ['massPoint','proc','cat','granular_key','nominal_yield']
 else: columns_data = ['massPoint','proc','cat','granular_key','nominal_yield','nominal_yield_COWCorr']
 data = pd.DataFrame( columns=columns_data )

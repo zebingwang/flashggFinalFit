@@ -137,15 +137,21 @@ class FinalModel:
   def buildXSBRSplines(self):
     mh = np.linspace(120.,130.,101)
     # XS
-    fp = self.xsbrMap[self.proc]['factor'] if 'factor' in self.xsbrMap[self.proc] else 1.
-    mp = self.xsbrMap[self.proc]['mode']
-    xs = fp*self.XSBR[mp]
+    if ("ggF" in self.proc or "GluGluToHHTo" in self.proc ):
+        xs=0.001*np.ones(101,dtype = float)
+    else:
+        fp = self.xsbrMap[self.proc]['factor'] if 'factor' in self.xsbrMap[self.proc] else 1.
+        mp = self.xsbrMap[self.proc]['mode']
+        xs = fp*self.XSBR[mp]
     self.Splines['xs'] = ROOT.RooSpline1D("fxs_%s_%s"%(self.proc,self.sqrts),"fxs_%s_%s"%(self.proc,self.sqrts),self.MH,len(mh),mh,xs)
     # BR
-    fd = self.xsbrMap['decay']['factor'] if 'factor' in self.xsbrMap['decay'] else 1.
-    md = self.xsbrMap['decay']['mode']
-    br = fd*self.XSBR[md]
-    self.Splines['br'] = ROOT.RooSpline1D("fbr_%s"%self.sqrts,"fbr_%s"%self.sqrts,self.MH,len(mh),mh,br)
+    if ("ggF" in self.proc or "GluGluToHHTo" in self.proc ):
+        br=np.ones(101,dtype = float)
+    else:
+        fd = self.xsbrMap['decay']['factor'] if 'factor' in self.xsbrMap['decay'] else 1.
+        md = self.xsbrMap['decay']['mode']
+        br = fd*self.XSBR[md]
+    self.Splines['br'] = ROOT.RooSpline1D("fbr_%s_%s"%(self.proc,self.sqrts),"fbr_%s_%s"%(self.proc,self.sqrts),self.MH,len(mh),mh,br)
 
   def buildEffAccSpline(self):
     # Two treatments: load from json created with getEffAcc.py script or calc from sum of weights

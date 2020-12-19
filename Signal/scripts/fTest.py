@@ -34,9 +34,11 @@ def get_options():
   parser.add_option("--nProcsToFTest", dest='nProcsToFTest', default=5, type='int',help="Number of signal processes to fTest (ordered by sum entries), others are set to nRV=1,nWV=1. Set to -1 to run over all")
   parser.add_option("--cat", dest='cat', default='', help="RECO category")
   parser.add_option('--mass', dest='mass', default='125', help="Mass point to fit")
+  parser.add_option('--HHWWggLabel', dest='HHWWggLabel', default='node_cHHH1_WWgg_lnulnugg', help="HHWWgg Label")
+  parser.add_option('--doHHWWgg', dest='doHHWWgg', default='True', help="Do HHWWgg analysis")
   parser.add_option('--doPlots', dest='doPlots', default=False, action="store_true", help="Produce Signal fTest plots")
   parser.add_option('--nBins', dest='nBins', default=80, type='int', help="Number of bins for fit")
-  parser.add_option('--threshold', dest='threshold', default=30, type='int', help="Threshold number of events")
+  parser.add_option('--threshold', dest='threshold', default=20, type='int', help="Threshold number of events")
   parser.add_option('--nGaussMax', dest='nGaussMax', default=5, type='int', help="Max number of gaussians to test")
   parser.add_option('--skipWV', dest='skipWV', default=False, action="store_true", help="Skip processing of WV case")
   # Minimizer options
@@ -72,7 +74,12 @@ for proc in opt.procs.split(","):
   WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,opt.mass,proc))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
+  print "WS name:",inputWSName__
+  print "%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)
+  if (opt.doHHWWgg):
+     d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
+  else:
+     d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
   df.loc[len(df)] = [proc,d.sumEntries(),1,1]
   inputWS.Delete()
   f.Close()
@@ -89,7 +96,10 @@ for pidx, proc in enumerate(procsToFTest):
   WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,opt.mass,proc))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
+  if (opt.doHHWWgg):
+     d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
+  else:
+     d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
   datasets_RV[opt.mass] = splitRVWV(d,aset,mode="RV")
   datasets_WV[opt.mass] = splitRVWV(d,aset,mode="WV")
 
@@ -120,6 +130,7 @@ for pidx, proc in enumerate(procsToFTest):
 
   # Run fTest: WV
   # If numEntries below threshold then keep as n = 1
+  print "WV events:",datasets_WV[opt.mass].numEntries()
   if( datasets_WV[opt.mass].numEntries() < opt.threshold )|( opt.skipWV ): continue
   else:
     ssfs = od()
