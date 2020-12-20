@@ -8,6 +8,9 @@ This is where you build the `.txt` datacard to be used for the final fits (see `
 The first step is to produce a pandas dataframe for each analysis category which holds information on the signal models, background models and the data. For each signal process, the dataframe stores the nominal yields (sum of weights) as well as the varied yields for each systematic uncertainty source (excluding the signal shape uncertainties). The systematics are defined in `systematics.py`. Simply comment out (or add new) systematics where appropriate. If you want to ignore the systematics completely then just run the following command without the `--doSystematics` option:
 ```
 python RunYields.py --cats auto --inputWSDirMap 2016={path to 2016 flashgg workspaces},2017={path to 2017 workspaces},2018={path to 2018 workspaces} --procs auto (--mergeYears) (--doSystematics) --batch condor --queue longlunch
+i.e
+
+python RunYields.py --cats HHWWggTag_3 --inputWSDirMap 2016=/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input --procs ggF --doSystematics --doHHWWgg True --HHWWggLabel node_cHHH1_WWgg_lnulnugg
 ```
 This script creates a job for each analysis category in the `yields` directory and submits this job to the batch. The output is the pandas dataframe, stored as a `pkl` file. To produce the job script without submitting, add the option `--dryRun`.
 

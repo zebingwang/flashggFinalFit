@@ -67,6 +67,7 @@ def factoryType(d,s):
     ws = f.Get(inputWSName__)
     dataHistUp = "%s_%sUp01sigma"%(r.nominalDataName,s['name'])
     dataHistDown = "%s_%sDown01sigma"%(r.nominalDataName,s['name'])
+    print dataHistUp
 
     # Check if syst is var (i.e. weight) in workspace
     if ws.allVars().selectByName("%s*"%(s['name'])).getSize():
@@ -97,6 +98,7 @@ def factoryType(d,s):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Function to extract yield variations for signal row in dataFrame
 def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTypes,skipCOWCorr=True,proc="ggH",year='2016',ignoreWarnings=False):
+  print _nominalDataName
 
   errMessage = "WARNING" if ignoreWarnings else "ERROR"
   errString = "Using nominal yield" if ignoreWarnings else ""

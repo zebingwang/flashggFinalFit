@@ -29,6 +29,8 @@ def get_options():
   parser.add_option('--procs', dest='procs', default='auto', help='Comma separated list of signal processes. auto = automatically inferred from input workspaces')
   parser.add_option('--ext', dest='ext', default='', help='Extension for saving') 
   parser.add_option('--mass', dest='mass', default='125', help='Input workspace mass')
+  parser.add_option('--HHWWggLabel', dest='HHWWggLabel', default='node_cHHH1_WWgg_lnulnugg', help='HHWWggLabel')
+  parser.add_option('--doHHWWgg', dest='doHHWWgg', default='True', help='doHHWWgg')
   parser.add_option('--mergeYears', dest='mergeYears', default=False, action="store_true", help="Merge category across years")
   parser.add_option('--skipBkg', dest='skipBkg', default=False, action="store_true", help="Only add signal processes to datacard")
   parser.add_option('--bkgScaler', dest='bkgScaler', default=1., type="float", help="Add overall scale factor for background")
@@ -98,7 +100,11 @@ for year in years:
 
     # Input flashgg ws 
     _inputWSFile = glob.glob("%s/*M%s*_%s.root"%(inputWSDirMap[year],opt.mass,proc))[0]
-    _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.mass,sqrts__,opt.cat)
+    
+    if ( opt.doHHWWgg ):
+        _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)
+    else:
+        _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.mass,sqrts__,opt.cat)
 
     # If opt.skipZeroes check nominal yield if 0 then do not add
     skipProc = False
@@ -209,6 +215,8 @@ for ir,r in data[data['type']=='sig'].iterrows():
 
   # Open input WS file and extract workspace
   f_in = ROOT.TFile(r.inputWSFile)
+  print r.inputWSFile
+  print r.nominalDataName
   inputWS = f_in.Get(inputWSName__)
   # Extract nominal RooDataSet and yield
   rdata_nominal = inputWS.data(r.nominalDataName)
