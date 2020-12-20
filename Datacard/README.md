@@ -61,6 +61,8 @@ Finally the theory systematics (of `'type':'factory'`) have an additional input 
 Once the `pkl` files have been produced then you are ready to make the datacard:
 ```
 python makeDatacard.py --years 2016,2017,2018 --prune (--doSystematics)
+i.e
+python makeDatacard.py --years 2017 --prune --ext test --doSystematics
 ```
 The datacard will be produced using the concatenation of all `pkl` files in the `yields` directory. The `--prune` option will prune all signal processes which contribute less than 0.1% to the total signal yield in a given category. This threshold has been shown to have negligible effect on the final results but can be toggled using the `--pruneThreshold 0.001` option.
 
