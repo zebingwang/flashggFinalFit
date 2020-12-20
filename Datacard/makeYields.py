@@ -91,7 +91,10 @@ for year in years:
 
     # Mapping to STXS definition here
     _procOriginal = proc
-    _proc = "%s_%s_%s"%(procToDatacardName(proc),year,decayMode)
+    if ( opt.doHHWWgg ):
+        _proc = "%s_%s_hwwhgg"%(procToDatacardName(proc),year)
+    else:
+        _proc = "%s_%s_%s"%(procToDatacardName(proc),year,decayMode)
     _proc_s0 = procToData(proc.split("_")[0])
 
     # Define category: add year tag if not merging
@@ -136,9 +139,14 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
   _proc_data = "data_obs"
   if opt.mergeYears:
     _cat = opt.cat
-    _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
-    _model_bkg = "%s:CMS_%s_%s_%s_bkgshape"%(bkgWSName__,decayMode,_cat,sqrts__)
-    _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
+    if( opt.doHHWWgg ):
+        _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
+        _model_bkg = "%s:CMS_%s_hwwhgg_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
+        _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
+    else:
+        _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
+        _model_bkg = "%s:CMS_%s_%s_%s_bkgshape"%(bkgWSName__,decayMode,_cat,sqrts__)
+        _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
     _proc_s0 = '-' #not needed for data/bkg
     _inputWSFile = '-' #not needed for data/bkg
     _nominalDataName = '-' #not needed for data/bkg
@@ -152,9 +160,14 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
     for year in years:
       _cat = "%s_%s"%(opt.cat,year)
       _catStripYear = opt.cat
-      _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
-      _model_bkg = "%s:CMS_%s_%s_%s_bkgshape"%(bkgWSName__,decayMode,_cat,sqrts__)
-      _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_catStripYear)
+      if( opt.doHHWWgg ):
+          _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
+          _model_bkg = "%s:CMS_%s_hwwhgg_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
+          _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
+      else:
+          _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
+          _model_bkg = "%s:CMS_%s_%s_%s_bkgshape"%(bkgWSName__,decayMode,_cat,sqrts__)
+          _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
       _proc_s0 = '-' #not needed for data/bkg
       _inputWSFile = '-' #not needed for data/bkg
       _nominalDataName = '-' #not needed for data/bkg
