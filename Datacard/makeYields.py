@@ -141,7 +141,7 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
     _cat = opt.cat
     if( opt.doHHWWgg ):
         _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
-        _model_bkg = "%s:CMS_%s_hgg_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
+        _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
         _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
     else:
         _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
@@ -162,8 +162,8 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
       _catStripYear = opt.cat
       if( opt.doHHWWgg ):
           _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
-          _model_bkg = "%s:CMS_%s_hgg_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
-          _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
+          _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
+          _model_data = "%s:roohist_data_mass_%s_%s"%(bkgWSName__,_cat,sqrts__)
       else:
           _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
           _model_bkg = "%s:CMS_%s_%s_%s_bkgshape"%(bkgWSName__,decayMode,_cat,sqrts__)
