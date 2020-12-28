@@ -102,7 +102,10 @@ for year in years:
     else: _cat = "%s_%s"%(opt.cat,year)
 
     # Input flashgg ws 
-    _inputWSFile = glob.glob("%s/*M%s*_%s.root"%(inputWSDirMap[year],opt.mass,proc))[0]
+    if ( opt.doHHWWgg ):
+        _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
+    else:
+        _inputWSFile = glob.glob("%s/output*M%s*_%s.root"%(inputWSDirMap[year],opt.mass,proc))[0]
     
     if ( opt.doHHWWgg ):
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)
