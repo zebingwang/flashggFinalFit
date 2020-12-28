@@ -91,7 +91,10 @@ if opt.analysis not in globalXSBRMap:
 else: xsbrMap = globalXSBRMap[opt.analysis]
 
 # Load RooRealVars
-nominalWSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,MHNominal,opt.proc))[0]
+if ( opt.doHHWWgg ):
+    nominalWSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,MHNominal,opt.proc,opt.HHWWggLabel,opt.cat))[0]
+else:
+    nominalWSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,MHNominal,opt.proc))[0]
 f0 = ROOT.TFile(nominalWSFileName,"read")
 inputWS0 = f0.Get(inputWSName__)
 xvar = inputWS0.var(opt.xvar)
@@ -158,7 +161,7 @@ nominalDatasets = od()
 datasetRVForFit = od()
 for mp in opt.massPoints.split(","):
   if ( opt.doHHWWgg ):
-     WSFileName = glob.glob("%s/Shifted*M%s*%s.root"%(opt.inputWSDir,mp,procRVFit))[0]
+     WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.HHWWggLabel,opt.cat))[0]
   else:
      WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procRVFit))[0]
   f = ROOT.TFile(WSFileName,"read")
@@ -180,7 +183,7 @@ if( datasetRVForFit[MHNominal].numEntries() < opt.replacementThreshold  )|( data
   print "replace RV:",procReplacementFit, catReplacementFit
   for mp in opt.massPoints.split(","):
     if ( opt.doHHWWgg ):
-         WSFileName = glob.glob("%s/Shifted*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
     else:
          WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
     f = ROOT.TFile(WSFileName,"read")
@@ -225,7 +228,7 @@ if not opt.skipVertexScenarioSplit:
   datasetWVForFit = od()
   for mp in opt.massPoints.split(","):
     if ( opt.doHHWWgg ):
-         WSFileName = glob.glob("%s/Shifted*M%s*%s.root"%(opt.inputWSDir,mp,procWVFit))[0]
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procWVFit,opt.HHWWggLabel,opt.cat))[0]
     else:
          WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procWVFit))[0]
     f = ROOT.TFile(WSFileName,"read")
@@ -245,7 +248,7 @@ if not opt.skipVertexScenarioSplit:
     print "ReplaceWV:",procReplacementFit,catReplacementFit
     for mp in opt.massPoints.split(","):
       if ( opt.doHHWWgg ):
-         WSFileName = glob.glob("%s/Shifted*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
       else:
          WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
       f = ROOT.TFile(WSFileName,"read")

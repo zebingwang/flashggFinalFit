@@ -115,7 +115,10 @@ data = pd.DataFrame( columns=columns_data )
 # Loop over processes and add row to dataframe
 for _proc in opt.procs.split(","):
   # Glob M125 filename
-  _WSFileName = glob.glob("%s/output*M125*%s.root"%(opt.inputWSDir,_proc))[0]
+  if ( opt.doHHWWgg ):
+    _WSFileName = glob.glob("%s/output*M125*%s_%s_%s.root"%(opt.inputWSDir,_proc,opt.HHWWggLabel,opt.cat))[0]
+  else:
+    _WSFileName = glob.glob("%s/output*M125*%s.root"%(opt.inputWSDir,_proc))[0]
   if ( opt.doHHWWgg ):
      _nominalDataName = "%s_%s_%s_%s"%(procToData(_proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)
   else:
