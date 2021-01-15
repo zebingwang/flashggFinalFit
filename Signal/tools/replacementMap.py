@@ -29,7 +29,8 @@ globalReplacementMap['STXS'] = od()
 # For WRONG VERTEX SCENARIO:
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
-globalReplacementMap['STXS']['procWV'] = "GluGluToHHTo2G2l2nu"
+#  globalReplacementMap['STXS']['procWV'] = "GluGluToHHTo2G2l2nu"
+globalReplacementMap['STXS']['procWV'] = "wzh"
 globalReplacementMap['STXS']['catWV'] = "HHWWggTag_2"
 # For RIGHT VERTEX SCENARIO:
 #  * default mapping is to use diagonal process from given category 

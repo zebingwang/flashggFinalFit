@@ -91,10 +91,10 @@ if opt.analysis not in globalXSBRMap:
 else: xsbrMap = globalXSBRMap[opt.analysis]
 
 # Load RooRealVars
-if ( opt.doHHWWgg ):
+if ( opt.doHHWWgg == True ):
     nominalWSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,MHNominal,opt.proc,opt.HHWWggLabel,opt.cat))[0]
 else:
-    nominalWSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,MHNominal,opt.proc))[0]
+    nominalWSFileName = glob.glob("%s/output*M%s*%s_%s.root"%(opt.inputWSDir,MHNominal,opt.proc,opt.cat))[0]
 f0 = ROOT.TFile(nominalWSFileName,"read")
 inputWS0 = f0.Get(inputWSName__)
 xvar = inputWS0.var(opt.xvar)
@@ -114,7 +114,7 @@ if opt.skipZeroes:
   WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,MHNominal,opt.proc))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  if ( opt.doHHWWgg ):
+  if ( opt.doHHWWgg == True ):
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(opt.proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(opt.proc.split("_")[0]),MHNominal,sqrts__,opt.cat)),aset)
@@ -160,13 +160,15 @@ nominalDatasets = od()
 # For RV (or if skipping vertex scenario split)
 datasetRVForFit = od()
 for mp in opt.massPoints.split(","):
-  if ( opt.doHHWWgg ):
+  if ( opt.doHHWWgg == True ):
      WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.HHWWggLabel,opt.cat))[0]
   else:
-     WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procRVFit))[0]
+     print "%s/output*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat)
+     WSFileName = glob.glob("%s/Shifted*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat))[0]
+     #  WSFileName = glob.glob("%s/output*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  if ( opt.doHHWWgg ):
+  if ( opt.doHHWWgg == True ):
      d = reduceDataset(inputWS.data("%s_%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catRVFit)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),mp,sqrts__,catRVFit)),aset)
@@ -182,13 +184,13 @@ if( datasetRVForFit[MHNominal].numEntries() < opt.replacementThreshold  )|( data
   procReplacementFit, catReplacementFit = rMap['procRVMap'][opt.cat], rMap['catRVMap'][opt.cat]
   print "replace RV:",procReplacementFit, catReplacementFit
   for mp in opt.massPoints.split(","):
-    if ( opt.doHHWWgg ):
+    if ( opt.doHHWWgg == True ):
          WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
     else:
          WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
     f = ROOT.TFile(WSFileName,"read")
     inputWS = f.Get(inputWSName__)
-    if ( opt.doHHWWgg):
+    if ( opt.doHHWWgg == True):
          d = reduceDataset(inputWS.data("%s_%s_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catReplacementFit)),aset)
     else:
          d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),mp,sqrts__,catReplacementFit)),aset)
@@ -227,13 +229,14 @@ else:
 if not opt.skipVertexScenarioSplit:
   datasetWVForFit = od()
   for mp in opt.massPoints.split(","):
-    if ( opt.doHHWWgg ):
+    if ( opt.doHHWWgg == True ):
          WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procWVFit,opt.HHWWggLabel,opt.cat))[0]
     else:
-         WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procWVFit))[0]
+         #  WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procWVFit))[0]
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s.root"%(opt.inputWSDir,mp,procWVFit,opt.cat))[0]
     f = ROOT.TFile(WSFileName,"read")
     inputWS = f.Get(inputWSName__)
-    if ( opt.doHHWWgg ):
+    if ( opt.doHHWWgg == True ):
          d = reduceDataset(inputWS.data("%s_%s_%s_%s_%s"%(procToData(procWVFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catWVFit)),aset)
     else:
          d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procWVFit.split("_")[0]),mp,sqrts__,catWVFit)),aset)
@@ -247,20 +250,20 @@ if not opt.skipVertexScenarioSplit:
     procReplacementFit, catReplacementFit = rMap['procWV'], rMap['catWV']
     print "ReplaceWV:",procReplacementFit,catReplacementFit
     for mp in opt.massPoints.split(","):
-      if ( opt.doHHWWgg ):
+      if ( opt.doHHWWgg == True ):
          WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
       else:
-         WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s.root"%(opt.inputWSDir,mp,procWVFit,opt.cat))[0]
       f = ROOT.TFile(WSFileName,"read")
       inputWS = f.Get(inputWSName__)
-      if ( opt.doHHWWgg ):
+      if ( opt.doHHWWgg == True ):
          d = reduceDataset(inputWS.data("%s_%s_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catReplacementFit)),aset)
       else:
          d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),mp,sqrts__,catReplacementFit)),aset)
-      if ( opt.doHHWWgg ):
+      if ( opt.doHHWWgg == True ):
          datasetWVForFit[mp] = splitRVWV(d,aset,mode="RV")
       else:
-         datasetWVForFit[mp] = splitRVWV(d,aset,mode="WV")
+         datasetWVForFit[mp] = splitRVWV(d,aset,mode="RV")
       inputWS.Delete()
       f.Close()
     # Check if replacement dataset has too few entries: if so throw error
@@ -336,10 +339,11 @@ if not opt.skipVertexScenarioSplit:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # FINAL MODEL: construction
 print "\n --> Constructing final model"
-if(opt.doHHWWgg):
+if(opt.doHHWWgg == True):
     fm = FinalModel(ssfMap,opt.proc,opt.cat,opt.HHWWggLabel,opt.ext,opt.year,sqrts__,nominalDatasets,xvar,MH,MHLow,MHHigh,opt.massPoints,xsbrMap,procSyst,opt.scales,opt.scalesCorr,opt.scalesGlobal,opt.smears,opt.doVoigtian,opt.useDCB,opt.skipVertexScenarioSplit,opt.skipSystematics,opt.doEffAccFromJson)
 else:
-    fm = FinalModel(ssfMap,opt.proc,opt.cat,SM,opt.ext,opt.year,sqrts__,nominalDatasets,xvar,MH,MHLow,MHHigh,opt.massPoints,xsbrMap,procSyst,opt.scales,opt.scalesCorr,opt.scalesGlobal,opt.smears,opt.doVoigtian,opt.useDCB,opt.skipVertexScenarioSplit,opt.skipSystematics,opt.doEffAccFromJson)
+    analysis='singleH'
+    fm = FinalModel(ssfMap,opt.proc,opt.cat,analysis,opt.ext,opt.year,sqrts__,nominalDatasets,xvar,MH,MHLow,MHHigh,opt.massPoints,xsbrMap,procSyst,opt.scales,opt.scalesCorr,opt.scalesGlobal,opt.smears,opt.doVoigtian,opt.useDCB,opt.skipVertexScenarioSplit,opt.skipSystematics,opt.doEffAccFromJson)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SAVE: to output workspace

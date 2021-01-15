@@ -75,7 +75,7 @@ def initialiseXSBR():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 class FinalModel:
   # Constructor
-  def __init__(self,_ssfMap,_proc,_cat,_HHWWggLabel,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics,_doEffAccFromJson):
+  def __init__(self,_ssfMap,_proc,_cat,_Label,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics,_doEffAccFromJson):
     self.ssfMap = _ssfMap
     self.proc = _proc
     self.procSyst = _procSyst # Signal process used for systematics (useful for low stat cases)
@@ -83,8 +83,8 @@ class FinalModel:
     self.ext = _ext
     self.year = _year
     self.sqrts = _sqrts
-    self.HHWWggLabel = _HHWWggLabel 
-    self.name = "%s_%s_%s_%s_%s"%(self.proc,self.HHWWggLabel,self.year,self.cat,self.sqrts)
+    self.Label = _Label 
+    self.name = "%s_%s_%s_%s_%s"%(self.proc,self.Label,self.year,self.cat,self.sqrts)
     self.datasets = _datasets
     self.xvar = _xvar
     self.aset = ROOT.RooArgSet(self.xvar)
@@ -140,6 +140,19 @@ class FinalModel:
     # XS
     if ("ggF" in self.proc or "GluGluToHHTo" in self.proc ):
         xs=0.001*np.ones(101,dtype = float)
+    elif ("VH" in self.proc or "wzh" in self.proc ) : 
+        mp1 = 'WH'
+        mp2 = 'ZH'
+        xs = self.XSBR[mp1] + self.XSBR[mp2]
+    elif ("ttH" in self.proc or "tth" in self.proc ) : 
+        mp = 'ttH'
+        xs = self.XSBR[mp]
+    elif ("ggH" in self.proc or "ggh" in self.proc ) : 
+        mp = 'ggH'
+        xs = self.XSBR[mp]
+    elif ("VBF" in self.proc or "vbf" in self.proc ) :
+        mp = 'vbfH'
+        xs = self.XSBR[mp]
     else:
         fp = self.xsbrMap[self.proc]['factor'] if 'factor' in self.xsbrMap[self.proc] else 1.
         mp = self.xsbrMap[self.proc]['mode']
