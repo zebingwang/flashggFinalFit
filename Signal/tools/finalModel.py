@@ -186,7 +186,7 @@ class FinalModel:
         xs,br = self.Splines['xs'].getVal(), self.Splines['br'].getVal()
         print "xs:",xs,",br:",br,",lumi:",lumiScaleFactor
         ea.append(sumw/(lumiScaleFactor*xs*br)) 
-        print "ea:"
+        print "ea:",ea
     # If single mass point then add MHLow and MHHigh dummy points for constant ea
     if len(ea) == 1: ea, mh = [ea[0],ea[0],ea[0]], [float(self.MHLow),mh[0],float(self.MHHigh)]
     # Convert to numpy arrays and make spline
