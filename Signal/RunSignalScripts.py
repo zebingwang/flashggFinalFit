@@ -107,6 +107,8 @@ print " --> Categories: %s"%options['cats']
 print " --> Mass points: %s --> Low = %s, High = %s"%(options['massPoints'],options['massLow'],options['massHigh'])
 print " --> Extension: %s"%options['ext']
 print " --> Analysis: %s"%options['analysis']
+print " --> doHHWWgg: %s"%options['doHHWWgg']
+print " --> HHWWggLabel: %s"%options['HHWWggLabel']
 print " --> Year: %s ::: Corresponds to intLumi = %.2f fb^-1"%(options['year'],lumiMap[options['year']])
 if options['mode'] in ['calcPhotonSyst']:
   print " --> Photon shape systematics:"

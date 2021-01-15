@@ -6,11 +6,11 @@ signalScriptCfg = {
   
   # Setup
   'inputWSDir':'/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input/',
-  'procs':'ggF', # if auto: inferred automatically from filenames
+  'procs':'GluGluToHHTo2G2l2nu', # if auto: inferred automatically from filenames
   'doHHWWgg':'True', 
-  'HHWWggLabel':'node_cHHH1_WWgg_lnulnugg', 
-  'cats':'HHWWggTag_3', # if auto: inferred automatically from (0) workspace
-  'ext':'HHWWggTest_%s'%_year,
+  'HHWWggLabel':'node_cHHH2p45', 
+  'cats':'HHWWggTag_2', # if auto: inferred automatically from (0) workspace
+  'ext':'HHWWggTest_%s_node_cHHH2p45'%_year,
   'analysis':'STXS', # To specify which replacement dataset mapping (defined in ./python/replacementMap.py)
   'year':'%s'%_year, # Use 'combined' if merging all years: not recommended
   'massPoints':'120,125,130',

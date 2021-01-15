@@ -72,6 +72,7 @@ df = pd.DataFrame(columns=['proc','sumEntries','nRV','nWV'])
 procYields = od()
 for proc in opt.procs.split(","):
   if (opt.doHHWWgg):
+    print "%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat) 
     WSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
   else:
     WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,opt.mass,proc))[0]

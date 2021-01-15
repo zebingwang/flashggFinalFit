@@ -75,7 +75,7 @@ def initialiseXSBR():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 class FinalModel:
   # Constructor
-  def __init__(self,_ssfMap,_proc,_cat,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics,_doEffAccFromJson):
+  def __init__(self,_ssfMap,_proc,_cat,_HHWWggLabel,_ext,_year,_sqrts,_datasets,_xvar,_MH,_MHLow,_MHHigh,_massPoints,_xsbrMap,_procSyst,_scales,_scalesCorr,_scalesGlobal,_smears,_doVoigtian,_useDCB,_skipVertexScenarioSplit,_skipSystematics,_doEffAccFromJson):
     self.ssfMap = _ssfMap
     self.proc = _proc
     self.procSyst = _procSyst # Signal process used for systematics (useful for low stat cases)
@@ -83,7 +83,8 @@ class FinalModel:
     self.ext = _ext
     self.year = _year
     self.sqrts = _sqrts
-    self.name = "%s_%s_%s_%s"%(self.proc,self.year,self.cat,self.sqrts)
+    self.HHWWggLabel = _HHWWggLabel 
+    self.name = "%s_%s_%s_%s_%s"%(self.proc,self.HHWWggLabel,self.year,self.cat,self.sqrts)
     self.datasets = _datasets
     self.xvar = _xvar
     self.aset = ROOT.RooArgSet(self.xvar)
@@ -172,7 +173,7 @@ class FinalModel:
         xs,br = self.Splines['xs'].getVal(), self.Splines['br'].getVal()
         print "xs:",xs,",br:",br,",lumi:",lumiScaleFactor
         ea.append(sumw/(lumiScaleFactor*xs*br)) 
-        print "ea:",ea
+        print "ea:"
     # If single mass point then add MHLow and MHHigh dummy points for constant ea
     if len(ea) == 1: ea, mh = [ea[0],ea[0],ea[0]], [float(self.MHLow),mh[0],float(self.MHHigh)]
     # Convert to numpy arrays and make spline

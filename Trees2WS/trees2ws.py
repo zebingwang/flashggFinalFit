@@ -114,6 +114,7 @@ if opt.year == '2018': systematics.append("JetHEM")
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # UPROOT file
 f = uproot.open(opt.inputTreeFile)
+print inputTreeDir
 if inputTreeDir == '': listOfTreeNames == f.keys()
 else: listOfTreeNames = f[inputTreeDir].keys()
 # If cats = 'auto' then determine from list of trees
@@ -201,12 +202,15 @@ for cat in cats:
       print "    --> Systematic: %s"%re.sub("YEAR",opt.year,s)
       for direction in ['Up','Down']:
         streeName = "%s_%s%s01sigma"%(treeName,s,direction)
+        print "=======sys name","%s_%s%s01sigma"%(treeName,s,direction)
         # If year in streeName then replace by year being processed
         streeName = re.sub("YEAR",opt.year,streeName)
         st = f[streeName]
         if len(st)==0: continue
         sdf = st.pandas.df(systematicsVars)
+        print "SDF:","%s%s"%(s,direction)
         sdf['type'] = "%s%s"%(s,direction)
+        print sdf
         # Add STXS splitting var if splitting necessary
         if opt.doSTXSSplitting: sdf[stxsVar] = st.pandas.df(stxsVar)
     
@@ -287,14 +291,17 @@ for stxsId in data[stxsVar].unique():
     del sa
 
     if opt.doSystematics:
-      # b) make RooDataHists for systematic variations
+      print "make RooDataHists for systematic variations"
       if cat == "NOTAG": continue
       for s in systematics:
         for direction in ['Up','Down']:
           # Create mask for systematic variation
-          mask = (sdf['type']=='%s%s'%(s,direction))&(sdf['cat']==cat)
+          #  mask = (sdf['type']=='%s%s'%(s,direction))&(sdf['cat']==cat)
+          mask = (sdf['type']=='nominal')&(sdf['cat']==cat)
+          print sdf
           # Convert dataframe to structured array, then to ROOT tree
           sa = sdf[mask].to_records()
+          print sa
           t = array2tree(sa)
           
           # Define RooDataHist
@@ -305,9 +312,10 @@ for stxsId in data[stxsVar].unique():
           for var in systematicsVars:
             if var != "weight": systematicsVarsDropWeight.append(var)
           aset = make_argset(ws,systematicsVarsDropWeight)
-          
+          print "-------",t
           h = ROOT.RooDataHist(hName,hName,aset)
           for ev in t:
+            #  print "===================",ev
             for v in systematicsVars:
               if v == "weight": continue
               else: ws.var(v).setVal(getattr(ev,v))
