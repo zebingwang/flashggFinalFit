@@ -35,7 +35,7 @@
 void Selections(){
 TString Process = "GluGluToHHTo2G2l2nu";
 TString year = "2017";
-TString input_node = "cHHH0";
+TString input_node = "cHHH1";
 TString InputFile = "/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded/" + Process + "_node_" + input_node + "_" + year + ".root";
 TFile *output;
 TString outputFile = "./" + Process + "_node_" + input_node  + "_" + year + "_applied_selections.root";

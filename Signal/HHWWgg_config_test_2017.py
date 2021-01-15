@@ -5,7 +5,7 @@ _year = '2017'
 signalScriptCfg = {
   
   # Setup
-  'inputWSDir':'/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input/',
+  'inputWSDir':'INPUTDIR',
   'procs':'GluGluToHHTo2G2l2nu', # if auto: inferred automatically from filenames
   'doHHWWgg':'True', 
   'HHWWggLabel':'node_cHHH2p45', 
