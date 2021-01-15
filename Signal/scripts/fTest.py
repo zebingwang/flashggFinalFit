@@ -71,7 +71,8 @@ MH.setConstant(True)
 df = pd.DataFrame(columns=['proc','sumEntries','nRV','nWV'])
 procYields = od()
 for proc in opt.procs.split(","):
-  if (opt.doHHWWgg == True):
+  print opt.doHHWWgg
+  if (opt.doHHWWgg == 'True'):
     print "%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat) 
     WSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
   else:
@@ -80,7 +81,7 @@ for proc in opt.procs.split(","):
   inputWS = f.Get(inputWSName__)
   print "WS name:",inputWSName__
   print opt.doHHWWgg
-  if (opt.doHHWWgg == True ) :
+  if (opt.doHHWWgg == 'True' ) :
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
@@ -97,13 +98,13 @@ for pidx, proc in enumerate(procsToFTest):
 
   # Split dataset to RV/WV: ssf requires input as dict (with mass point as key)
   datasets_RV, datasets_WV = od(), od()
-  if( opt.doHHWWgg == True ):
+  if( opt.doHHWWgg == 'True' ):
     WSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
   else:
     WSFileName = glob.glob("%s/output*M%s*%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.cat))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  if (opt.doHHWWgg == True):
+  if (opt.doHHWWgg == 'True'):
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
