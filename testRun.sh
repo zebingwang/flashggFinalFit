@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH2p45"
+node="cHHH5"
 procs='GluGluToHHTo2G4Q'
 year='2017'
 cat='HHWWggTag_1'
@@ -66,7 +66,7 @@ python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_nod
 if [ ! -f "../Background/Input/${procs}_${year}/allData.root" ]; then
   echo "Do not have an input Data WS, convert tree to workspace "
   python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
-  mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${year}/allData.root
+  mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${procs}_${year}/allData.root
 fi
 mv ws_${procs}/${procs}_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
 rm ${procs}_node_${node}_${year}.root
