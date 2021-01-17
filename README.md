@@ -3,6 +3,7 @@ Welcome to the new Final Fits package. Here lies a a series of scripts which are
 
 Slides from the flashgg tutorial series can be found [here](https://indico.cern.ch/event/963619/contributions/4112177/attachments/2151275/3627204/finalfits_tutorial_201126.pdf)
 
+
 ## Download and setup instructions
 
 ```
@@ -35,6 +36,26 @@ In every new shell run the following to add `tools/commonTools` and `tools/commo
 cmsenv
 source setup.sh
 ```
+
+## simple test
+There is a automactic script.Named testRun.sh
+Before you run it.
+You should set:
+- node="cHHH1"
+- procs='GluGluToHHTo2G4Q'
+- year='2017'
+- cat='HHWWggTag_1'
+- doHHWWgg='True'
+- TreePath='P/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FH_NLO_2017_hadded/' #path to signal tree
+- DataTreeFile='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root' #path to data tree file
+- doSelections="0" #if you want to applied selections to your tree, then set it to 1
+- Selections='dipho_pt > 160' #Here you can define which selections you want to set.
+
+After you set these options,Then you can just run:
+```
+sh testRun.sh
+```
+
 
 ## Contents
 The Finals Fits package contains several subfolders which are used for the following steps:
