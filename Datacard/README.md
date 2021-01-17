@@ -10,7 +10,7 @@ The first step is to produce a pandas dataframe for each analysis category which
 python RunYields.py --cats auto --inputWSDirMap 2016={path to 2016 flashgg workspaces},2017={path to 2017 workspaces},2018={path to 2018 workspaces} --procs auto (--mergeYears) (--doSystematics) --batch condor --queue longlunch
 i.e
 
-python RunYields.py --cats HHWWggTag_3 --inputWSDirMap 2017=/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input --procs ggF --doSystematics --doHHWWgg True --HHWWggLabel node_cHHH1_WWgg_lnulnugg
+python RunYields.py --cats HHWWggTag_2 --inputWSDirMap 2017=../Signal/Input/ --procs GluGluToHHTo2G2l2nu --doHHWWgg True --HHWWggLabel node_cHHH1 --batch local --sigModelWSDir FL_node_cHHH1 --bkgModelWSDir FL_node_cHHH1
 ```
 This script creates a job for each analysis category in the `yields` directory and submits this job to the batch. The output is the pandas dataframe, stored as a `pkl` file. To produce the job script without submitting, add the option `--dryRun`.
 
