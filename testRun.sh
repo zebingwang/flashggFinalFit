@@ -39,8 +39,8 @@ then
   rm DataSelections_Run.C
 else
   echo "Do not apply any selections ,just copy tree file "
-  # cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
-  # cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
+  cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
+  cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
 fi
 
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -60,12 +60,12 @@ fi
 
 
 # Signal tree to data ws
-# python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
+python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 
 # data tree to data ws
 if [ ! -f "../Background/Input/${procs}_${year}/allData.root" ]; then
   echo "Do not have an input Data WS, convert tree to workspace "
-  # python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
+  python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
   mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${year}/allData.root
 fi
 mv ws_${procs}/${procs}_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
@@ -121,6 +121,7 @@ cd ../Background
 cp HHWWgg_cofig_test.py HHWWgg_cofig_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_cofig_Run.py
 sed -i "s#YEAR#${year}#g" HHWWgg_cofig_Run.py
+sed -i "s#PROCS#${procs}#g" HHWWgg_cofig_Run.py
 cmsenv
 # make clean
 make
