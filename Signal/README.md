@@ -1,8 +1,8 @@
 # Signal modelling
 
 ## Preparation
-Before you run these scripts
-You need prepare the input Files
+Before you run these scripts,
+You need prepare the input Files,
 And the input Files name should like this:
 ```
 For HHWWgg samples:
@@ -14,6 +14,7 @@ For singleHiggs samples:
 output_M{mass}_{process}*.root
 
 ```
+Then put the input file inside this directory ./Signal/Input/
 Once your input files are ready.
 For HHWWgg samples.
 We need to shift the 125 GeV samples to 120 and 130
