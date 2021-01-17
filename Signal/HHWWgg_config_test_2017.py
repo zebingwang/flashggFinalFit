@@ -6,11 +6,11 @@ signalScriptCfg = {
   
   # Setup
   'inputWSDir':'INPUTDIR',
-  'procs':'GluGluToHHTo2G2l2nu', # if auto: inferred automatically from filenames
-  'doHHWWgg':'True', 
-  'HHWWggLabel':'node_cHHH2p45', 
-  'cats':'HHWWggTag_2', # if auto: inferred automatically from (0) workspace
-  'ext':'HHWWggTest_%s_node_cHHH2p45'%_year,
+  'procs':'PROCS', # if auto: inferred automatically from filenames
+  'doHHWWgg':'DOHHWWGG', 
+  'HHWWggLabel':'NODE', 
+  'cats':'CAT', # if auto: inferred automatically from (0) workspace
+  'ext':'HHWWggTest_%s_NODE'%_year,
   'analysis':'STXS', # To specify which replacement dataset mapping (defined in ./python/replacementMap.py)
   'year':'%s'%_year, # Use 'combined' if merging all years: not recommended
   'massPoints':'120,125,130',

@@ -32,16 +32,16 @@
 #include "RooCategory.h"
 
 
-void DataSelections(){
-TString InputFile = "../Trees2WS/Data_13TeV_HHWWggTag_2.root";
+void DataSelections_Run(){
+TString InputFile = "INPUTFILE";
 TFile *output;
-TString outputFile = "Data_13TeV_HHWWggTag_2_after.root";
+TString outputFile = "Data_13TeV_CAT_YEAR.root";
 TFile MC_file(InputFile);
 output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
 TTree* fChain;
 TString TreeName;
-TString catName="tagsDumper/trees/Data_13TeV_HHWWggTag_2";
+TString catName="tagsDumper/trees/Data_13TeV_CAT";
 TreeName=catName;
 cout<<TreeName<<endl;
 MC_file.GetObject(TreeName,fChain);
@@ -2127,7 +2127,7 @@ MC_file.GetObject(TreeName,fChain);
    double XS_Ratio = 1.;//Reweight SF from Petr's histgrams
   for (int i = 0; i< nevents; i=i+1){
       fChain->GetEntry(i);
-      if ( dipho_pt > 54){
+      if ( SELECTIONS ){
       newtree->Fill();
       }
   }
