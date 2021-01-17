@@ -87,12 +87,15 @@ for year in years:
   for proc in procs:
 
     # Identifier
-    _id = "%s_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
+    if ( opt.doHHWWgg == 'True' ):
+        _id = "%s_%s_%s_%s_%s"%(proc,opt.HHWWggLabel,year,opt.cat,sqrts__)
+    else:
+        _id = "%s_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
 
     # Mapping to STXS definition here
     _procOriginal = proc
-    if ( opt.doHHWWgg ):
-        _proc = "%s_%s_hwwhgg"%(procToDatacardName(proc),year)
+    if ( opt.doHHWWgg == 'True' ):
+        _proc = "%s_%s_hwwhgg_%s"%(procToDatacardName(proc),year,opt.HHWWggLabel)
     else:
         _proc = "%s_%s_%s"%(procToDatacardName(proc),year,decayMode)
     _proc_s0 = procToData(proc.split("_")[0])
@@ -102,12 +105,12 @@ for year in years:
     else: _cat = "%s_%s"%(opt.cat,year)
 
     # Input flashgg ws 
-    if ( opt.doHHWWgg ):
+    if ( opt.doHHWWgg == 'True' ):
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
     else:
         _inputWSFile = glob.glob("%s/output*M%s*_%s.root"%(inputWSDirMap[year],opt.mass,proc))[0]
     
-    if ( opt.doHHWWgg ):
+    if ( opt.doHHWWgg == 'True' ):
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)
     else:
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.mass,sqrts__,opt.cat)
@@ -142,7 +145,7 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
   _proc_data = "data_obs"
   if opt.mergeYears:
     _cat = opt.cat
-    if( opt.doHHWWgg ):
+    if( opt.doHHWWgg == 'True' ):
         _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
         _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
         _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
@@ -163,7 +166,7 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
     for year in years:
       _cat = "%s_%s"%(opt.cat,year)
       _catStripYear = opt.cat
-      if( opt.doHHWWgg ):
+      if( opt.doHHWWgg == 'True' ):
           _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
           _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
           _model_data = "%s:roohist_data_mass_%s_%s"%(bkgWSName__,_cat,sqrts__)
