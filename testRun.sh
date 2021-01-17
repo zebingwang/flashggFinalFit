@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH1"
+node="cHHH2p45"
 procs='GluGluToHHTo2G4Q'
 year='2017'
 cat='HHWWggTag_1'
@@ -39,8 +39,8 @@ then
   rm DataSelections_Run.C
 else
   echo "Do not apply any selections ,just copy tree file "
-  cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
-  cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
+  # cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
+  # cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
 fi
 
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -54,21 +54,21 @@ cd ../Trees2WS/
 if [ ! -d "../Signal/Input/" ]; then
   mkdir ../Signal/Input/
 fi
-if [ ! -d "../Background/Input/${year}" ]; then
-  mkdir -p ../Background/Input/${year}
+if [ ! -d "../Background/Input/${procs}_${year}" ]; then
+  mkdir -p ../Background/Input/${procs}_${year}
 fi
 
 
 # Signal tree to data ws
-python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
+# python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 
 # data tree to data ws
-if [ ! -f "../Background/Input/${year}/allData.root" ]; then
+if [ ! -f "../Background/Input/${procs}_${year}/allData.root" ]; then
   echo "Do not have an input Data WS, convert tree to workspace "
-  python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root 
+  # python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
   mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${year}/allData.root
 fi
-mv ws_${procs}/GluGluToHHTo2G2l2nu_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
+mv ws_${procs}/${procs}_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
 rm ${procs}_node_${node}_${year}.root
 rm Data_13TeV_${cat}_${year}.root
 
