@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 node="cHHH1"
-procs='GluGluToHHTo2G2l2nu'
+procs='GluGluToHHTo2G4Q'
 year='2017'
-cat='HHWWggTag_2'
+cat='HHWWggTag_1'
 doHHWWgg='True'
-TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded/'
+TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FH_NLO_2017_hadded/'
 DataTreeFile='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root'
-doSelections='True'
-Selections='dipho_pt > 54'
+doSelections="0"
+Selections='dipho_pt > 54' # Seletions you want to applied.
 eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
-# Signal Tree selectors#
+#  Tree selectors#
 #
 ############################################
 path=`pwd`
-if (( $doSelections == 'True' ))
+cd ./Reweight/
+if [ $doSelections -eq "1" ]
 then
   echo "Selection start"
-  cd ./Reweight/
   cp Selections.C Selections_Run.C
   cp DataSelections.C DataSelections_Run.C
   sed -i "s#NODE#${node}#g" Selections_Run.C 
@@ -33,12 +33,12 @@ then
   sed -i "s#INPUTFILE#${DataTreeFile}#g" DataSelections_Run.C
   sed -i "s#SELECTIONS#${Selections}#g" DataSelections_Run.C
 
-  # root -b -q Selections_Run.C
-  # root -b -q DataSelections_Run.C
+  root -b -q Selections_Run.C
+  root -b -q DataSelections_Run.C
   rm Selections_Run.C
-  # rm DataSelections_Run.C
+  rm DataSelections_Run.C
 else
-  echo "Do do selections,just copy tree file "
+  echo "Donot do selections,just copy tree file "
   cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
   cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
 fi
@@ -49,7 +49,7 @@ cd ../Trees2WS/
 
 #########################################
 # start tree to workspace
-
+########################################
 
 if [ ! -d "../Signal/Input/" ]; then
   mkdir ../Signal/Input/
@@ -59,26 +59,28 @@ if [ ! -d "../Background/Input/${year}" ]; then
 fi
 
 
-# echo "python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_2017_applied_selections.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics"
-# python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
+# Signal tree to data ws
+python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 
 # data tree to data ws
 python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root 
-echo "python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root "
+
 mv ws_${procs}/GluGluToHHTo2G2l2nu_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
 mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${year}/allData.root
+rm ${procs}_node_${node}_${year}.root
+rm Data_13TeV_${cat}_${year}.root
 
 #########################################
 #shift dataset
-
+#########################################
 cd ../Signal/
-# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
+python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 
 
 #######################################
 # Run ftest
-
-sed -i "s#PROCS_Replacement#${procs}#g" tools/replacementMap.py
+######################################
+sed -i "s#PROCS_Replacement#${procs}#g" tools/replacementMap.py ##Set replacements while WV events < 100
 sed -i "s#CAT_Replacement#${cat}#g" tools/replacementMap.py
 echo "Run FTest"
 cp HHWWgg_config_test_2017.py HHWWgg_config_Run_2017.py
@@ -87,17 +89,19 @@ sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run_2017.py
 sed -i "s#DOHHWWGG#${doHHWWgg}#g" HHWWgg_config_Run_2017.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run_2017.py
 sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run_2017.py
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode fTest --modeOpts "doPlots"
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode fTest --modeOpts "doPlots"
 
 
 #######################################
 # Run photon sys
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode calcPhotonSyst
+######################################
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode calcPhotonSyst
 
 
 #######################################
 #Run signal Fit
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode signalFit --groupSignalFitJobsByCat
+#######################################
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode signalFit --groupSignalFitJobsByCat
 
 
 
@@ -119,7 +123,7 @@ cmsenv
 # make clean
 make
 
-# python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
+python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
 
 rm HHWWgg_cofig_Run.py
 
