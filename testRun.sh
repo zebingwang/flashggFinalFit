@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH5"
+node="cHHH2p45"
 procs='GluGluToHHTo2G2l2nu'
 year='2017'
 doHHWWgg="True"
@@ -44,8 +44,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-# root -b -q Selections_Run.C
-# root -b -q DataSelections_Run.C
+root -b -q Selections_Run.C
+root -b -q DataSelections_Run.C
 # rm Selections_Run.C
 # rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -78,7 +78,7 @@ rm Data_13TeV_${cat}_${year}.root
 #shift dataset
 #########################################
 cd ../Signal/
-# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
+python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 
 
 #######################################
@@ -91,19 +91,19 @@ sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
 sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run.py
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 
 #######################################
 # Run photon sys
 ######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
 
 
 #######################################
 #Run signal Fit
 #######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
 
 
 
