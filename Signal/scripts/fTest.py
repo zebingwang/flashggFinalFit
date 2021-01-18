@@ -35,7 +35,7 @@ def get_options():
   parser.add_option("--cat", dest='cat', default='', help="RECO category")
   parser.add_option('--mass', dest='mass', default='125', help="Mass point to fit")
   parser.add_option('--HHWWggLabel', dest='HHWWggLabel', default='node_cHHH1_WWgg_lnulnugg', help="HHWWgg Label")
-  parser.add_option('--doHHWWgg', dest='doHHWWgg', default='True', help="Do HHWWgg analysis")
+  parser.add_option('--analysis', dest='analysis', default='STXS', help="analysis type")
   parser.add_option('--doPlots', dest='doPlots', default=False, action="store_true", help="Produce Signal fTest plots")
   parser.add_option('--nBins', dest='nBins', default=80, type='int', help="Number of bins for fit")
   parser.add_option('--threshold', dest='threshold', default=20, type='int', help="Threshold number of events")
@@ -71,8 +71,7 @@ MH.setConstant(True)
 df = pd.DataFrame(columns=['proc','sumEntries','nRV','nWV'])
 procYields = od()
 for proc in opt.procs.split(","):
-  print opt.doHHWWgg
-  if (opt.doHHWWgg == 'True'):
+  if (opt.analysis == 'HHWWgg'):
     print "%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat) 
     WSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
   else:
@@ -80,8 +79,8 @@ for proc in opt.procs.split(","):
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
   print "WS name:",inputWSName__
-  print opt.doHHWWgg
-  if (opt.doHHWWgg == 'True' ) :
+  print opt.analysis
+  if (opt.analysis == 'HHWWgg' ) :
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
@@ -98,13 +97,13 @@ for pidx, proc in enumerate(procsToFTest):
 
   # Split dataset to RV/WV: ssf requires input as dict (with mass point as key)
   datasets_RV, datasets_WV = od(), od()
-  if( opt.doHHWWgg == 'True' ):
+  if( opt.analysis == 'HHWWgg' ):
     WSFileName = glob.glob("%s/output*M%s*%s_%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
   else:
     WSFileName = glob.glob("%s/output*M%s*%s_%s.root"%(opt.inputWSDir,opt.mass,proc,opt.cat))[0]
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
-  if (opt.doHHWWgg == 'True'):
+  if (opt.analysis == 'HHWWgg'):
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)

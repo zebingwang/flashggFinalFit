@@ -41,7 +41,6 @@ if opt.inputConfig != '':
     #Extract options
     options['inputWSDir']   = _cfg['inputWSDir']
     options['procs']        = _cfg['procs']
-    options['doHHWWgg']     = _cfg['doHHWWgg']
     options['HHWWggLabel']  = _cfg['HHWWggLabel']
     options['cats']         = _cfg['cats']
     options['ext']          = _cfg['ext']
@@ -107,7 +106,6 @@ print " --> Categories: %s"%options['cats']
 print " --> Mass points: %s --> Low = %s, High = %s"%(options['massPoints'],options['massLow'],options['massHigh'])
 print " --> Extension: %s"%options['ext']
 print " --> Analysis: %s"%options['analysis']
-print " --> doHHWWgg: %s"%options['doHHWWgg']
 print " --> HHWWggLabel: %s"%options['HHWWggLabel']
 print " --> Year: %s ::: Corresponds to intLumi = %.2f fb^-1"%(options['year'],lumiMap[options['year']])
 if options['mode'] in ['calcPhotonSyst']:

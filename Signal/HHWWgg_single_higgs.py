@@ -1,16 +1,15 @@
 # Config file: options for signal fitting
 
-_year = '2017'
+_year = 'YEAR'
 
 signalScriptCfg = {
   
   # Setup
   'inputWSDir':'INPUTDIR',
   'procs':'PROCS', # if auto: inferred automatically from filenames
-  'doHHWWgg':'DOHHWWGG', 
-  'HHWWggLabel':'NODE', 
+  'HHWWggLabel':'single_Higgs', 
   'cats':'CAT', # if auto: inferred automatically from (0) workspace
-  'ext':'HHWWggTest_%s_NODE'%_year,
+  'ext':'HHWWggTest_%s_single_Higgs'%_year,
   'analysis':'STXS', # To specify which replacement dataset mapping (defined in ./python/replacementMap.py)
   'year':'%s'%_year, # Use 'combined' if merging all years: not recommended
   'massPoints':'120,125,130',

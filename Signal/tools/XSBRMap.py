@@ -28,6 +28,12 @@ globalXSBRMap['example']['THQ'] = {'mode':'tHq'}
 globalXSBRMap['example']['THW'] = {'mode':'tHW'}
 # ...
 
+globalXSBRMap['HHWWgg'] = od()
+globalXSBRMap['HHWWgg']['decay'] = {'mode':'hgg'}
+globalXSBRMap['HHWWgg']['GluGluToHH'] = {'mode':'ggF'}
+
+
+
 # STXS analysis: add factor for bin composition
 globalXSBRMap['STXS'] = od()
 globalXSBRMap['STXS']['decay'] = {'mode':'hgg'}

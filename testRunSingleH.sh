@@ -6,7 +6,7 @@ cat='HHWWggTag_2'
 mass='125'
 doHHWWgg='False'
 TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/'
-doSelections="1"
+doSelections="0"
 Selections='dipho_pt > 54' # Seletions you want to applied.
 eval `scramv1 runtime -sh`
 source ./setup.sh
@@ -49,8 +49,8 @@ fi
 python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${Name}_${cat}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics 
 
 # data tree to data ws
-mv ws_${procs}/${Name}_${cat}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_${cat}.root
-rm ${Name}_${cat}_${year}.root
+cp ws_${procs}/${Name}_${cat}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_${cat}.root
+# rm ${Name}_${cat}_${year}.root
 
 #########################################
 #shift dataset
@@ -63,31 +63,31 @@ python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/ --procs 
 # Run ftest
 ######################################
 echo "Run FTest"
-cp HHWWgg_single_higgs_2017.py HHWWgg_config_Run_2017.py
-sed -i "s#NODE#node_${node}#g" HHWWgg_config_Run_2017.py
-sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run_2017.py
-sed -i "s#DOHHWWGG#${doHHWWgg}#g" HHWWgg_config_Run_2017.py
-sed -i "s#CAT#${cat}#g" HHWWgg_config_Run_2017.py
-sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run_2017.py
-python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode fTest --modeOpts "doPlots"
+cp HHWWgg_single_higgs.py HHWWgg_config_Run.py
+sed -i "s#NODE#node_${node}#g" HHWWgg_config_Run.py
+sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
+sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
+sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
+sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run.py
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 
 #######################################
 # Run photon sys
 ######################################
-python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode calcPhotonSyst
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
 
 
 #######################################
 #Run signal Fit
 #######################################
-python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode signalFit --groupSignalFitJobsByCat
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
 
 
 
 
 
-rm HHWWgg_config_Run_2017.py
+rm HHWWgg_config_Run.py
 
 
 ########################################
