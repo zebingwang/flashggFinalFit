@@ -46,16 +46,16 @@ void Selections_Run(){
   // vector<string> cats{"HHWWggTag_0","HHWWggTag_2","HHWWggTag_2","HHWWggTag_3"};
   // vector<string> cats{"HHWWggTag_3","HHWWggTag_2"};
   vector<string> cats{"CAT"};
-  vector<string> systematics{""};
-  // vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
-    // "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
-    // "JECRelativeSample2017","JEC","JER","MCScaleGain1EB","MCScaleGain6EB","MCScaleHighR9EB",
-    // "MCScaleHighR9EE","MCScaleLowR9EB","MCScaleLowR9EE","MCSmearHighR9EBPhi","MCSmearHighR9EBRho",
-    // "MCSmearHighR9EEPhi","MCSmearHighR9EERho","MCSmearLowR9EBPhi","MCSmearLowR9EBRho",
-    // "MCSmearLowR9EEPhi","MCSmearLowR9EERho","MaterialCentralBarrel","MaterialForward",
-    // "MaterialOuterBarrel","MvaShift","PUJIDShift","ShowerShapeHighR9EB","ShowerShapeHighR9EE",
-    // "ShowerShapeLowR9EB","ShowerShapeLowR9EE","SigmaEOverEShift",
-    // "metJecUncertainty","metJerUncertainty","metPhoUncertainty","metUncUncertainty"};
+  // vector<string> systematics{""};
+  vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
+    "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
+    "JECRelativeSample2017","JEC","JER","MCScaleGain1EB","MCScaleGain6EB","MCScaleHighR9EB",
+    "MCScaleHighR9EE","MCScaleLowR9EB","MCScaleLowR9EE","MCSmearHighR9EBPhi","MCSmearHighR9EBRho",
+    "MCSmearHighR9EEPhi","MCSmearHighR9EERho","MCSmearLowR9EBPhi","MCSmearLowR9EBRho",
+    "MCSmearLowR9EEPhi","MCSmearLowR9EERho","MaterialCentralBarrel","MaterialForward",
+    "MaterialOuterBarrel","MvaShift","PUJIDShift","ShowerShapeHighR9EB","ShowerShapeHighR9EE",
+    "ShowerShapeLowR9EB","ShowerShapeLowR9EE","SigmaEOverEShift",
+    "metJecUncertainty","metJerUncertainty","metPhoUncertainty","metUncUncertainty"};
   vector<string> shifts{"Up","Down"};
   TString TreeName;
   for (auto i = cats.begin(); i != cats.end(); i++){//cats loop
