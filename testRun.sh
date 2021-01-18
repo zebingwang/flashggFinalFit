@@ -37,11 +37,11 @@ then
   sed -i "s#SELECTIONS#${Selections}#g" DataSelections_Run.C
 
 else
-  echo "Do not apply any selections ,just copy tree file "
+  echo "Do not apply any selections ,just copytree "
   # cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
   # cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
-  sed -i "s#SELECTIONS##g" Selections_Run.C
-  sed -i "s#SELECTIONS##g" DataSelections_Run.C
+  sed -i "s#SELECTIONS##g" Selections_Run.C # No Selection 
+  sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
 root -b -q Selections_Run.C
