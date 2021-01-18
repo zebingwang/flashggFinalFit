@@ -84,6 +84,7 @@ python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs}
 #######################################
 # Run ftest
 ######################################
+cp tools/replacementMap_template.py tools/replacementMap.py
 sed -i "s#PROCS_Replacement#${procs}#g" tools/replacementMap.py ##Set replacements while WV events < 100
 sed -i "s#CAT_Replacement#${cat}#g" tools/replacementMap.py
 echo "Run FTest"
@@ -112,8 +113,6 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run_2017.py --mode signal
 
 
 rm HHWWgg_config_Run_2017.py
-sed -i "s#${procs}#PROCS_Replacement#g" tools/replacementMap.py
-sed -i "s#${cat}#CAT_Replacement#g" tools/replacementMap.py
 
 ########################################
 #           BKG model                  #

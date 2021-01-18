@@ -21,7 +21,7 @@ values = [-5,0,5]
 higgs_mass = 125
 ws_name = 'tagsDumper/cms_hgg_13TeV'
 dataset_name = '%s_125_13TeV_%s'%(opt.procs,opt.cats)
-temp_ws = TFile(inDir+'output_M125_%s.root'%(opt.procs)).Get(ws_name)
+temp_ws = TFile(inDir+'output_M125_%s_%s.root'%(opt.procs,opt.cats)).Get(ws_name)
 for value in values:
     shift = value + higgs_mass
     dataset1 = (temp_ws.data(dataset_name)).Clone('%s_'%opt.procs + str(shift)+'_13TeV_%s'%(opt.cats)) # includes process and category
@@ -31,7 +31,7 @@ for value in values:
     higgs_new = RooFormulaVar( 'CMS_hgg_mass', 'CMS_hgg_mass', "(@0+%.1f)"%value,RooArgList(higgs_old) );
     dataset1.addColumn(higgs_new).setRange(105,145)
     dataset1.Print()
-    output = TFile(outDir + 'Shifted_M'+str(shift)+'_%s_%s.root'%(opt.procs),'RECREATE')
+    output = TFile(outDir + 'Shifted_M'+str(shift)+'_%s_%s.root'%(opt.procs,opt.cats),'RECREATE')
     output.mkdir("tagsDumper")
     output.cd("tagsDumper")
     ws_new = ROOT.RooWorkspace("cms_hgg_13TeV")

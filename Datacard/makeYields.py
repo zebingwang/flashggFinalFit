@@ -108,7 +108,7 @@ for year in years:
     if ( opt.doHHWWgg == 'True' ):
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
     else:
-        _inputWSFile = glob.glob("%s/output*M%s*_%s.root"%(inputWSDirMap[year],opt.mass,proc))[0]
+        _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     
     if ( opt.doHHWWgg == 'True' ):
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)

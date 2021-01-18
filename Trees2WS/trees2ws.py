@@ -249,9 +249,11 @@ for stxsId in data[stxsVar].unique():
     if opt.doSystematics: sdf = df
 
     # Define output workspace file
-    outputWSDir = "/".join(opt.inputTreeFile.split("/")[:-1])+"/ws_%s"%dataToProc(opt.productionMode)
+    outputWSDir = "/".join(opt.inputTreeFile.split("/")[:-1])+"/ws_%s"%opt.productionMode
+    #  outputWSDir = "/".join(opt.inputTreeFile.split("/")[:-1])+"/ws_%s"%dataToProc(opt.productionMode)
     if not os.path.exists(outputWSDir): os.system("mkdir %s"%outputWSDir)
-    outputWSFile = outputWSDir+"/"+re.sub(".root","_%s.root"%dataToProc(opt.productionMode),opt.inputTreeFile.split("/")[-1])
+    #  outputWSFile = outputWSDir+"/"+re.sub(".root","_%s.root"%dataToProc(opt.productionMode),opt.inputTreeFile.split("/")[-1])
+    outputWSFile = outputWSDir+"/"+re.sub(".root","_%s.root"%opt.productionMode,opt.inputTreeFile.split("/")[-1])
     print " --> Creating output workspace: (%s)"%outputWSFile
     
   # Open file and initiate workspace
