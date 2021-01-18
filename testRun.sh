@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-node="cHHH1"
-procs='GluGluToHHTo2G4Q'
+node="cHHH2p45"
+procs='GluGluToHHTo2G2l2nu'
 year='2017'
-cat='HHWWggTag_1'
+cat='HHWWggTag_2'
 doHHWWgg='True'
-TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FH_NLO_2017_hadded/'
+TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded/'
 DataTreeFile='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root'
-doSelections="0"
+doSelections="1"
 Selections='dipho_pt > 54' # Seletions you want to applied.
 eval `scramv1 runtime -sh`
 source ./setup.sh
@@ -137,16 +137,16 @@ rm HHWWgg_cofig_Run.py
 ########################################
 echo "Start generate datacard(no systeamtics)"
 cd ../Datacard
-if [ ! -d "./${procs}_node_${node}" ]; then
-  mkdir ./${procs}_node_${node}
+if [ ! -d "./${procs}_node_${node}/${procs}_node_${node}/" ]; then
+  mkdir -p ./${procs}_node_${node}/${procs}_node_${node}
 fi
 rm Datacard*.txt
 rm -rf yields_test/
 #copy signal  and bkg model
-cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
-cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./${procs}_node_${node}/CMS-HGG_multipdf_${cat}_$year.root 
+cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
+cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_multipdf_${cat}_$year.root 
 
-python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./ --bkgModelWSDir ./
+python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node} --bkgModelWSDir ./${procs}_node_${node}
 python makeDatacard.py --years $year --prune --ext test #--doSystematics
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
 cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
