@@ -2222,7 +2222,7 @@ TH1D* ReweightHist_=(TH1D*)((TH1D*)ReWeightFile->Get(ReweightName));
       newtree->Fill();
       }
   }
-  newtree->Write();
+  newtree->Write("",TObject::kOverwrite);
 //plot validate plot
   TH1D *h2 = new TH1D("h2","Reweight LO node "+input_node +" to NLO node "+target_node,100,0,2000);//reweighted  histgrams
   h2->SetLineColor(3);

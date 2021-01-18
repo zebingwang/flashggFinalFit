@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH2p45"
+node="cHHH1"
 procs='GluGluToHHTo2G4Q'
 year='2017'
 cat='HHWWggTag_1'
@@ -40,14 +40,14 @@ else
   echo "Do not apply any selections ,just copy tree file "
   # cp ${TreePath}${procs}_node_${node}_${year}.root ./${procs}_node_${node}_${year}.root
   # cp ${DataTreeFile} ./Data_13TeV_${cat}_${year}.root
-  sed -i "s#SELECTIONS#1#g" Selections_Run.C
-  sed -i "s#SELECTIONS#1#g" DataSelections_Run.C
+  sed -i "s#SELECTIONS##g" Selections_Run.C
+  sed -i "s#SELECTIONS##g" DataSelections_Run.C
 fi
 
 root -b -q Selections_Run.C
 root -b -q DataSelections_Run.C
-rm Selections_Run.C
-rm DataSelections_Run.C
+# rm Selections_Run.C
+# rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
 mv Data_13TeV_${cat}_${year}.root ../Trees2WS/
 cd ../Trees2WS/
