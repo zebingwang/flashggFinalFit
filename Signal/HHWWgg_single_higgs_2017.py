@@ -5,11 +5,11 @@ _year = '2017'
 signalScriptCfg = {
   
   # Setup
-  'inputWSDir':'/afs/cern.ch/user/c/chuw/Upload/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input/',
-  'procs':'wzh', # if auto: inferred automatically from filenames
-  'doHHWWgg':'False', 
+  'inputWSDir':'INPUTDIR',
+  'procs':'PROCS', # if auto: inferred automatically from filenames
+  'doHHWWgg':'DOHHWWGG', 
   'HHWWggLabel':'single_Higgs', 
-  'cats':'HHWWggTag_2', # if auto: inferred automatically from (0) workspace
+  'cats':'CAT', # if auto: inferred automatically from (0) workspace
   'ext':'HHWWggTest_%s_single_Higgs'%_year,
   'analysis':'STXS', # To specify which replacement dataset mapping (defined in ./python/replacementMap.py)
   'year':'%s'%_year, # Use 'combined' if merging all years: not recommended

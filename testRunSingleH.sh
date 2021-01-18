@@ -62,11 +62,8 @@ python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/ --procs 
 #######################################
 # Run ftest
 ######################################
-cp tools/replacementMap_template.py tools/replacementMap.py
-sed -i "s#PROCS_Replacement#${procs}#g" tools/replacementMap.py ##Set replacements while WV events < 100
-sed -i "s#CAT_Replacement#${cat}#g" tools/replacementMap.py
 echo "Run FTest"
-cp HHWWgg_config_test_2017.py HHWWgg_config_Run_2017.py
+cp HHWWgg_single_higgs_2017.py HHWWgg_config_Run_2017.py
 sed -i "s#NODE#node_${node}#g" HHWWgg_config_Run_2017.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run_2017.py
 sed -i "s#DOHHWWGG#${doHHWWgg}#g" HHWWgg_config_Run_2017.py
@@ -105,7 +102,7 @@ fi
 rm Datacard*.txt
 rm -rf yields_test/
 #copy signal  and bkg model
-cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
+cp ${path}/Signal/outdir_HHWWggTest_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
 
 python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node}/ --bkgModelWSDir ./${procs}_node_${node}/
 python makeDatacard.py --years $year --prune --ext test #--doSystematics
