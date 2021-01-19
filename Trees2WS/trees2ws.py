@@ -215,6 +215,7 @@ for cat in cats:
         sdf['cat'] = cat
         sdata = pandas.concat([sdata,sdf], ignore_index=True, axis=0, sort=False)
      
+print sdata
 # If not splitting by STXS bin then add dummy column to dataframe
 if not opt.doSTXSSplitting:
   data[stxsVar] = 'nosplit'  
@@ -246,7 +247,8 @@ for stxsId in data[stxsVar].unique():
     
   else:
     df = data
-    if opt.doSystematics: sdf = df
+    #  if opt.doSystematics: sdf = df
+    if opt.doSystematics: sdf = sdata
 
     # Define output workspace file
     outputWSDir = "/".join(opt.inputTreeFile.split("/")[:-1])+"/ws_%s"%opt.productionMode
@@ -295,8 +297,7 @@ for stxsId in data[stxsVar].unique():
       for s in systematics:
         for direction in ['Up','Down']:
           # Create mask for systematic variation
-          #  mask = (sdf['type']=='%s%s'%(s,direction))&(sdf['cat']==cat)
-          mask = (sdf['type']=='nominal')&(sdf['cat']==cat)
+          mask = (sdf['type']=='%s%s'%(s,direction))&(sdf['cat']==cat)
           # Convert dataframe to structured array, then to ROOT tree
           sa = sdf[mask].to_records()
           t = array2tree(sa)
