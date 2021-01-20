@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH1"
+node="cHHH2p45"
 procs='GluGluToHHTo2G2l2nu'
 year='2017'
 doHHWWgg="True"
@@ -104,6 +104,8 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonS
 #Run signal Fit
 #######################################
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
+cp outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root outdir_HHWWggTest_${year}_node_${node}/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${cat}.root
+python RunPlotter.py --procs all --years $year --cats $cat --ext HHWWggTest_${year}_node_${node}
 
 
 
@@ -143,10 +145,11 @@ rm -rf yields_test/
 cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
 cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_multipdf_${cat}_$year.root 
 
-python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node} --bkgModelWSDir ./${procs}_node_${node} --doSystematics
-python makeDatacard.py --years $year --prune --ext test --doSystematics
+python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node} --bkgModelWSDir ./${procs}_node_${node} --doSystematics --ext ${procs}_node_${node}
+python makeDatacard.py --years $year --prune --ext ${procs}_node_${node} --doSystematics
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
 cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+
 
 ########################################
 #           combine                    #
