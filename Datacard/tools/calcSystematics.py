@@ -59,6 +59,8 @@ def factoryType(d,s):
 
   #Fix for pdfWeight (as Nweights > 10)
   if('pdfWeight' in s['name']): return "s_w"
+  if('scaleWeight' in s['name']): return "s_w"
+  if('alphaSWeight' in s['name']): return "s_w"
   #if('pdfWeight' in s['name'])|('alphaSWeight' in s['name']): return "s_w"
 
   # Loop over rows in dataframe: until syst is found
@@ -76,7 +78,6 @@ def factoryType(d,s):
     if ws.allVars().selectByName("%s*"%(s['name'])).getSize():
       print "RooDataSet"
       nWeights = ws.allVars().selectByName("%s*"%(s['name'])).getSize()
-      ws.Delete()
       f.Close()
       if nWeights == 2: return "a_w"
       elif nWeights == 1: return "s_w"
@@ -143,6 +144,7 @@ def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTy
   for i in range(0,data_nominal.numEntries()):
     p = data_nominal.get(i)
     w = data_nominal.weight()
+    #  print "Event:",i
     f_COWCorr = p.getRealValue("centralObjectWeight") if "centralObjectWeight" in _nominalDataContents else 1.
     f_NNLOPS = abs(p.getRealValue("NNLOPSweight")) if "NNLOPSweight" in _nominalDataContents else 1.
     # Loop over systematics:
@@ -165,6 +167,10 @@ def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTy
           centralWeightStr = "centralObjectWeight"
           f_central = p.getRealValue(centralWeightStr) if centralWeightStr in _nominalDataContents else 1.
           f_up, f_down = p.getRealValue("%sUp01sigma"%s), p.getRealValue("%sDown01sigma"%s)
+          import numpy as np
+          if ( np.isnan(f_up) or np.isnan(f_down)):
+              f_up, f_down = f_central,f_central
+          #  print "%sUp01sigma"%s,"fUp",f_up,"fdown",f_down
           # Checks:
           # 1) if central weights are zero then skip event
           if f_central == 0: continue
@@ -172,9 +178,12 @@ def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTy
           elif f_up == f_down: w_up, w_down = w, w
           else:
             w_up, w_down = w*(f_up/f_central), w*(f_down/f_central)
+            #  print "w_Up:",w_up, "w_Down:",w_down
           # Add weights to counters
           systYields["%s_up"%s] += w_up        
           systYields["%s_down"%s] += w_down
+          #  print "%s"%s," ",systYields["%s_up"%s]," ",systYields["%s_down"%s]
+          #  print "====="
           if not skipCOWCorr:
             if f_COWCorr != 0:
 	      systYields["%s_up_COWCorr"%s] += w_up*(f_NNLOPS/f_COWCorr)

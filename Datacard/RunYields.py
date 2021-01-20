@@ -19,9 +19,10 @@ def get_options():
   parser.add_option('--mass', dest='mass', default='125', help='Input workspace mass')
   parser.add_option('--HHWWggLabel', dest='HHWWggLabel', default='node_cHHH1', help='HHWWgg Label')
   parser.add_option('--doHHWWgg', dest='doHHWWgg', default='True', help='do HHWWgg')
+  parser.add_option('--klScan', dest='klScan', default='False', help='do HHWWgg kl scan')
   parser.add_option('--mergeYears', dest='mergeYears', default=False, action="store_true", help="Merge category across years")
   parser.add_option('--skipBkg', dest='skipBkg', default=False, action="store_true", help="Only add signal processes to datacard")
-  parser.add_option('--bkgScaler', dest='bkgScaler', default=1., type="float", help="Add overall scale factor for background")
+  parser.add_option('--bkgScaler', dest='bkgScaler', default=1., type="float", help="A kl scandd overall scale factor for background")
   parser.add_option('--sigModelWSDir', dest='sigModelWSDir', default='./Models/signal', help='Input signal model WS directory')
   parser.add_option('--sigModelExt', dest='sigModelExt', default='packaged', help='Extension used when saving signal model')
   parser.add_option('--bkgModelWSDir', dest='bkgModelWSDir', default='./Models/background', help='Input background model WS directory')
@@ -55,6 +56,7 @@ options['ext'] = opt.ext
 options['mass'] = opt.mass
 options['HHWWggLabel'] = opt.HHWWggLabel
 options['doHHWWgg'] = opt.doHHWWgg
+options['klScan'] = opt.klScan
 options['sigModelWSDir'] = opt.sigModelWSDir
 options['sigModelExt'] = opt.sigModelExt
 options['bkgModelWSDir'] = opt.bkgModelWSDir

@@ -31,6 +31,7 @@ def get_options():
   parser.add_option('--mass', dest='mass', default='125', help='Input workspace mass')
   parser.add_option('--HHWWggLabel', dest='HHWWggLabel', default='node_cHHH1_WWgg_lnulnugg', help='HHWWggLabel')
   parser.add_option('--doHHWWgg', dest='doHHWWgg', default='True', help='doHHWWgg')
+  parser.add_option('--klScan', dest='klScan', default='False', help='do kl scan')
   parser.add_option('--mergeYears', dest='mergeYears', default=False, action="store_true", help="Merge category across years")
   parser.add_option('--skipBkg', dest='skipBkg', default=False, action="store_true", help="Only add signal processes to datacard")
   parser.add_option('--bkgScaler', dest='bkgScaler', default=1., type="float", help="Add overall scale factor for background")
@@ -87,15 +88,17 @@ for year in years:
   for proc in procs:
 
     # Identifier
-    if ( opt.doHHWWgg == 'True' ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
         _id = "%s_%s_%s_%s_%s"%(proc,opt.HHWWggLabel,year,opt.cat,sqrts__)
     else:
         _id = "%s_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
 
     # Mapping to STXS definition here
     _procOriginal = proc
-    if ( opt.doHHWWgg == 'True' ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
         _proc = "%s_%s_hwwhgg_%s"%(procToDatacardName(proc),year,opt.HHWWggLabel)
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+        _proc = "%s_%s_hwwhgg"%(procToDatacardName(proc),year)
     else:
         _proc = "%s_%s_%s"%(procToDatacardName(proc),year,decayMode)
     _proc_s0 = procToData(proc.split("_")[0])
@@ -105,13 +108,17 @@ for year in years:
     else: _cat = "%s_%s"%(opt.cat,year)
 
     # Input flashgg ws 
-    if ( opt.doHHWWgg == 'True' ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+        _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     else:
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     
-    if ( opt.doHHWWgg == 'True' ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+        _nominalDataName = "%s_%s_%s"%(_proc_s0,sqrts__,opt.cat)
     else:
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.mass,sqrts__,opt.cat)
 
