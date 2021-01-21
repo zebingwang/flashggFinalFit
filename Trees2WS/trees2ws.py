@@ -215,7 +215,7 @@ for cat in cats:
         sdf['cat'] = cat
         sdata = pandas.concat([sdata,sdf], ignore_index=True, axis=0, sort=False)
      
-print sdata
+#  print sdata
 # If not splitting by STXS bin then add dummy column to dataframe
 if not opt.doSTXSSplitting:
   data[stxsVar] = 'nosplit'  

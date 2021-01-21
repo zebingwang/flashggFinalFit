@@ -37,7 +37,7 @@ void Reweight(){
   TString year = "2017";
   // vector<string> target_nodes{"1","2","3","4","5","6","7","8","9","10","11","12","SM"};
   vector<string> target_nodes{"SM"};
-  TString input_node = "SM";
+  TString input_node = "2";
   TString InputFile = "/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_LO_2017_hadded/" + Process + "_node_" + input_node + "_" + year + ".root";
   TString NLOFile = "/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded/GluGluToHHTo2G2l2nu_node_cHHH1_2017.root";
   TFile *output;
@@ -46,7 +46,7 @@ void Reweight(){
   NLO_Tree->Add(NLOFile);
   TH1D *h_NLO = new TH1D("h_NLO","NLO",100,0,2000);//NLO  histgrams
   NLO_Tree->Project("h_NLO","genMhh", "weight");
-  h_NLO->Scale(1/h_NLO->Integral());
+  // h_NLO->Scale(1/h_NLO->Integral());
 
   for (auto node_index = target_nodes.begin(); node_index != target_nodes.end(); node_index++){//nodes loop
     target_node = (*node_index).c_str();
@@ -2249,12 +2249,12 @@ void Reweight(){
           legend->AddEntry(h_NLO,"NLO_cHHH1 MC samples","l");
           h_NLO->SetLineColor(1);
           target->SetLineColor(2);
-          h2->Scale(1/h2->Integral());
+          // h2->Scale(1/h2->Integral());
           h2->Draw("hist,E");
-          target->Scale(1/target->Integral());
+          // target->Scale(1/target->Integral());
           target->Draw("hist,same");
           h_NLO->Draw("hist,same,E");
-          h_genMhh->Scale(1/h_genMhh->Integral());
+          // h_genMhh->Scale(1/h_genMhh->Integral());
           h_genMhh->Draw("hist,same");
           legend->Draw("same");
           TString PdfName = "output/" + TreeName + "_node_" + input_node + "_To_node_" + target_node + ".pdf";

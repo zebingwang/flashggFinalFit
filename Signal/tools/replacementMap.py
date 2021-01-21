@@ -48,13 +48,17 @@ globalReplacementMap['STXS'] = od()
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
 globalReplacementMap['STXS']['procWV'] = "GG2H_0J_PTH_GT10"
+globalReplacementMap['STXS']['procWV'] = "GG2H_0J_PTH_GT10"
+globalReplacementMap['STXS']['procWV'] = "tth"
 globalReplacementMap['STXS']['catWV'] = "RECO_0J_PTH_GT10_Tag1"
+globalReplacementMap["STXS"]["catWV"] = "HHWWggTag_2"
 # For RIGHT VERTEX SCENARIO:
 #  * default mapping is to use diagonal process from given category 
 #  * if few events in diagonal process then may need to change the category aswell (see catRVMap)
 #  * map must contain entry for all cats being processed (for replacement proc and cat)
 globalReplacementMap['STXS']['procRVMap'] = od()
 globalReplacementMap["STXS"]["procRVMap"]["RECO_0J_PTH_0_10_Tag0"] = "GG2H_0J_PTH_0_10"
+globalReplacementMap["STXS"]["procRVMap"]["HHWWggTag_2"] = "tth"
 globalReplacementMap["STXS"]["procRVMap"]["RECO_0J_PTH_0_10_Tag1"] = "GG2H_0J_PTH_0_10"
 globalReplacementMap["STXS"]["procRVMap"]["RECO_0J_PTH_0_10_Tag2"] = "GG2H_0J_PTH_0_10"
 globalReplacementMap["STXS"]["procRVMap"]["RECO_0J_PTH_GT10_Tag0"] = "GG2H_0J_PTH_GT10"
@@ -138,6 +142,7 @@ globalReplacementMap["STXS"]["procRVMap"]["RECO_ZH_LEP_Tag1"] = "QQ2HLL_PTV_75_1
 # Replacement category for RV fit
 globalReplacementMap["STXS"]["catRVMap"] = od()
 globalReplacementMap["STXS"]["catRVMap"]["RECO_0J_PTH_0_10_Tag0"] = "RECO_0J_PTH_0_10_Tag0"
+globalReplacementMap["STXS"]["catRVMap"]["HHWWggTag_2"] = "HHWWggTag_2"
 globalReplacementMap["STXS"]["catRVMap"]["RECO_0J_PTH_0_10_Tag1"] = "RECO_0J_PTH_0_10_Tag1"
 globalReplacementMap["STXS"]["catRVMap"]["RECO_0J_PTH_0_10_Tag2"] = "RECO_0J_PTH_0_10_Tag2"
 globalReplacementMap["STXS"]["catRVMap"]["RECO_0J_PTH_GT10_Tag0"] = "RECO_0J_PTH_GT10_Tag0"

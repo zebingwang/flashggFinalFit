@@ -186,6 +186,8 @@ if( datasetRVForFit[MHNominal].numEntries() < opt.replacementThreshold  )|( data
   for mp in opt.massPoints.split(","):
     if ( opt.analysis == 'HHWWgg' ):
          WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
+    if ( "single_Higgs" in opt.HHWWggLabel ):
+         WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procReplacementFit,opt.HHWWggLabel,opt.cat))[0]
     else:
          WSFileName = glob.glob("%s/output*M%s*%s.root"%(opt.inputWSDir,mp,procReplacementFit))[0]
     f = ROOT.TFile(WSFileName,"read")
@@ -304,7 +306,7 @@ if not opt.skipBeamspotReweigh:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # If using nGaussian fit then extract nGaussians from fTest json file
 if not opt.useDCB:
-  with open("%s/outdir_%s/fTest/json/nGauss_%s.json"%(swd__,opt.ext,catRVFit)) as jf: ngauss = json.load(jf)
+  with open("%s/outdir_%s/fTest/json/nGauss_%s_%s.json"%(swd__,opt.ext,procRVFit,catRVFit)) as jf: ngauss = json.load(jf)
   nRV = int(ngauss["%s__%s"%(procRVFit,catRVFit)]['nRV'])
   if opt.skipVertexScenarioSplit: print " --> Fitting function: convolution of nGaussians (%g)"%nRV
   else: 

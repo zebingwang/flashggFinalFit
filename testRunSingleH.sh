@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
-Name="ttHJetToGG"
-procs='tth'
+eval `scramv1 runtime -sh`
+source ./setup.sh
+############################################
+SingleHiggs=("tth" "wzh" "vbf")
+# SingleHiggs=("vbf")
+Names=("ttHJetToGG" "VHToGG" "VBFHToGG")
+# Names=("VBFHToGG")
+for (( i = 0 ; i < 3 ; i++ ))
+do
+echo "Start process ${Names[$i]}"
+Name=${Names[$i]}
+procs=${SingleHiggs[$i]}
+echo $Name $procs
 year='2017'
 cat='HHWWggTag_2'
 mass='125'
 doHHWWgg='False'
 TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/'
-doSelections="0"
+doSelections="1"
 Selections='dipho_pt > 54' # Seletions you want to applied.
-eval `scramv1 runtime -sh`
-source ./setup.sh
 ############################################
 #  Tree selectors#
 #
@@ -96,18 +105,18 @@ rm HHWWgg_config_Run.py
 ########################################
 echo "Start generate datacard(no systeamtics)"
 cd ../Datacard
-if [ ! -d "./${procs}_node_${node}/${procs}_node_${node}/" ]; then
-  mkdir -p ./${procs}_node_${node}/${procs}_node_${node}/
+if [ ! -d "./SingleHiggs" ]; then
+  mkdir -p ./SingleHiggs/
 fi
 rm Datacard*.txt
 rm -rf yields_test/
 #copy signal  and bkg model
-cp ${path}/Signal/outdir_HHWWggTest_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
+cp ${path}/Signal/outdir_HHWWggTest_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_single_Higgs_${procs}_${year}_${cat}.root ./SingleHiggs/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
 
-python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node}/ --bkgModelWSDir ./${procs}_node_${node}/
-python makeDatacard.py --years $year --prune --ext test #--doSystematics
-python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
-
-
-
+# python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node}/ --bkgModelWSDir ./${procs}_node_${node}/
+# python makeDatacard.py --years $year --prune --ext test #--doSystematics
+# python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
+# cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+#
+cd ${path}
+done

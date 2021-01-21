@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH2p45"
+node="cHHH1"
 procs='GluGluToHHTo2G2l2nu'
 year='2017'
 doHHWWgg="True"
@@ -8,6 +8,8 @@ TreePath='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/20
 DataTreeFile='/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root'
 doSelections="1"
 Selections='dipho_pt > 54' # Seletions you want to applied.
+doSingleHiggs="0"
+SingleHiggsProcs="tth,wzh,vbf"
 eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
@@ -46,8 +48,8 @@ fi
 
 root -b -q Selections_Run.C
 root -b -q DataSelections_Run.C
-# rm Selections_Run.C
-# rm DataSelections_Run.C
+rm Selections_Run.C
+rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
 mv Data_13TeV_${cat}_${year}.root ../Trees2WS/
 cd ../Trees2WS/
@@ -65,7 +67,7 @@ fi
 
 
 # Signal tree to data ws
-python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics 
+python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 
 # data tree to data ws
 python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
@@ -126,7 +128,7 @@ cmsenv
 # make clean
 make
 
-# python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
+python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
 
 rm HHWWgg_cofig_Run.py
 
@@ -134,7 +136,7 @@ rm HHWWgg_cofig_Run.py
 #           DATACARD                   #
 #                                      #
 ########################################
-echo "Start generate datacard(no systeamtics)"
+echo "Start generate datacard"
 cd ../Datacard
 if [ ! -d "./${procs}_node_${node}/${procs}_node_${node}/" ]; then
   mkdir -p ./${procs}_node_${node}/${procs}_node_${node}
@@ -142,20 +144,34 @@ fi
 rm Datacard*.txt
 rm -rf yields_test/
 #copy signal  and bkg model
-cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${cat}_${year}.root 
-cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_multipdf_${cat}_$year.root 
 
-python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node} --bkgModelWSDir ./${procs}_node_${node} --doSystematics --ext ${procs}_node_${node}
-python makeDatacard.py --years $year --prune --ext ${procs}_node_${node} --doSystematics
-python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+if [ $doSelections -eq "0" ]; then
+  if [ ! -d "./${procs}_node_${node}/${procs}_node_${node}/" ]; then
+    mkdir -p ./${procs}_node_${node}/${procs}_node_${node}
+  fi
+  cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
+  cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./${procs}_node_${node}/${procs}_node_${node}/CMS-HGG_multipdf_${cat}_$year.root 
+  python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./${procs}_node_${node} --bkgModelWSDir ./${procs}_node_${node} --doSystematics --ext ${procs}_node_${node}
+  python makeDatacard.py --years $year --prune --ext ${procs}_node_${node} --doSystematics
+  python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
+  cp Datacard_cleaned.txt ./${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+  cd ./${procs}_node_${node}/
+  combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 
+else
+  cp -rf SingleHiggs SingleHiggs_${procs}_node_${node}
+  if [ ! -d "./SingleHiggs_${procs}_node_${node}/Models/" ]; then
+    mkdir -p ./SingleHiggs_${procs}_node_${node}/Models/
+  fi
+  python RunYields.py --cats HHWWggTag_2 --inputWSDirMap 2017=/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input --procs GluGluToHHTo2G2l2nu,${SingleHiggsProcs} --doSystematics --doHHWWgg True --HHWWggLabel node_cHHH1 --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models
+  python makeDatacard.py --years $year --prune  --doSystematics --ext SingleHiggs
+  python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
+  cp SingleHiggs/*${cat}*.root SingleHiggs_${procs}_node_${node}/Models/
+  cp ${path}/Background/outdir_HHWWggTest_$year/CMS-HGG_multipdf_${cat}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_multipdf_${cat}_$year.root 
+  cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+  cd ./SingleHiggs_${procs}_node_${node}
+  combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
+fi
 
-########################################
-#           combine                    #
-#                                      #
-########################################
-cd ./${procs}_node_${node}/
-
-combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 

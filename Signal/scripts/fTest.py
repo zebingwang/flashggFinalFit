@@ -167,7 +167,10 @@ for pidx, proc in enumerate(procsToFTest):
 
 # Make output
 if not os.path.isdir("%s/outdir_%s/fTest/json"%(swd__,opt.ext)): os.system("mkdir %s/outdir_%s/fTest/json"%(swd__,opt.ext))
-ff = open("%s/outdir_%s/fTest/json/nGauss_%s.json"%(swd__,opt.ext,opt.cat),"w")
+if( opt.analysis == 'HHWWgg' or "single" in opt.HHWWggLabel ):
+    ff = open("%s/outdir_%s/fTest/json/nGauss_%s_%s.json"%(swd__,opt.ext,opt.procs,opt.cat),"w")
+else:
+    ff = open("%s/outdir_%s/fTest/json/nGauss_%s.json"%(swd__,opt.ext,opt.cat),"w")
 ff.write("{\n")
 # Iterate over rows in dataframe: sorted by sumEntries
 pitr = 1

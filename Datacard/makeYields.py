@@ -88,36 +88,41 @@ for year in years:
   for proc in procs:
 
     # Identifier
-    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _id = "%s_%s_%s_%s_%s"%(proc,opt.HHWWggLabel,year,opt.cat,sqrts__)
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" not in proc ):
+        _id = "%s_single_Higgs_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
     else:
         _id = "%s_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
 
     # Mapping to STXS definition here
     _procOriginal = proc
-    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _proc = "%s_%s_hwwhgg_%s"%(procToDatacardName(proc),year,opt.HHWWggLabel)
-    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" and "HH" in proc ):
         _proc = "%s_%s_hwwhgg"%(procToDatacardName(proc),year)
     else:
         _proc = "%s_%s_%s"%(procToDatacardName(proc),year,decayMode)
-    _proc_s0 = procToData(proc.split("_")[0])
+    #  _proc_s0 = procToData(proc.split("_")[0])
+    _proc_s0 = procToData(proc.split(",")[0])
 
     # Define category: add year tag if not merging
     if opt.mergeYears: _cat = opt.cat
     else: _cat = "%s_%s"%(opt.cat,year)
 
     # Input flashgg ws 
-    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
-    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" and "HH" in proc ):
+        print "%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat)
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     else:
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     
-    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" ):
+    if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.HHWWggLabel,sqrts__,opt.cat)
-    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" ):
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" and "HH" in proc ):
+        print "_nominalDataName:","%s_%s_%s"%(_proc_s0,sqrts__,opt.cat)
         _nominalDataName = "%s_%s_%s"%(_proc_s0,sqrts__,opt.cat)
     else:
         _nominalDataName = "%s_%s_%s_%s"%(_proc_s0,opt.mass,sqrts__,opt.cat)
@@ -136,7 +141,7 @@ for year in years:
     # Input model ws 
     if opt.cat == "NOTAG": _modelWSFile, _model = '-', '-'
     else:
-      _modelWSFile = "%s/CMS-HGG_sigfit_%s_%s.root"%(opt.sigModelWSDir,opt.sigModelExt,_cat)
+      _modelWSFile = "%s/CMS-HGG_sigfit_%s_%s_%s.root"%(opt.sigModelWSDir,opt.sigModelExt,_proc_s0,_cat)
       _model = "%s_%s:%s_%s"%(outputWSName__,sqrts__,outputWSObjectTitle__,_id)
 
     # Extract rate from lumi
@@ -152,7 +157,7 @@ if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
   _proc_data = "data_obs"
   if opt.mergeYears:
     _cat = opt.cat
-    if( opt.doHHWWgg == 'True' ):
+    if( opt.doHHWWgg == 'True' and "HH" in proc ):
         _modelWSFile = "%s/CMS-HGG_%s_%s.root"%(opt.bkgModelWSDir,opt.bkgModelExt,_cat)
         _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape"%(bkgWSName__,_cat,sqrts__)
         _model_data = "%s:roohist_data_mass_%s"%(bkgWSName__,_cat)
@@ -241,8 +246,8 @@ for ir,r in data[data['type']=='sig'].iterrows():
 
   # Open input WS file and extract workspace
   f_in = ROOT.TFile(r.inputWSFile)
-  print r.inputWSFile
-  print r.nominalDataName
+  print "Input WS:",r.inputWSFile
+  print "Input nominal:",r.nominalDataName
   inputWS = f_in.Get(inputWSName__)
   # Extract nominal RooDataSet and yield
   rdata_nominal = inputWS.data(r.nominalDataName)

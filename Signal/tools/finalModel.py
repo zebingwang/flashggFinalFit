@@ -151,7 +151,7 @@ class FinalModel:
         mp = 'ggH'
         xs = self.XSBR[mp]
     elif ("VBF" in self.proc or "vbf" in self.proc ) :
-        mp = 'vbfH'
+        mp = 'qqH'
         xs = self.XSBR[mp]
     else:
         fp = self.xsbrMap[self.proc]['factor'] if 'factor' in self.xsbrMap[self.proc] else 1.
