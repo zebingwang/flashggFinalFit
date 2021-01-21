@@ -161,18 +161,16 @@ rm -rf yields_*/
   cp ${path}/Signal/outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
   cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
   
-  # python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics --ext ${procs}_node_${node}
-  # python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 --doSystematics
-  # python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-  # cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt
+  python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics --ext ${procs}_node_${node}
+  python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 --doSystematics
+  python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt
 #
   cd ./SingleHiggs_${procs}_node_${node}
   echo "Combine results without singleH:"
   combine HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
-  echo "will not combine results, you need to edit ${path}/Datacard/SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt"
-  echo "set singleHiggs process number > 1"
   echo "Combine results singleH:"
-  sed -i "23c process  0 2 3 4 1" ./HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+  sed -i "23c process  0 2 3 4 5 1" ./HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
   combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 
 
