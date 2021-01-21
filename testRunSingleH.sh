@@ -2,11 +2,11 @@
 eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
-SingleHiggs=("tth" "wzh" "vbf")
+SingleHiggs=("tth" "wzh" "vbf" "ggh")
 # SingleHiggs=("vbf")
-Names=("ttHJetToGG" "VHToGG" "VBFHToGG")
+Names=("ttHJetToGG" "VHToGG" "VBFHToGG" "GluGluHToGG")
 # Names=("VBFHToGG")
-for (( i = 0 ; i < 3 ; i++ ))
+for (( i = 0 ; i < 4 ; i++ ))
 do
 echo "Start process ${Names[$i]}"
 Name=${Names[$i]}

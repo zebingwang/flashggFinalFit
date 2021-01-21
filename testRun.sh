@@ -44,8 +44,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-# root -b -q Selections_Run.C
-# root -b -q DataSelections_Run.C
+root -b -q Selections_Run.C
+root -b -q DataSelections_Run.C
 rm Selections_Run.C
 rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -64,11 +64,11 @@ if [ ! -d "../Background/Input/${procs}_${cat}_${year}" ]; then
 fi
 
 
-# Signal tree to data ws
-# python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
+# Signal tree to signal ws
+python trees2ws.py --inputConfig HHWWgg_config.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 
 # data tree to data ws
-# python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
+python trees2ws_data.py --inputConfig HHWWgg_config.py --inputTreeFile ./Data_13TeV_${cat}_${year}.root
 mv ws_${procs}/${procs}_node_${node}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_node_${node}_${cat}.root
 mv ws/Data_13TeV_${cat}_${year}.root ../Background/Input/${procs}_${cat}_${year}/allData.root
 rm ${procs}_node_${node}_${year}.root
@@ -78,7 +78,7 @@ rm Data_13TeV_${cat}_${year}.root
 #shift dataset
 #########################################
 cd ../Signal/
-# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
+python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 
 
 #######################################
@@ -91,21 +91,21 @@ sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
 sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run.py
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 
 #######################################
 # Run photon sys
 ######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
 
 
 #######################################
 #Run signal Fit
 #######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
 cp outdir_HHWWggTest_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${procs}_${year}_${cat}.root outdir_HHWWggTest_${year}_node_${node}/CMS-HGG_sigfit_HHWWggTest_${year}_node_${node}_${cat}.root
-# python RunPlotter.py --procs all --years $year --cats $cat --ext HHWWggTest_${year}_node_${node}
+python RunPlotter.py --procs all --years $year --cats $cat --ext HHWWggTest_${year}_node_${node}
 
 
 
@@ -126,7 +126,7 @@ cmsenv
 # make clean
 make
 
-# python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
+python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
 
 rm HHWWgg_cofig_Run.py
 
@@ -151,7 +151,7 @@ rm -rf yields_*/
   #
   #   Add singleHiggs procs to RunYields.py 
   ###################
-  python RunYields.py --cats ${cat} --inputWSDirMap 2017=${path}/Signal/Input --procs ${procs},tth,vbf,wzh --doSystematics --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models
+  python RunYields.py --cats ${cat} --inputWSDirMap 2017=${path}/Signal/Input --procs ${procs},tth,vbf,wzh,ggh --doSystematics --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models
   ####################
   echo "python RunYields.py --cats HHWWggTag_2 --inputWSDirMap 2017=/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/Signal/Input --procs tth,GluGluToHHTo2G2l2nu,vbf,wzh --doSystematics --doHHWWgg True --HHWWggLabel node_cHHH1 --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models"
   python makeDatacard.py --years 2017 --prune True --ext SingleHiggs  --doSystematics --pruneThreshold 0.00001
