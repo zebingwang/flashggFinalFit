@@ -264,9 +264,9 @@ if not opt.skipVertexScenarioSplit:
       else:
          d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procReplacementFit.split("_")[0]),mp,sqrts__,catReplacementFit)),aset)
       if ( opt.analysis == 'HHWWgg' ):
-         datasetWVForFit[mp] = splitRVWV(d,aset,mode="RV")
+         datasetWVForFit[mp] = splitRVWV(d,aset,mode="WV")
       else:
-         datasetWVForFit[mp] = splitRVWV(d,aset,mode="RV")
+         datasetWVForFit[mp] = splitRVWV(d,aset,mode="WV")
       inputWS.Delete()
       f.Close()
     # Check if replacement dataset has too few entries: if so throw error

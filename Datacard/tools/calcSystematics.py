@@ -199,9 +199,9 @@ def calcSystYields(_nominalDataName,_nominalDataContents,_inputWS,_systFactoryTy
               systYields["%s_COWCorr"%s] += w*(f_NNLOPS/f_COWCorr)
 
         else:
-          if "scaleWeight" in s: centralWeightStr = "scaleWeight_0"
-          elif "alphaSWeight" in s: centralWeightStr = "scaleWeight_0" 
-          elif "pdfWeight" in s: centralWeightStr = "pdfWeight_0"
+          if "scaleWeight" in s: centralWeightStr = "scaleWeights[0]"
+          elif "alphaSWeight" in s: centralWeightStr = "scaleWeights[0]" 
+          elif "pdfWeight" in s: centralWeightStr = "pdfWeights[0]"
           else: centralWeightStr = "centralObjectWeight"
 	  f_central = p.getRealValue(centralWeightStr) if centralWeightStr in _nominalDataContents else 1.
 	  f = p.getRealValue(s)

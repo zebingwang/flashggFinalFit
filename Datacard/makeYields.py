@@ -90,7 +90,7 @@ for year in years:
     # Identifier
     if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _id = "%s_%s_%s_%s_%s"%(proc,opt.HHWWggLabel,year,opt.cat,sqrts__)
-    elif ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" not in proc ):
+    elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" and "HH" not in proc ):
         _id = "%s_single_Higgs_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
     else:
         _id = "%s_%s_%s_%s"%(proc,year,opt.cat,sqrts__)
