@@ -146,8 +146,8 @@ fi
 rm Datacard*.txt
 rm -rf yields_*/
 #copy signal  and bkg model
-
-  cp -rf SingleHiggs_${ext}_${year} SingleHiggs_${procs}_node_${node}_${year}
+ rm -rf SingleHiggs_${procs}_node_${node}_${year}
+  cp -rf SingleHiggs_${ext}_${year}/ SingleHiggs_${procs}_node_${node}_${year}/
   if [ ! -d "./SingleHiggs_${procs}_node_${node}_${year}/Models/" ]; then
     mkdir -p ./SingleHiggs_${procs}_node_${node}_${year}/Models/
   fi
