@@ -145,9 +145,9 @@ rm Datacard*.txt
 rm -rf yields_*/
 #copy signal  and bkg model
 
-  cp -rf SingleHiggs_${ext} SingleHiggs_${procs}_node_${node}
-  if [ ! -d "./SingleHiggs_${procs}_node_${node}/Models/" ]; then
-    mkdir -p ./SingleHiggs_${procs}_node_${node}/Models/
+  cp -rf SingleHiggs_${ext} SingleHiggs_${procs}_node_${node}_${year}
+  if [ ! -d "./SingleHiggs_${procs}_node_${node}_${year}/Models/" ]; then
+    mkdir -p ./SingleHiggs_${procs}_node_${node}_${year}/Models/
   fi
   ####################
   #
@@ -157,17 +157,17 @@ rm -rf yields_*/
   ####################
   python makeDatacard.py --years 2017 --prune True --ext SingleHiggs  --doSystematics --pruneThreshold 0.00001
   python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-  mv ./SingleHiggs_${procs}_node_${node}/*${cat}*.root SingleHiggs_${procs}_node_${node}/Models/
-  cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${cat}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_multipdf_${cat}_$year.root 
-  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
-  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+  mv ./SingleHiggs_${procs}_node_${node}_${year}/*${cat}*.root SingleHiggs_${procs}_node_${node}_${year}/Models/
+  cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${cat}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_multipdf_${cat}_$year.root 
+  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}_${year}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
   
   python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics --ext ${procs}_node_${node}
   python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 --doSystematics
   python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt
 #
-  cd ./SingleHiggs_${procs}_node_${node}
+  cd ./SingleHiggs_${procs}_node_${node}_${year}
   echo "Combine results without singleH:"
   combine HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
   echo "Combine results singleH:"

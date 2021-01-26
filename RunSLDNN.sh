@@ -5,7 +5,7 @@ year='2017'
 doHHWWgg="True"
 ext='SL'
 cat='HHWWggTag_0,HHWWggTag_1,HHWWggTag_2,HHWWggTag_3'
-catNames=("HHWWggTag_0" "HHWWggTag_1" "HHWWggTag_2 "HHWWggTag_3") #change variable ${cat} to shell array format 
+catNames=("HHWWggTag_0" "HHWWggTag_1" "HHWWggTag_2" "HHWWggTag_3") #change variable ${cat} to shell array format 
 path=`pwd`
 SignalFile='/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/January_2021_SLDNN/Signal/GluGluToHHTo2G2Qlnu_node_cHHH1_2017.root'
 DataFile='/afs/cern.ch/user/c/chuw/chuw/HHWWgg/FinalFit/CMSSW_10_2_13/src/flashggFinalFit/January_2021_SLDNN/Data/allData.root'
@@ -15,6 +15,7 @@ Replace='HHWWggTag_0'
 eval `scramv1 runtime -sh`
 source ./setup.sh
 sed -i "s#REPLACEMET_CATWV#${cat}#g" ./Signal/tools/replacementMap.py
+sed -i "s#dest='skipSystematics', default=True,#dest='skipSystematics', default=False,#g" ./Signal/scripts/signalFit.py
 #########################################
 #Copy signal and bkg file as a new name
 #########################################
@@ -68,6 +69,7 @@ python RunPlotter.py --procs all --years $year --cats $cat --ext ${ext}_${year}_
 
 
 sed -i "s#${Replace}#REPLACEMET_CATWV#g" ./tools/replacementMap.py
+sed -i "s#dest='skipSystematics', default=False,#dest='skipSystematics', default=True,#g" ./scripts/signalFit.py
 
 
 
@@ -103,27 +105,23 @@ fi
 rm Datacard*.txt
 rm -rf yields_*/
 
-# cp -rf SingleHiggs SingleHiggs_${procs}_node_${node}
-mkdir SingleHiggs_${procs}_node_${node}
-if [ ! -d "./SingleHiggs_${procs}_node_${node}/Models/" ]; then
-mkdir -p ./SingleHiggs_${procs}_node_${node}/Models/
+# cp -rf SingleHiggs SingleHiggs_${procs}_node_${node}_${year}
+mkdir SingleHiggs_${procs}_node_${node}_${year}
+if [ ! -d "./SingleHiggs_${procs}_node_${node}_${year}/Models/" ]; then
+mkdir -p ./SingleHiggs_${procs}_node_${node}_${year}/Models/
 fi
 
 #copy signal  and bkg model
 for catName in ${catNames[@]}
   do
-  cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${catName}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_multipdf_${catName}_$year.root
-  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root ./SingleHiggs_${procs}_node_${node}/Models/CMS-HGG_sigfit_packaged_${procs}_${catName}_${year}.root
+  cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_multipdf_${catName}_$year.root
+  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${catName}_${year}.root
 done
-  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${ext}_${year}.txt
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}.txt
   python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models  --ext ${procs}_node_${node}
   python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 
   python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}/HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt
+  cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt
   
-  cd ./SingleHiggs_${procs}_node_${node}
-  echo "Combine results without singleH:"
+  cd ./SingleHiggs_${procs}_node_${node}_${year}
   combine HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
-
-
-
