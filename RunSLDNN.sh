@@ -64,8 +64,11 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonS
 #Run signal Fit
 #######################################
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
-cp outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${cat}.root outdir_${ext}_${year}_node_${node}/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${cat}.root
-python RunPlotter.py --procs all --years $year --cats $cat --ext ${ext}_${year}_node_${node}
+for catName in ${catNames[@]}
+do
+cp outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root outdir_${ext}_${year}_node_${node}/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${catName}.root
+python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${year}_node_${node}
+done
 
 
 sed -i "s#${Replace}#REPLACEMET_CATWV#g" ./tools/replacementMap.py
