@@ -161,7 +161,7 @@ rm -rf yields_*/
   python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
   mv ./SingleHiggs_${procs}_node_${node}_${year}/*${cat}*.root SingleHiggs_${procs}_node_${node}_${year}/Models/
   cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${cat}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_multipdf_${cat}_$year.root 
-  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}_${year}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
+  cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${cat}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
   cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
   
   python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg ${doHHWWgg} --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics --ext ${procs}_node_${node}
