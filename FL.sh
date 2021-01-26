@@ -173,7 +173,7 @@ rm -rf yields_*/
   echo "Combine results without singleH:"
   combine HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
   echo "Combine results singleH:"
-  sed -i "23c process  0 2 3 4 5 1" ./HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+  sed -i "23c process  0 2 3 4 1" ./HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
   combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 
 
