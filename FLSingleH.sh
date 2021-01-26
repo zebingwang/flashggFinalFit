@@ -106,12 +106,12 @@ rm HHWWgg_config_Run.py
 ########################################
 echo "Start generate datacard(no systeamtics)"
 cd ../Datacard
-if [ ! -d "./SingleHiggs" ]; then
-  mkdir -p ./SingleHiggs/
+if [ ! -d "./SingleHiggs_${ext}_${year}" ]; then
+  mkdir -p ./SingleHiggs_${ext}_${year}/
 fi
 rm Datacard*.txt
 rm -rf yields_test/
 #copy signal modl
-cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${cat}.root ./SingleHiggs_${ext}/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
+cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${cat}.root ./SingleHiggs_${ext}_${year}/CMS-HGG_sigfit_packaged_${procs}_${cat}_${year}.root 
 cd ${path}
 done

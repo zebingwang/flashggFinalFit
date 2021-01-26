@@ -15,7 +15,7 @@ Replace='HHWWggTag_0'
 eval `scramv1 runtime -sh`
 source ./setup.sh
 sed -i "s#REPLACEMET_CATWV#${cat}#g" ./Signal/tools/replacementMap.py
-sed -i "s#dest='skipSystematics', default=True,#dest='skipSystematics', default=False,#g" ./Signal/scripts/signalFit.py
+sed -i "s#dest='skipSystematics', default=False,#dest='skipSystematics', default=True,#g" ./Signal/scripts/signalFit.py
 #########################################
 #Copy signal and bkg file as a new name
 #########################################
@@ -69,7 +69,7 @@ python RunPlotter.py --procs all --years $year --cats $cat --ext ${ext}_${year}_
 
 
 sed -i "s#${Replace}#REPLACEMET_CATWV#g" ./tools/replacementMap.py
-sed -i "s#dest='skipSystematics', default=False,#dest='skipSystematics', default=True,#g" ./scripts/signalFit.py
+sed -i "s#dest='skipSystematics', default=True,#dest='skipSystematics', default=False,#g" ./scripts/signalFit.py
 
 
 
@@ -105,7 +105,7 @@ fi
 rm Datacard*.txt
 rm -rf yields_*/
 
-# cp -rf SingleHiggs SingleHiggs_${procs}_node_${node}_${year}
+# cp -rf SingleHiggs_${ext}_${year} SingleHiggs_${procs}_node_${node}_${year}
 mkdir SingleHiggs_${procs}_node_${node}_${year}
 if [ ! -d "./SingleHiggs_${procs}_node_${node}_${year}/Models/" ]; then
 mkdir -p ./SingleHiggs_${procs}_node_${node}_${year}/Models/
