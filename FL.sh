@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-node="cHHH1"
+node="cHHH5"
 ext='FL'
 procs='GluGluToHHTo2G2l2nu'
 year='2017'
@@ -83,7 +83,7 @@ rm Data_13TeV_${year}.root
 #shift dataset
 #########################################
 cd ../Signal/
-# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
+python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 
 #######################################
 # Run ftest
