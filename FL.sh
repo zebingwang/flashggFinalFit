@@ -14,10 +14,6 @@ Selections='dipho_pt > 54' # Seletions you want to applied.
 eval `scramv1 runtime -sh`
 source ./setup.sh
 
-############################################
-# Run single higgs
-############################################
-source ./FLSingleH.sh
 
 ############################################
 #  Tree selectors#
