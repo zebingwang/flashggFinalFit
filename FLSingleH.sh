@@ -3,9 +3,9 @@ eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" )
-SingleHiggs=("vbf" )
+# SingleHiggs=("vbf" )
 Names=("ttHJetToGG" "VHToGG" "VBFHToGG")
-Names=("VBFHToGG")
+# Names=("VBFHToGG")
 for (( i = 0 ; i < 3 ; i++ ))
 do
   Name=${Names[$i]}
