@@ -35,6 +35,7 @@
 void Selections_Run(){
   TString Process = "PROCS";
   TString year = "YEAR";
+  TString NewCatName = "NEW_Cat_NAME";
   TString input_node = "NODE";
   TString InputFile = "INPUTPATH" + Process + "_node_" + input_node + "_" + year + ".root";
   TFile *output;
@@ -43,10 +44,7 @@ void Selections_Run(){
   output = new TFile(outputFile, "RECREATE");
   output->mkdir("tagsDumper/trees");
   TTree* fChain;
-  // vector<string> cats{"HHWWggTag_0","HHWWggTag_2","HHWWggTag_2","HHWWggTag_3"};
-  // vector<string> cats{"HHWWggTag_3","HHWWggTag_2"};
-  vector<string> cats{"CAT"};
-  // vector<string> systematics{""};
+  vector<string> cats{CAT};
   vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
     "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
     "JECRelativeSample2017","JEC","JER","MCScaleGain1EB","MCScaleGain6EB","MCScaleHighR9EB",
@@ -58,9 +56,11 @@ void Selections_Run(){
     "metJecUncertainty","metJerUncertainty","metPhoUncertainty","metUncUncertainty"};
   vector<string> shifts{"Up","Down"};
   TString TreeName;
+  TString newTreeName;
   for (auto i = cats.begin(); i != cats.end(); i++){//cats loop
     TString cat=(*i).c_str();
     TString catName="tagsDumper/trees/" + Process + "_node_" + input_node + "_13TeV_" + cat;
+    TString newCatName=Process + "_node_" + input_node + "_13TeV_" + NewCatName;
     for (auto j = systematics.begin(); j != systematics.end(); j++){//sys loop`
 
       TString sys=(*j).c_str();
@@ -69,10 +69,12 @@ void Selections_Run(){
         if ( sys == "" )
         {
           TreeName=catName;
+          newTreeName=newCatName;
         }
         else
         { 
           TreeName=catName + "_" + sys + shift + "01sigma";
+          newTreeName=newCatName + "_" + sys + shift + "01sigma";
         }
         cout<<TreeName<<endl;
         MC_file.GetObject(TreeName,fChain);
@@ -85,6 +87,7 @@ void Selections_Run(){
             // newtree->Fill();
           // }
         // }
+        newtree->SetName(newTreeName);
         newtree->Write("",TObject::kOverwrite);
         if( sys == ""){
           break;

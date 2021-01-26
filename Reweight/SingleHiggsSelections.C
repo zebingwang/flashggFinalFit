@@ -36,17 +36,17 @@ void SingleHiggsSelections_Run(){
 TString Name = "NAME";
 TString year = "YEAR";
 TString Procs = "PROCS";
-TString cat = "CAT";
+TString NewCatName = "NEW_Cat_NAME";
 TString InputFile = "INPUTPATH" + Name + ".root";
 TFile *output;
-TString outputFile = "./" + Name  + "_" + cat + "_" + year +".root";
+TString outputFile = "./" + Name  + "_" +NewCatName +"_"+ year +".root";
 TFile MC_file(InputFile);
 output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
 TTree* fChain;
 // vector<string> cats{"HHWWggTag_0","HHWWggTag_1","HHWWggTag_2","HHWWggTag_3"};
 // vector<string> cats{"HHWWggTag_3","HHWWggTag_2"};
-vector<string> cats{"CAT"};
+vector<string> cats{CAT};
 // vector<string> systematics{""};
 vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
 "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
@@ -62,6 +62,8 @@ TString TreeName;
 for (auto i = cats.begin(); i != cats.end(); i++){//cats loop
 TString cat=(*i).c_str();
 TString catName="tagsDumper/trees/"+ Procs + "_125_13TeV_" + cat;
+TString newCatName=Procs + "_125_13TeV_" + NewCatName;
+TString newTreeName;
 for (auto j = systematics.begin(); j != systematics.end(); j++){//sys loop`
 
 TString sys=(*j).c_str();
@@ -70,10 +72,12 @@ TString shift=(*k).c_str();
 if ( sys == "" )
 {
   TreeName=catName;
+  newTreeName=newCatName;
 }
 else
 { 
   TreeName=catName + "_" + sys + shift + "01sigma";
+  newTreeName=newCatName + "_" + sys + shift + "01sigma";
 }
 cout<<TreeName<<endl;
 MC_file.GetObject(TreeName,fChain);
@@ -82,6 +86,7 @@ MC_file.GetObject(TreeName,fChain);
    int Nevents=newtree->GetEntries();
    int nevents=fChain->GetEntries();
    cout<<"Original number of events:"<<nevents<<" selected number of events:"<<Nevents<<endl;
+   newtree->SetName(newTreeName);
   newtree->Write("",TObject::kOverwrite);
   if( sys == ""){
   break;

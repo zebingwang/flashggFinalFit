@@ -3,7 +3,7 @@
 backgroundScriptCfg = {
   
   # Setup
-    'inputWSDir':'./Input/PROCS_CAT_YEAR', # location of 'allData.root' file
+  'inputWSDir':'./Input/PROCS_YEAR', # location of 'allData.root' file
   'cats':'CAT', # auto: automatically inferred from input ws
   'catOffset':0, # add offset to category numbers (useful for categories from different allData.root files)  
   'ext':'HHWWggTest_YEAR', # extension to add to output directory

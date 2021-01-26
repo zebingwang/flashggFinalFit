@@ -35,18 +35,23 @@
 void DataSelections_Run(){
 TString InputFile = "INPUTFILE";
 TFile *output;
-TString outputFile = "Data_13TeV_CAT_YEAR.root";
+TString outputFile = "Data_13TeV_YEAR.root";
 TFile MC_file(InputFile);
 output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
+output->cd("tagsDumper/trees");
+vector<string> cats{CAT};
+for (auto i = cats.begin(); i != cats.end(); i++){
+TString cat=(*i).c_str();
 TTree* fChain;
 TString TreeName;
-TString catName="tagsDumper/trees/Data_13TeV_CAT";
+TString catName="tagsDumper/trees/Data_13TeV_" + cat;
+TString NewCatName = "NEW_Cat_NAME";
+TString newTreeName="Data_13TeV_" + NewCatName;
 TreeName=catName;
 cout<<TreeName<<endl;
 MC_file.GetObject(TreeName,fChain);
-   output->cd("tagsDumper/trees");
-   TTree *newtree = fChain->CopyTree("SELECTIONS");
+TTree *newtree = fChain->CopyTree("SELECTIONS");
    // int nevents=fChain->GetEntries();
   // for (int i = 0; i< nevents; i=i+1){
       // fChain->GetEntry(i);
@@ -54,7 +59,8 @@ MC_file.GetObject(TreeName,fChain);
       // newtree->Fill();
       // }
   // }
-  newtree->Write("",TObject::kOverwrite);
+newtree->SetName(newTreeName);
+newtree->Write("",TObject::kOverwrite);
+}
 output->Close();
 }
-
