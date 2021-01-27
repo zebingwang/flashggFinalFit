@@ -113,10 +113,10 @@ for year in years:
     else: _cat = "%s_%s"%(opt.cat,year)
 
     # Input flashgg ws 
+    print opt.doHHWWgg,opt.klScan,"HH" in proc
     if ( opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc ):
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.HHWWggLabel,opt.cat))[0]
     elif ( opt.doHHWWgg == 'True' and opt.klScan == "True" and "HH" in proc ):
-        print "%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat)
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
     else:
         _inputWSFile = glob.glob("%s/output*M%s*_%s_%s.root"%(inputWSDirMap[year],opt.mass,proc,opt.cat))[0]
