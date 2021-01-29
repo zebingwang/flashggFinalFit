@@ -41,12 +41,14 @@ output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
 output->cd("tagsDumper/trees");
 vector<string> cats{CAT};
-for (auto i = cats.begin(); i != cats.end(); i++){
-TString cat=(*i).c_str();
+vector<string>NewCatNames = {NEW_Cat_NAME};
+for (int i = 0; i < cats.size(); i++){
+
+TString cat=cats[i];
 TTree* fChain;
 TString TreeName;
 TString catName="tagsDumper/trees/Data_13TeV_" + cat;
-TString NewCatName = "NEW_Cat_NAME";
+TString NewCatName = NewCatNames[i];
 TString newTreeName="Data_13TeV_" + NewCatName;
 TreeName=catName;
 cout<<TreeName<<endl;

@@ -35,9 +35,9 @@
 void Selections_Run(){
   TString Process = "PROCS";
   TString year = "YEAR";
-  TString NewCatName = "NEW_Cat_NAME";
+  // TString NewCatName = "NEW_Cat_NAME";
   TString input_node = "NODE";
-  TString InputFile = "INPUTPATH" + Process + "_node_" + input_node + "_" + year + ".root";
+  TString InputFile = "INPUTFILE";
   TFile *output;
   TString outputFile = "./" + Process + "_node_" + input_node  + "_" + year + ".root";
   TFile MC_file(InputFile);
@@ -45,6 +45,7 @@ void Selections_Run(){
   output->mkdir("tagsDumper/trees");
   TTree* fChain;
   vector<string> cats{CAT};
+  vector<string>NewCatName = {NEW_Cat_NAME};
   vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
     "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
     "JECRelativeSample2017","JEC","JER","MCScaleGain1EB","MCScaleGain6EB","MCScaleHighR9EB",
@@ -57,10 +58,12 @@ void Selections_Run(){
   vector<string> shifts{"Up","Down"};
   TString TreeName;
   TString newTreeName;
-  for (auto i = cats.begin(); i != cats.end(); i++){//cats loop
-    TString cat=(*i).c_str();
+  // for (auto i = cats.begin(); i != cats.end(); i++){//cats loop
+  for (int i = 0; i < cats.size(); i++){//cats loop
+    // TString cat=(*i).c_str();
+    TString cat=cats[i];
     TString catName="tagsDumper/trees/" + Process + "_node_" + input_node + "_13TeV_" + cat;
-    TString newCatName=Process + "_node_" + input_node + "_13TeV_" + NewCatName;
+    TString newCatName=Process + "_node_" + input_node + "_13TeV_" + NewCatName[i];
     for (auto j = systematics.begin(); j != systematics.end(); j++){//sys loop`
 
       TString sys=(*j).c_str();
@@ -76,7 +79,7 @@ void Selections_Run(){
           TreeName=catName + "_" + sys + shift + "01sigma";
           newTreeName=newCatName + "_" + sys + shift + "01sigma";
         }
-        cout<<TreeName<<endl;
+        cout<<"old name:"<<TreeName<<" ,new name:"<<newTreeName<<endl;
         MC_file.GetObject(TreeName,fChain);
         output->cd("tagsDumper/trees");
         TTree *newtree = fChain->CopyTree("SELECTIONS");
@@ -89,13 +92,14 @@ void Selections_Run(){
         // }
         newtree->SetName(newTreeName);
         newtree->Write("",TObject::kOverwrite);
+        cout<<"write over"<<endl;
         if( sys == ""){
           break;
         }
       }// up and down shift 
-      if( cat == "HHWWggTag_3"){
-        break;
-      }
+      // if( cat == "HHWWggTag_3"){
+        // break;
+      // }
     }//sys loop
   }//cats loop
   output->Close();
