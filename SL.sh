@@ -71,8 +71,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-# root -b -q  Selections_Run.C
-# root -b -q DataSelections_Run.C
+root -b -q  Selections_Run.C
+root -b -q DataSelections_Run.C
 rm Selections_Run.C
 rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
