@@ -117,7 +117,7 @@ rm Data_13TeV_${year}.root
 #shift dataset
 #########################################
 cd ../Signal/
-python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
+# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 cp ./tools/replacementMapHHWWgg.py ./tools/replacementMap.py
 sed -i "s#REPLACEMET_CATWV#${Replace}#g" ./tools/replacementMap.py
 
@@ -187,29 +187,27 @@ fi
 #
 #   Add singleHiggs procs to RunYields.py 
 ###################
-python RunYields.py --cats ${cat} --inputWSDirMap ${year}=${path}/Signal/Input --procs ${procs},${singleHiggs} --doSystematics --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models
-####################
-python makeDatacard.py --years ${year} --prune True --ext SingleHiggs  --doSystematics --pruneThreshold 0.00001
+python RunYields.py --cats ${cat} --inputWSDirMap ${year}=${path}/Signal/Input --procs ${procs},${singleHiggs} --doSystematics False --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models
+python makeDatacard.py --years ${year} --prune True --ext SingleHiggs  --doSystematics --pruneThreshold 0.000001
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-mv ./SingleHiggs_${procs}_node_${node}_${year}/*${cat}*.root SingleHiggs_${procs}_node_${node}_${year}/Models/
+mv ./SingleHiggs_${procs}_node_${node}_${year}/*.root SingleHiggs_${procs}_node_${node}_${year}/Models/
 for catName in ${catNames[@]}
 do
-cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_multipdf_${catName}_$year.root 
-cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${catName}_${year}.root 
+cp ${path}/Background/outdir_${ext}_$year/CMS-HGG_multipdf_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_multipdf_${catName}_$year.root
+cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root ./SingleHiggs_${procs}_node_${node}_${year}/Models/CMS-HGG_sigfit_packaged_${procs}_${catName}_${year}.root
 done
-cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
+cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}.txt
 
 python RunYields.py --cats $cat --inputWSDirMap $year=../Signal/Input/ --procs ${procs} --doHHWWgg True --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics --ext ${procs}_node_${node}
 python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 --doSystematics
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
-cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt
-#
+cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt
+
 cd ./SingleHiggs_${procs}_node_${node}_${year}
 echo "Combine results without singleH:"
-combine HHWWgg_${procs}_node_${node}_${cat}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
+combine HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 echo "Combine results singleH:"
-sed -i "24c process  0 2 3 4 5  1" ./HHWWgg_${procs}_node_${node}_${cat}_${year}.txt
-combine HHWWgg_${procs}_node_${node}_${cat}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
+combine HHWWgg_${procs}_node_${node}_${ext}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
 cd $path
 done
 done
