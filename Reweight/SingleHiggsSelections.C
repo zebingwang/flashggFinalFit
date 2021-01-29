@@ -42,6 +42,7 @@ TString outputFile = "./" + Name +"_"+ year +".root";
 TFile MC_file(InputFile);
 output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
+output->cd("tagsDumper/trees");
 TTree* fChain;
 // vector<string> cats{"HHWWggTag_0","HHWWggTag_1","HHWWggTag_2","HHWWggTag_3"};
 // vector<string> cats{"HHWWggTag_3","HHWWggTag_2"};
@@ -86,7 +87,6 @@ else
 }
 cout<<TreeName<<endl;
 MC_file.GetObject(TreeName,fChain);
-   output->cd("tagsDumper/trees");
    TTree *newtree = fChain->CopyTree("SELECTIONS");
    int Nevents=newtree->GetEntries();
    int nevents=fChain->GetEntries();

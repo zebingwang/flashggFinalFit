@@ -17,7 +17,7 @@ do
     InputTreeCats='HHWWggTag_SL_0,HHWWggTag_SL_1,HHWWggTag_SL_2,HHWWggTag_SL_3' #input cat name in the tree
     catNames=(${cat//,/ })
     mass='125'
-    TreePath="/afs/cern.ch/work/a/atishelm/public/ForChu/January_2021_SLDNN/SingleH_withSystematics/"
+    TreePath="/eos/user/c/chuw/HHWWgg_ntuple/January_2021_SLDNN/SingleH_withSystematics/"
     doSelections="0"
     Selections='dipho_pt > 54' # Seletions you want to applied.
     Replace="HHWWggTag_SLDNN_0"
