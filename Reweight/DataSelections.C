@@ -31,7 +31,7 @@
 #include "TKey.h"
 #include "RooCategory.h"
 
-
+int splitStringToVect(const string & srcStr, vector<string> & destVect, const string & strFlag);
 void DataSelections_Run(){
 TString InputFile = "INPUTFILE";
 TFile *output;
@@ -40,8 +40,12 @@ TFile MC_file(InputFile);
 output = new TFile(outputFile, "RECREATE");
 output->mkdir("tagsDumper/trees");
 output->cd("tagsDumper/trees");
-vector<string> cats{CAT};
-vector<string>NewCatNames = {NEW_Cat_NAME};
+vector<string> cats;
+string cats_string="CAT";
+splitStringToVect(cats_string, cats, ",");
+vector<string>NewCatNames;
+string NewCatString="NEW_Cat_NAME";
+splitStringToVect(NewCatString, NewCatNames, ",");
 for (int i = 0; i < cats.size(); i++){
 
 TString cat=cats[i];
@@ -65,4 +69,26 @@ newtree->SetName(newTreeName);
 newtree->Write("",TObject::kOverwrite);
 }
 output->Close();
+}
+
+int splitStringToVect(const string & srcStr, vector<string> & destVect, const string & strFlag)
+{
+    int pos = srcStr.find(strFlag, 0);
+    int startPos = 0;
+    int splitN = pos;
+    string lineText(strFlag);
+
+    while (pos > -1)
+    {
+        lineText = srcStr.substr(startPos, splitN);
+        startPos = pos + 1;
+        pos = srcStr.find(strFlag, pos + 1);
+        splitN = pos - startPos;
+        destVect.push_back(lineText);
+    }
+
+    lineText = srcStr.substr(startPos, srcStr.length() - startPos);
+    destVect.push_back(lineText);
+
+    return destVect.size();
 }

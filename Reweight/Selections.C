@@ -30,7 +30,7 @@
 #include "TArrow.h"
 #include "TKey.h"
 #include "RooCategory.h"
-
+int splitStringToVect(const string & srcStr, vector<string> & destVect, const string & strFlag);
 
 void Selections_Run(){
   TString Process = "PROCS";
@@ -44,8 +44,12 @@ void Selections_Run(){
   output = new TFile(outputFile, "RECREATE");
   output->mkdir("tagsDumper/trees");
   TTree* fChain;
-  vector<string> cats{CAT};
-  vector<string>NewCatName = {NEW_Cat_NAME};
+  string cats_string="CAT";
+  vector<string> cats;
+  splitStringToVect(cats_string, cats, ",");
+  vector<string>NewCatName; 
+  string NewCatString="NEW_Cat_NAME";
+  splitStringToVect(NewCatString, NewCatName, ",");
   vector<string> systematics{"","FNUFEB","FNUFEE","JECAbsolute2017","JECAbsolute","JECBBEC12017",
     "JECBBEC1","JECEC22017","JECEC2","JECFlavorQCD","JECHF2017","JECHF","JECRelativeBal",
     "JECRelativeSample2017","JEC","JER","MCScaleGain1EB","MCScaleGain6EB","MCScaleHighR9EB",
@@ -104,4 +108,24 @@ void Selections_Run(){
   }//cats loop
   output->Close();
 }
+int splitStringToVect(const string & srcStr, vector<string> & destVect, const string & strFlag)
+{
+    int pos = srcStr.find(strFlag, 0);
+    int startPos = 0;
+    int splitN = pos;
+    string lineText(strFlag);
 
+    while (pos > -1)
+    {
+        lineText = srcStr.substr(startPos, splitN);
+        startPos = pos + 1;
+        pos = srcStr.find(strFlag, pos + 1);
+        splitN = pos - startPos;
+        destVect.push_back(lineText);
+    }
+
+    lineText = srcStr.substr(startPos, srcStr.length() - startPos);
+    destVect.push_back(lineText); 
+
+    return destVect.size();
+}
