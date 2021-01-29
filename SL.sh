@@ -16,15 +16,13 @@ do
     
     cat='HHWWggTag_SLDNN_0,HHWWggTag_SLDNN_1,HHWWggTag_SLDNN_2,HHWWggTag_SLDNN_3' #Final cat name 
     
-    catNames=(${cat//,/ })
-    # catNames=("HHWWggTag_SLDNN_0" "HHWWggTag_SLDNN_1" "HHWWggTag_SLDNN_2" "HHWWggTag_SLDNN_3") #shell format array, should same as "cat",just a different format
-   
-    SignalTreeFile="/afs/cern.ch/work/a/atishelm/public/ForChu/January_2021_SLDNN/Signal_withSystematics/signal_2017_CategorizedTrees.root"
+    SignalTreeFile="/eos/user/c/chuw/HHWWgg_ntuple/January_2021_SLDNN/Signal_withSystematics/signal_2017_CategorizedTrees.root"
     DataTreeFile="/afs/cern.ch/work/a/atishelm/public/ForChu/January_2021_SLDNN/Data/Data_2017.root"
 
     Replace='HHWWggTag_SLDNN_0'
     doSelections="0"
     Selections='dipho_pt > 54' # Seletions you want to applied.
+    catNames=(${cat//,/ })
     eval `scramv1 runtime -sh`
     source ./setup.sh
 
@@ -73,9 +71,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-root -l  Selections_Run.C
-root -b -q DataSelections_Run.C
-exit
+# root -b -q  Selections_Run.C
+# root -b -q DataSelections_Run.C
 rm Selections_Run.C
 rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -99,6 +96,7 @@ else
 fi
 sed -i "s#2017#${year}#g" HHWWgg_config_run.py
 sed -i "s#auto#${cat}#g" HHWWgg_config_run.py
+rm -rf ws*
 python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 # data tree to data ws
 python trees2ws_data.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./Data_13TeV_${year}.root
@@ -121,6 +119,8 @@ rm Data_13TeV_${year}.root
 cd ../Signal/
 python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 cp ./tools/replacementMapHHWWgg.py ./tools/replacementMap.py
+sed -i "s#REPLACEMET_CATWV#${Replace}#g" ./tools/replacementMap.py
+
 #######################################
 # Run ftest
 ######################################

@@ -76,6 +76,7 @@ fi
 sed -i "s#2017#${year}#g" HHWWgg_config_run.py
 sed -i "s#auto#${cat}#g" HHWWgg_config_run.py
 echo "python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${cat}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics"
+rm -rf ws*
 python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics
 rm HHWWgg_config_run.py
 for catName in ${catNames[@]}
