@@ -4,6 +4,7 @@ source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" "ggh")
 Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
+# Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
 years=("2017")
 for year in ${years[@]}
 do
@@ -11,7 +12,6 @@ do
   do
     Name=${Names[$i]}
     procs=${SingleHiggs[$i]}
-    # year='2017'
     ext='SL'
     cat='HHWWggTag_SLDNN_0,HHWWggTag_SLDNN_1,HHWWggTag_SLDNN_2,HHWWggTag_SLDNN_3' #output cat name, it will be used in subsequence step
     InputTreeCats='HHWWggTag_SL_0,HHWWggTag_SL_1,HHWWggTag_SL_2,HHWWggTag_SL_3' #input cat name in the tree
@@ -62,13 +62,13 @@ do
 # start tree to workspace
 ########################################
 
-if [ ! -d "../Signal/Input/" ]; then
-  mkdir ../Signal/Input/
+if [ ! -d "../Signal/Input/${year}/" ]; then
+  mkdir ../Signal/Input/${year}
 fi
 # Signal tree to data ws
-if [ $year -ne "2017" ]
+if [ $year -eq "2018" ]
 then
-echo "not 2017"
+echo " 2018, remove prefire"
 cp HHWWgg_config_noprefire.py HHWWgg_config_run.py
 else
 cp HHWWgg_config.py HHWWgg_config_run.py
@@ -81,14 +81,14 @@ python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_
 rm HHWWgg_config_run.py
 for catName in ${catNames[@]}
 do
-cp ws_${procs}/${Name}_${year}_${procs}.root ../Signal/Input/output_M125_${procs}_${catName}.root
+cp ws_${procs}/${Name}_${year}_${procs}.root ../Signal/Input/${year}/output_M125_${procs}_${catName}.root
 done
 rm ${Name}_${year}.root
 #########################################
 #shift dataset
 #########################################
 cd ../Signal/
-python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/ --procs ${procs} --cats ${cat}
+python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/${year}/ --procs ${procs} --cats ${cat}
 
 #######################################
 # Run ftest
@@ -100,7 +100,7 @@ sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#HHWWggTest#${ext}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
-sed -i "s#INPUTDIR#${path}/Signal/Input/#g" HHWWgg_config_Run.py
+sed -i "s#INPUTDIR#${path}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 #######################################
