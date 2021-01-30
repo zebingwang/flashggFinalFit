@@ -52,7 +52,7 @@ do
     fi
   if [ $year -eq "2018" ]
   then
-  sed -i "s#metUncUncertainty"#metUncUncertainty","JetHEM"#g" Selections_Run.C
+    sed -i "s#metUncUncertainty\"#metUncUncertainty\",\"JetHEM\"#g" SingleHiggsSelections_Run.C
   fi
     root -b -q SingleHiggsSelections_Run.C
     mv ${Name}_${year}.root  ../Trees2WS/

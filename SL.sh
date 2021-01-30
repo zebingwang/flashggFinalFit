@@ -49,7 +49,7 @@ fi
 
 if [ $year -eq "2018" ]
 then
-  sed -i "s#metUncUncertainty"#metUncUncertainty","JetHEM"#g" Selections_Run.C
+  sed -i "s#metUncUncertainty\"#metUncUncertainty\",\"JetHEM\"#g" Selections_Run.C
 fi
 ##########Data selection #####
   sed -i "s#CAT#${InputDataTreeCats}#g" DataSelections_Run.C
