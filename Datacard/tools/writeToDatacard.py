@@ -40,6 +40,10 @@ def writeProcesses(f,d,options):
     lbin_cat += "%-55s "%cat
     lobs_cat += "%-55s "%"-1"
     sigID = 0
+    tthID = 2
+    wzhID = 3
+    vbfID = 4
+    gghID = 5
     # Loop over rows for respective category
     for ir,r in d[d['cat']==cat].iterrows():
       if r['proc'] == "data_obs": continue
@@ -57,6 +61,10 @@ def writeProcesses(f,d,options):
       else:
         lprocid += "%-55s "%sigID
         sigID -= 1
+        tthID += 4
+        gghID += 4
+        wzhID += 4
+        vbfID += 4
       if r['rate'] == 1.0: lrate += "%-55.1f "%r['rate']
       else: lrate += "%-55.7f "%r['rate']
   #Remove final space from lines and add to file
