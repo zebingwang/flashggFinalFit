@@ -345,7 +345,7 @@ def plotInterpolation(_finalModel,_outdir='./',_massPoints='120,121,122,123,124,
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Plot splines
-def plotSplines(_finalModel,_outdir="./",_nominalMass='125',splinesToPlot=['xs','br','ea','fracRV']):
+def plotSplines(_finalModel,_outdir="./",_nominalMass='125',splinesToPlot=['xs','br','ea']):
   canv = ROOT.TCanvas()
   colorMap = {'xs':ROOT.kRed-4,'br':ROOT.kAzure+1,'ea':ROOT.kGreen+1,'fracRV':ROOT.kMagenta-7,'norm':ROOT.kBlack}
   grs = od()
@@ -421,7 +421,7 @@ def plotSplines(_finalModel,_outdir="./",_nominalMass='125',splinesToPlot=['xs',
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Function for plotting final signal model: neat
-def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
+def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   colorMap = {'2016':38,'2017':30,'2018':46}
   canv = ROOT.TCanvas("c","c",650,600)
   canv.SetBottomMargin(0.12)
@@ -430,15 +430,31 @@ def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
   canv.SetTicky()
   h_axes = _hists['data'].Clone()
   h_axes.Reset()
+  orginal_Data=_hists['data'].Integral()
+  orginal_pdf=_hists['pdf'].Integral()
+  Scale=orginal_Data
+  print orginal_Data
+  if ( "SL" in Label):
+    Scale=31.049*0.441*0.000970198
+  elif ( "FL" in Label):
+    Scale=31.049*0.01071*0.000970198
+  elif ( "FH" in Label):
+    Scale=31.049*0.5483*0.000970198
+  else:
+    Scale=orginal_Data
+  _hists['data'].Scale(Scale/_hists['data'].Integral())
+  _hists['pdf'].Scale(Scale*(orginal_pdf/orginal_Data)/_hists['pdf'].Integral())
   h_axes.SetMaximum(_hists['data'].GetMaximum()*1.2)
   h_axes.SetMinimum(0.)
   h_axes.GetXaxis().SetRangeUser(105,140)
   h_axes.SetTitle("")
   h_axes.GetXaxis().SetTitle("%s (%s)"%(_opt.xvar.split(":")[1],_opt.xvar.split(":")[2]))
-  h_axes.GetXaxis().SetTitleSize(0.05)
+  h_axes.GetXaxis().SetTitleSize(0.03)
   h_axes.GetXaxis().SetTitleOffset(1.)
-  h_axes.GetYaxis().SetTitleSize(0.05)
-  h_axes.GetYaxis().SetTitleOffset(1.2)
+  h_axes.GetYaxis().SetTitleSize(0.03)
+  h_axes.GetXaxis().SetLabelSize(0.025)
+  h_axes.GetYaxis().SetLabelSize(0.025)
+  h_axes.GetYaxis().SetTitleOffset(2.)
   h_axes.Draw()
     
   # Extract effSigma
@@ -485,6 +501,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
   h_effSigma.SetLineColor(15)
   h_effSigma.SetFillStyle(1001)
   h_effSigma.SetFillColor(19)
+
   h_effSigma.Draw("Same Hist F")
   vline_effSigma_low = ROOT.TLine(effSigma_low,0,effSigma_low,_hists['pdf'].GetBinContent(_hists['pdf'].FindBin(effSigma_low)))
   vline_effSigma_high = ROOT.TLine(effSigma_high,0,effSigma_high,_hists['pdf'].GetBinContent(_hists['pdf'].FindBin(effSigma_high)))
@@ -496,6 +513,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
   vline_effSigma_high.Draw("Same")
 
   # Extract FWHM and set style
+  print "Pdf Max:",_hists['pdf'].GetMaximum()
   if _opt.doFWHM:
     fwhm_low = _hists['pdf'].GetBinCenter(_hists['pdf'].FindFirstBinAbove(0.5*_hists['pdf'].GetMaximum()))
     fwhm_high = _hists['pdf'].GetBinCenter(_hists['pdf'].FindLastBinAbove(0.5*_hists['pdf'].GetMaximum()))
@@ -512,18 +530,21 @@ def plotSignalModel(_hists,_opt,_outdir=".",offset=0.02):
   # Set style pdf
   _hists['pdf'].SetLineColor(4)
   _hists['pdf'].SetLineWidth(2)
+  print _hists['pdf'].Integral()
   _hists['pdf'].Draw("Same Hist C")
   if len(_opt.years.split(","))>1:
     for year in _opt.years.split(","):
       _hists['pdf_%s'%year].SetLineColor( colorMap[year] )  
       _hists['pdf_%s'%year].SetLineStyle(2)
       _hists['pdf_%s'%year].SetLineWidth(2)
+      _hists['pdf_%s'%year].Scale(Scale*(_hists['pdf_%s'%year].Integral()/orginal_Data)/_hists['pdf_%s'%year].Integral())
       _hists['pdf_%s'%year].Draw("Same Hist C")
   # Set style: data
   _hists['data'].SetMarkerStyle(25)
   _hists['data'].SetMarkerColor(1)
   _hists['data'].SetLineColor(1)
   _hists['data'].SetLineWidth(2)
+  print _hists['data'].Integral()
   _hists['data'].Draw("Same PE")
   
   # Add TLatex to plot

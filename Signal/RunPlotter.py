@@ -18,6 +18,7 @@ def get_options():
   parser.add_option('--ext', dest='ext', default='test', help="Extension: defines output dir where signal models are saved")
   parser.add_option("--xvar", dest="xvar", default='CMS_hgg_mass:m_{#gamma#gamma}:GeV', help="x-var (name:title:units)")
   parser.add_option("--mass", dest="mass", default='125', help="Mass of datasets")
+  parser.add_option("--HHWWggLabel", dest="HHWWggLabel", default='cHHH1', help="nodes")
   parser.add_option("--MH", dest="MH", default='125', help="Higgs mass (for pdf)")
   parser.add_option("--nBins", dest="nBins", default=160, type='int', help="Number of bins")
   parser.add_option("--pdf_nBins", dest="pdf_nBins", default=3200, type='int', help="Number of bins")
@@ -66,7 +67,7 @@ if opt.loadCatWeights != '':
 # Define dict to store data histogram and inclusive + per-year pdf histograms
 hists = od()
 hists['data'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
-
+hists['temp'] = xvar.createHistogram("temp", ROOT.RooFit.Binning(opt.nBins))
 # Loop over files
 for cat,f in inputFiles.iteritems():
   print " --> Processing %s: file = %s"%(cat,f)
@@ -102,6 +103,7 @@ for cat,f in inputFiles.iteritems():
   for k, norm in norms.iteritems():
     proc, year = k.split("__")
     w.var("IntLumi").setVal(lumiScaleFactor*lumiMap[year])
+    print lumiScaleFactor*lumiMap[year]
     catNorm += norm.getVal()
 
   # Iterate over norms and extract data sets + pdfs
@@ -135,14 +137,46 @@ for cat,f in inputFiles.iteritems():
     hpdfs[_id].Scale(wcat*float(opt.nBins)/320) # FIXME: hardcoded 320
 
   # Fill total histograms: data, per-year pdfs and pdfs
-  for _id,d in data_rwgt.iteritems(): d.fillHistogram(hists['data'],alist)
+  for _id,d in data_rwgt.iteritems(): 
+      print "Check:",_id,"  ",d
+      d.fillHistogram(hists['temp'],alist)
+      print "inte befor:",hists['data'].Integral()
+      if("2017" in _id):
+        if ("HHWWggTag_SLDNN_0" in _id):
+            print "tag0"
+            hists['temp'].Scale(1.993)
+        elif ("HHWWggTag_SLDNN_1" in _id):
+            print "tag1"
+            #  hists['data'].Scale(((1.984+tag3)/(tag3+1))*hists['data'].Integral())
+            hists['temp'].Scale(1.984)
+        elif ( "HHWWggTag_SLDNN_2" in _id ):
+            print "tag2"
+            #  hists['data'].Scale(2.007*hists['data'].Integral())
+            hists['temp'].Scale(2.007)
+        else: 
+            print "tag3"
+            #  hists['data'].Scale(1.979*hists['data'].Integral())
+            hists['temp'].Scale(1.979)
+      hists['data'].Add(hists['temp'],hists['data'])
+      hists['temp'].Reset()
+      print "inte:",hists['data'].Integral()
 
   # Sum pdf histograms
   for _id,p in hpdfs.iteritems():
+    print "PDF:",_id,"  ",p
     if 'pdf' not in hists: 
       hists['pdf'] = p.Clone("h_pdf")
       hists['pdf'].Reset()
     # Fill
+    if "2017" in _id:
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.993)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.984)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.007)
+        else:
+            p.Scale(1.979)
     hists['pdf'] += p
 
   # Per-year pdf histograms
@@ -163,4 +197,4 @@ for cat,f in inputFiles.iteritems():
 
 # Make plot
 if not os.path.isdir("%s/outdir_%s/Plots"%(swd__,opt.ext)): os.system("mkdir %s/outdir_%s/Plots"%(swd__,opt.ext))
-plotSignalModel(hists,opt,_outdir="%s/outdir_%s/Plots"%(swd__,opt.ext))
+plotSignalModel(hists,opt,_outdir="%s/outdir_%s/Plots"%(swd__,opt.ext),Label=opt.HHWWggLabel)
