@@ -67,6 +67,7 @@ if opt.loadCatWeights != '':
 # Define dict to store data histogram and inclusive + per-year pdf histograms
 hists = od()
 hists['data'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
+print opt.nBins
 hists['temp'] = xvar.createHistogram("temp", ROOT.RooFit.Binning(opt.nBins))
 # Loop over files
 for cat,f in inputFiles.iteritems():
@@ -141,7 +142,7 @@ for cat,f in inputFiles.iteritems():
       print "Check:",_id,"  ",d
       d.fillHistogram(hists['temp'],alist)
       print "inte befor:",hists['data'].Integral()
-      if("2017" in _id):
+      if("2017" in _id and "SL" in opt.HHWWggLabel):
         if ("HHWWggTag_SLDNN_0" in _id):
             print "tag0"
             hists['temp'].Scale(1.993)
@@ -168,7 +169,7 @@ for cat,f in inputFiles.iteritems():
       hists['pdf'] = p.Clone("h_pdf")
       hists['pdf'].Reset()
     # Fill
-    if "2017" in _id:
+    if ("2017" in _id and "SL" in opt.HHWWggLabel):
         if "HHWWggTag_SLDNN_0" in _id:
             p.Scale(1.993)
         elif "HHWWggTag_SLDNN_1" in _id:

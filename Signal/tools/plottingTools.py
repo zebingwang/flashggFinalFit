@@ -442,8 +442,8 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
     Scale=31.049*0.5483*0.000970198
   else:
     Scale=orginal_Data
-  _hists['data'].Scale(Scale/_hists['data'].Integral())
-  _hists['pdf'].Scale(Scale*(orginal_pdf/orginal_Data)/_hists['pdf'].Integral())
+  _hists['data'].Scale(Scale)
+  _hists['pdf'].Scale(Scale)
   h_axes.SetMaximum(_hists['data'].GetMaximum()*1.2)
   h_axes.SetMinimum(0.)
   h_axes.GetXaxis().SetRangeUser(105,140)
@@ -537,7 +537,8 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
       _hists['pdf_%s'%year].SetLineColor( colorMap[year] )  
       _hists['pdf_%s'%year].SetLineStyle(2)
       _hists['pdf_%s'%year].SetLineWidth(2)
-      _hists['pdf_%s'%year].Scale(Scale*(_hists['pdf_%s'%year].Integral()/orginal_Data)/_hists['pdf_%s'%year].Integral())
+      _hists['pdf_%s'%year].Scale(Scale)
+      print "Pdf year Max:",year,"  ",_hists['pdf_%s'%year].GetMaximum()
       _hists['pdf_%s'%year].Draw("Same Hist C")
   # Set style: data
   _hists['data'].SetMarkerStyle(25)
@@ -553,8 +554,8 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat0.SetTextAlign(11)
   lat0.SetNDC()
   lat0.SetTextSize(0.045)
-  lat0.DrawLatex(0.15,0.92,"#bf{CMS} #it{%s}"%_opt.label)
-  lat0.DrawLatex(0.77,0.92,"%s TeV"%(sqrts__.split("TeV")[0]))
+  lat0.DrawLatex(0.15,0.93,"#bf{CMS} #it{%s}"%_opt.label)
+  lat0.DrawLatex(0.77,0.93,"%s TeV"%(sqrts__.split("TeV")[0]))
   lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma") #WWgg
 
   # Load translations

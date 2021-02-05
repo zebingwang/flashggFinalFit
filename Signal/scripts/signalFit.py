@@ -163,7 +163,6 @@ for mp in opt.massPoints.split(","):
   if ( opt.analysis == 'HHWWgg' ):
      WSFileName = glob.glob("%s/Shifted*M%s*%s_%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.HHWWggLabel,opt.cat))[0]
   else:
-     print "%s/output*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat)
      WSFileName = glob.glob("%s/Shifted*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat))[0]
      #  WSFileName = glob.glob("%s/output*M%s*%s_%s.root"%(opt.inputWSDir,mp,procRVFit,opt.cat))[0]
   f = ROOT.TFile(WSFileName,"read")
