@@ -67,6 +67,10 @@ if opt.loadCatWeights != '':
 # Define dict to store data histogram and inclusive + per-year pdf histograms
 hists = od()
 hists['data'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
+hists['data_2016'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
+hists['0'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
+hists['data_2017'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
+hists['data_2018'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
 print opt.nBins
 hists['temp'] = xvar.createHistogram("temp", ROOT.RooFit.Binning(opt.nBins))
 # Loop over files
@@ -148,19 +152,25 @@ for cat,f in inputFiles.iteritems():
             hists['temp'].Scale(1.993)
         elif ("HHWWggTag_SLDNN_1" in _id):
             print "tag1"
-            #  hists['data'].Scale(((1.984+tag3)/(tag3+1))*hists['data'].Integral())
             hists['temp'].Scale(1.984)
         elif ( "HHWWggTag_SLDNN_2" in _id ):
             print "tag2"
-            #  hists['data'].Scale(2.007*hists['data'].Integral())
             hists['temp'].Scale(2.007)
         else: 
             print "tag3"
-            #  hists['data'].Scale(1.979*hists['data'].Integral())
             hists['temp'].Scale(1.979)
       hists['data'].Add(hists['temp'],hists['data'])
+      if ("2017" in _id ):
+          hists['data_2017'].Add(hists['temp'],hists['data_2017'])
+      elif ("2018" in _id ):
+          hists['data_2018'].Add(hists['temp'],hists['data_2018'])
+      elif("2016" in _id ):
+          hists['data_2016'].Add(hists['temp'],hists['data_2016'])
       hists['temp'].Reset()
       print "inte:",hists['data'].Integral()
+      print "inte16:",hists['data_2016'].Integral()
+      print "inte17:",hists['data_2017'].Integral()
+      print "inte18:",hists['data_2018'].Integral()
 
   # Sum pdf histograms
   for _id,p in hpdfs.iteritems():
@@ -189,7 +199,8 @@ for cat,f in inputFiles.iteritems():
       # Fill
       for _id,p in hpdfs.iteritems():
 	if year in _id: hists['pdf_%s'%year] += p
-   
+  
+  
   # Garbage removal
   for d in data_rwgt.itervalues(): d.Delete()
   for p in hpdfs.itervalues(): p.Delete()

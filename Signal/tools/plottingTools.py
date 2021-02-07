@@ -437,9 +437,11 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   if ( "SL" in Label):
     Scale=31.049*0.441*0.000970198
   elif ( "FL" in Label):
-    Scale=31.049*0.01071*0.000970198
+    Scale=31.049*0.1071*0.000970198
   elif ( "FH" in Label):
-    Scale=31.049*0.5483*0.000970198
+    Scale=31.049*0.4544*0.000970198
+  elif ( "ZZ" in Label):
+    Scale=31.049*0.4888*0.000119992
   else:
     Scale=orginal_Data
   _hists['data'].Scale(Scale)
@@ -539,6 +541,11 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
       _hists['pdf_%s'%year].SetLineWidth(2)
       _hists['pdf_%s'%year].Scale(Scale)
       print "Pdf year Max:",year,"  ",_hists['pdf_%s'%year].GetMaximum()
+      _hists['data_%s'%year].SetLineColor( colorMap[year] )  
+      _hists['data_%s'%year].SetLineStyle(2)
+      _hists['data_%s'%year].SetLineWidth(2)
+      _hists['data_%s'%year].Scale(Scale)
+      print "Data year Inte:",year,"  ",_hists['data_%s'%year].Integral()
       _hists['pdf_%s'%year].Draw("Same Hist C")
   # Set style: data
   _hists['data'].SetMarkerStyle(25)
@@ -556,7 +563,17 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat0.SetTextSize(0.045)
   lat0.DrawLatex(0.15,0.93,"#bf{CMS} #it{%s}"%_opt.label)
   lat0.DrawLatex(0.77,0.93,"%s TeV"%(sqrts__.split("TeV")[0]))
-  lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma") #WWgg
+  if ( "SL" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow2ql#nu#gamma#gamma") #WWgg
+  elif ( "FL" in Label):
+    print "FL in label"
+    lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrowl#nul#nu#gamma#gamma") #WWgg
+  elif ( "FH" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
+  elif ( "ZZ" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowZZ#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
+  else:
+    lat0.DrawLatex(0.16+offset,0.83,"H#rightarrow#gamma#gamma") #WWgg
 
   # Load translations
   translateCats = {} if _opt.translateCats is None else LoadTranslations(_opt.translateCats)
@@ -566,7 +583,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat1.SetTextFont(42)
   lat1.SetTextAlign(33)
   lat1.SetNDC(1)
-  lat1.SetTextSize(0.035)
+  lat1.SetTextSize(0.023)
   if _opt.procs == 'all': procStr, procExt = "", ""
   elif len(_opt.procs.split(","))>1: procStr, procExt = "Multiple processes", "_multipleProcs"
   else: procStr, procExt = Translate(_opt.procs,translateProcs), "_%s"%_opt.procs
@@ -574,12 +591,24 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   if len(_opt.years.split(","))>1: yearStr, yearExt = "", ""
   else: yearStr, yearExt = _opt.years, "_%s"%_opt.years
 
-  if _opt.cats == 'all': catStr, catExt = "All categories", "all"
+  if _opt.cats == 'all' and "SL" in Label: 
+      catStr, catExt = "All categories", "all"
+  elif _opt.cats == 'all' and "FL" in Label:
+      catStr, catExt = "FL category", "all"
+  elif _opt.cats == 'all' and "FH" in Label:
+      catStr, catExt = "FH category", "all"
+  elif _opt.cats == 'all' and "ZZ" in Label:
+      catStr, catExt = "FH category", "all"
   elif _opt.cats == 'wall': catStr, catExt = "#splitline{All Categories}{S/(S+B) weighted}", "wall"
   elif len(_opt.cats.split(","))>1: procStr, procExt = "Multiple categories", "multipleCats"
   else: catStr, catExt = Translate(_opt.cats,translateCats), _opt.cats
  
   lat1.DrawLatex(0.85,0.86,"%s"%catStr)
+  lat1.DrawLatex(0.85,0.83,"Weighted events :")
+  lat1.DrawLatex(0.85,0.80,"Run2 : %.4f"%_hists['data'].Integral())
+  lat1.DrawLatex(0.85,0.77,"2016 : %.4f"%_hists['data_2016'].Integral())
+  lat1.DrawLatex(0.85,0.74,"2017 : %.4f"%_hists['data_2017'].Integral())
+  lat1.DrawLatex(0.85,0.71,"2018 : %.4f"%_hists['data_2018'].Integral())
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
 
   canv.Update()
