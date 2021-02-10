@@ -442,8 +442,16 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
     Scale=31.049*0.4544*0.000970198
   elif ( "ZZ" in Label):
     Scale=31.049*0.4888*0.000119992
+  #  elif ( "tth" in Label):
+    #  Scale=31.049*0.4888*0.000119992
+  #  elif ( "vbf" in Label):
+    #  Scale=31.049*0.4888*0.000119992
+  #  elif ( "ggh" in Label):
+    #  Scale=31.049*0.4888*0.000119992
+  #  elif ( "wzh" in Label):
+    #  Scale=31.049*0.4888*0.000119992
   else:
-    Scale=orginal_Data
+    Scale=1
   _hists['data'].Scale(Scale)
   _hists['pdf'].Scale(Scale)
   h_axes.SetMaximum(_hists['data'].GetMaximum()*1.2)
@@ -572,6 +580,14 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
   elif ( "ZZ" in Label):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowZZ#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
+  elif ( "tth" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"ttHJetToGG") #WWgg
+  elif ( "wzh" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"VHToGG") #WWgg
+  elif ( "ggh" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"GluGluHToGG") #WWgg
+  elif ( "vbf" in Label):
+    lat0.DrawLatex(0.16+offset,0.83,"VBFHToGG") #WWgg
   else:
     lat0.DrawLatex(0.16+offset,0.83,"H#rightarrow#gamma#gamma") #WWgg
 
