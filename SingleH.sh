@@ -3,8 +3,8 @@ eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" "ggh")
-Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
-# Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
+# Names=("SingleHiggs_ttHJetToGG_2016_all_CategorizedTrees" "SingleHiggs_VHToGG_2016_all_CategorizedTrees" "SingleHiggs_VBFHToGG_2016_all_CategorizedTrees" "SingleHiggs_GluGluHToGG_2016_all_CategorizedTrees")
+Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
 years=("2017")
 for year in ${years[@]}
 do
@@ -17,7 +17,7 @@ do
     InputTreeCats='HHWWggTag_SL_0,HHWWggTag_SL_1,HHWWggTag_SL_2,HHWWggTag_SL_3' #input cat name in the tree
     catNames=(${cat//,/ })
     mass='125'
-    TreePath="/eos/user/c/chuw/HHWWgg_ntuple/January_2021_SLDNN/SingleH_withSystematics/"
+    TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/Signal_SL_DNN_Categorized/"
     doSelections="0"
     Selections='dipho_pt > 54' # Seletions you want to applied.
     Replace="HHWWggTag_SLDNN_0"
@@ -113,9 +113,13 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonS
 #Run signal Fit
 #######################################
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
-
-
-
+for catName in ${catNames[@]}
+do
+  echo "Start plot"
+  mkdir outdir_${ext}_${procs}_${year}_single_Higgs/
+cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${catName}.root outdir_${ext}_${procs}_${year}_single_Higgs/CMS-HGG_sigfit_${ext}_${procs}_${year}_single_Higgs_${catName}.root
+python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${procs}_${year}_single_Higgs --HHWWggLabel $ext
+done
 
 rm HHWWgg_config_Run.py
 

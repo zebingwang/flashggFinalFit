@@ -583,7 +583,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat1.SetTextFont(42)
   lat1.SetTextAlign(33)
   lat1.SetNDC(1)
-  lat1.SetTextSize(0.023)
+  lat1.SetTextSize(0.03)
   if _opt.procs == 'all': procStr, procExt = "", ""
   elif len(_opt.procs.split(","))>1: procStr, procExt = "Multiple processes", "_multipleProcs"
   else: procStr, procExt = Translate(_opt.procs,translateProcs), "_%s"%_opt.procs
@@ -604,11 +604,11 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   else: catStr, catExt = Translate(_opt.cats,translateCats), _opt.cats
  
   lat1.DrawLatex(0.85,0.86,"%s"%catStr)
-  lat1.DrawLatex(0.85,0.83,"Weighted events :")
-  lat1.DrawLatex(0.85,0.80,"Run2 : %.4f"%_hists['data'].Integral())
-  lat1.DrawLatex(0.85,0.77,"2016 : %.4f"%_hists['data_2016'].Integral())
-  lat1.DrawLatex(0.85,0.74,"2017 : %.4f"%_hists['data_2017'].Integral())
-  lat1.DrawLatex(0.85,0.71,"2018 : %.4f"%_hists['data_2018'].Integral())
+  lat1.DrawLatex(0.85,0.725,"Weighted events :")
+  lat1.DrawLatex(0.85,0.69,"Run2 : %.4f"%_hists['data'].Integral())
+  lat1.DrawLatex(0.85,0.655,"2016 : %.4f"%_hists['data_2016'].Integral())
+  lat1.DrawLatex(0.85,0.620,"2017 : %.4f"%_hists['data_2017'].Integral())
+  lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral())
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
 
   canv.Update()

@@ -26,7 +26,8 @@ def rooiter(x):
 
 # Extract all files to be merged
 fNames = {}
-for ext in opt.exts.split(","): fNames[ext] = glob.glob("outdir_%s/signalFit/output/CMS-HGG_sigfit_%s_*_%s.root"%(ext,ext,opt.cat))
+#  for ext in opt.exts.split(","): fNames[ext] = glob.glob("outdir_%s/signalFit/output/CMS-HGG_sigfit_%s_*_%s.root"%(ext,ext,opt.cat))
+for ext in opt.exts.split(","): fNames[ext] = glob.glob("outdir_%s/CMS-HGG_sigfit_%s*_%s.root"%(ext,ext,opt.cat))
 
 # Define ouput packaged workspace
 print " --> Packaging output workspaces"

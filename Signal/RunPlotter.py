@@ -84,7 +84,6 @@ for cat,f in inputFiles.iteritems():
   fin = ROOT.TFile(f)
   w = fin.Get("wsig_13TeV")
   w.var("MH").setVal(float(opt.MH))
-
   # Extract normalisations
   norms = od()
   data_rwgt = od()
@@ -146,7 +145,8 @@ for cat,f in inputFiles.iteritems():
       print "Check:",_id,"  ",d
       d.fillHistogram(hists['temp'],alist)
       print "inte befor:",hists['data'].Integral()
-      if("2017" in _id and "SL" in opt.HHWWggLabel):
+      if("2017" in _id and "SL_cHHH1" in opt.HHWWggLabel):
+        print "DO NOT APPLY SCALE FACTOR"
         if ("HHWWggTag_SLDNN_0" in _id):
             print "tag0"
             hists['temp'].Scale(1.993)
@@ -179,7 +179,7 @@ for cat,f in inputFiles.iteritems():
       hists['pdf'] = p.Clone("h_pdf")
       hists['pdf'].Reset()
     # Fill
-    if ("2017" in _id and "SL" in opt.HHWWggLabel):
+    if ("2017" in _id and "SL_cHHH1" in opt.HHWWggLabel):
         if "HHWWggTag_SLDNN_0" in _id:
             p.Scale(1.993)
         elif "HHWWggTag_SLDNN_1" in _id:
@@ -192,13 +192,22 @@ for cat,f in inputFiles.iteritems():
 
   # Per-year pdf histograms
   if len(opt.years.split(",")) > 1:
+    print "Hist old pdf:",hists['pdf'].Integral()
+    #  hists['pdf_2016']=hists['pdf'].Clone()
+    #  hists['pdf_2016'].Scale(0)
+    #  print "Before:",hists['pdf_2016'].GetMaximum()
     for year in opt.years.split(","):
-      if 'pdf_%s'%year not in hists:
-	hists['pdf_%s'%year] = hists['pdf'].Clone()
-	hists['pdf_%s'%year].Reset()
+      if 'pdf_%s'%year not in hists or hists['pdf_2016'].Integral() == 0:
+          print "Do not have pdf_",year
+          hists['pdf_%s'%year] = hists['pdf'].Clone()
+          hists['pdf_%s'%year].Scale(0)
       # Fill
+      print hists['pdf_2016'].GetMaximum()
       for _id,p in hpdfs.iteritems():
-	if year in _id: hists['pdf_%s'%year] += p
+          #  print "P value:",_id,p.Integral()
+          if year in _id:
+              print 'pdf_%s'%year,hists['pdf_%s'%year].GetMaximum()
+              hists['pdf_%s'%year] += p
   
   
   # Garbage removal
@@ -206,7 +215,15 @@ for cat,f in inputFiles.iteritems():
   for p in hpdfs.itervalues(): p.Delete()
   w.Delete()
   fin.Close()
-
+if ( opt.cats == "all"):
+    output = ROOT.TFile(opt.HHWWggLabel+'_Run2_AllCats.root',"RECREATE")
+else:
+    output = ROOT.TFile(opt.HHWWggLabel+'Run2_'+opt.cats+".root","RECREATE")
+output.mkdir("wsig_13TeV")
+hists['pdf'].SetName("Run2_SL")
+print hists['pdf'].GetMaximum()
+hists['pdf'].Write()
+output.Close()
 # Make plot
 if not os.path.isdir("%s/outdir_%s/Plots"%(swd__,opt.ext)): os.system("mkdir %s/outdir_%s/Plots"%(swd__,opt.ext))
 plotSignalModel(hists,opt,_outdir="%s/outdir_%s/Plots"%(swd__,opt.ext),Label=opt.HHWWggLabel)

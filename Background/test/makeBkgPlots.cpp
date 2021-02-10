@@ -743,6 +743,8 @@ int main(int argc, char* argv[]){
 	int sqrts;
 	int year_=2016;
 	//int year_=2017;
+  bool isRun2=0;
+  bool doHHWWggModel=0;
 	float intLumi;
 	double mhvalue_;
 	int isFlashgg_ =1;
@@ -758,6 +760,8 @@ int main(int argc, char* argv[]){
 		("outFileName,o", po::value<string>(&outFileName)->default_value("BkgPlots.root"),	"Output file name")
 		("outDir,d", po::value<string>(&outDir)->default_value("BkgPlots"),						 			"Output directory")
 		("cat,c", po::value<int>(&cat),																								 			"Category")
+		("isRun2", po::value<bool>(&isRun2),																								 			"isRun2")
+		("doHHWWggModel", po::value<bool>(&doHHWWggModel),																								 			"Plot HHWWgg model")
 		("catLabel,l", po::value<string>(&catLabel),																	 			"Label category")
 		("doBands",																																		 			"Do error bands")
 		("isMultiPdf",																																			"Is this a multipdf ws?")
@@ -816,26 +820,34 @@ int main(int argc, char* argv[]){
 	RooWorkspace *outWS = new RooWorkspace("bkgplotws","bkgplotws");
 
 	RooAbsData *data = (RooDataSet*)inWS->data(Form("data_mass_%s",catname.c_str()));
-	if (useBinnedData) data = (RooDataHist*)inWS->data(Form("roohist_data_mass_%s_%d_%dTeV",catname.c_str(),year_,sqrts));
-
+	if (useBinnedData){ 
+    if ( isRun2 ){
+    data = (RooDataHist*)inWS->data(Form("roohist_data_mass_%s_%dTeV",catname.c_str(),sqrts));
+    }
+    else data = (RooDataHist*)inWS->data(Form("roohist_data_mass_%s_%d_%dTeV",catname.c_str(),year_,sqrts));
+  }
 	RooAbsPdf *bpdf = 0;
 	RooMultiPdf *mpdf = 0; 
 	RooCategory *mcat = 0;
 	if (isMultiPdf) {
-		mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%d_%dTeV_bkgshape",catname.c_str(),year_,sqrts));
-		mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%d_%dTeV",catname.c_str(),year_,sqrts));
+    if ( isRun2 ) mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts));
+    else mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%d_%dTeV_bkgshape",catname.c_str(),year_,sqrts));
+		if ( isRun2 ) mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts));
+    else mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%d_%dTeV",catname.c_str(),year_,sqrts));
 		if (!mpdf || !mcat){
 			cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_%dTeV_%d_bkgshape",catname.c_str(),sqrts,year_) << ") or multicat ("<< Form("pdfindex_%s_%dTeV_%d",catname.c_str(),sqrts,year_) <<")" << endl;
 			exit(0);
 		}
 	}
 	else {
-		bpdf = (RooAbsPdf*)inWS->pdf(Form("pdf_data_pol_model_%dTeV_%d_%s",sqrts,year_,catname.c_str()));
+    if ( isRun2 ) bpdf = (RooAbsPdf*)inWS->pdf(Form("pdf_data_pol_model_%dTeV_%s",sqrts,catname.c_str()));
+    else bpdf = (RooAbsPdf*)inWS->pdf(Form("pdf_data_pol_model_%dTeV_%d_%s",sqrts,year_,catname.c_str()));
 		if (!bpdf){
 			cout << "[ERROR] "<< "Cant't find background pdf " << Form("pdf_data_pol_model_%dTeV_%d_%s",sqrts,year_,catname.c_str()) << endl;
 			exit(0);
 		}
-		mcat = new RooCategory(Form("pdfindex_%s_%dTeV_%d",catname.c_str(),sqrts,year_),"c");
+    if ( isRun2 ) mcat = new RooCategory(Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts),"c");
+    else mcat = new RooCategory(Form("pdfindex_%s_%dTeV_%d",catname.c_str(),sqrts,year_),"c");
 		RooArgList temp;
 		temp.add(*bpdf);
 		mpdf = new RooMultiPdf(Form("tempmpdf_%s",catname.c_str()),"",*mcat,temp);
@@ -975,11 +987,14 @@ int main(int argc, char* argv[]){
 				}
 				profCurve->GetXaxis()->SetRangeUser(0.9*errLow2Value,1.1*errHigh2Value);
 				profCurve->GetYaxis()->SetRangeUser(0.,5.);
+        if ( isRun2 == 0){
 				profCurve->Draw("ALP");
+        }
 				TLine line;
 				line.SetLineWidth(2);
 				line.SetLineStyle(kDashed);
 				line.SetLineColor(kRed);
+        if ( isRun2 == 0){
 				line.DrawLine(nomBkg-errLow1,0.,nomBkg-errLow1,1.);
 				line.DrawLine(nomBkg+errHigh1,0.,nomBkg+errHigh1,1.);
 				line.DrawLine(0.9*errLow2Value,1.,1.1*errHigh2Value,1.);
@@ -987,6 +1002,7 @@ int main(int argc, char* argv[]){
 				line.DrawLine(nomBkg-errLow2,0.,nomBkg-errLow2,4.);
 				line.DrawLine(nomBkg+errHigh2,0.,nomBkg+errHigh2,4.);
 				line.DrawLine(0.9*errLow2Value,4.,1.1*errHigh2Value,4.);
+        }
 				temp->Print(Form("%s/normProfs/%s_mass%6.2f.pdf",outDir.c_str(),catname.c_str(),center));
 				delete profCurve;
 				delete temp;
@@ -1034,11 +1050,13 @@ int main(int argc, char* argv[]){
 			twoSigmaBand->SetLineColor(kYellow);
 			twoSigmaBand->SetFillColor(kYellow);
 			twoSigmaBand->SetMarkerColor(kYellow);
-			twoSigmaBand->Draw("L3 SAME");
+      if ( isRun2 == 0){
+			twoSigmaBand->Draw("L3 SAME");}
 			oneSigmaBand->SetLineColor(kGreen);
 			oneSigmaBand->SetFillColor(kGreen);
 			oneSigmaBand->SetMarkerColor(kGreen);
-			oneSigmaBand->Draw("L3 SAME");
+      if ( isRun2 == 0){
+			oneSigmaBand->Draw("L3 SAME");}
 			leg->AddEntry(oneSigmaBand,"#pm1#sigma","F");
 			leg->AddEntry(twoSigmaBand,"#pm2#sigma","F");
 			twoSigmaBand_r->SetLineColor(kYellow);
@@ -1084,14 +1102,30 @@ int main(int argc, char* argv[]){
 				sigHist->SetLineWidth(3);
 				sigHist->SetFillColor(38);
 				sigHist->SetFillStyle(3001);
-				sigHist->Draw("HISTsame");
+        if ( isRun2 == 0){
+				sigHist->Draw("HISTsame");}
 				leg->AddEntry(sigHist,"Sig model m_{H}=125GeV","LF");
 				outFile->cd();
 				sigHist->Write();
 				if (verbose_) cout<< "[INFO] "  << "Plotted binned signal with " << sigHist->Integral() << " entries" << endl;
 				return (0); //FIXME
 			}
-			else {
+      else if( doHHWWggModel == 1 ) {
+			// TH1F *WWggHist = (TH1F*)sigFile->Get(Form("Run2_%s",catname.c_str()));
+			TH1F *WWggHist = (TH1F*)sigFile->Get("Run2_SL");
+				// WWggHist->SetLineColor(kBlue);
+				// WWggHist->SetLineWidth(3);
+				WWggHist->SetFillColor(38);
+				WWggHist->SetFillStyle(3001);
+        WWggHist->Scale(100);
+      WWggHist->Draw("HISTsame");
+      leg->AddEntry(WWggHist,"Sig model m_{H}=125GeV","LF");
+		  outFile->cd();
+			WWggHist->Write();
+			if (verbose_) cout<< "[INFO] "  << "Plotted binned signal with " << WWggHist->GetMaximum() << " entries" << endl;
+			// return (0); //FIXME
+			}
+      else {
 				RooRealVar *MH = (RooRealVar*)w_sig->var("MH");
 				if (!MH) MH = (RooRealVar*)w_sig->var("CMS_hgg_mass");
 				RooAbsPdf *sigPDF = (RooAbsPdf*)w_sig->pdf(Form("sigpdfrel%s_allProcs",catname.c_str()));
@@ -1169,17 +1203,17 @@ int main(int argc, char* argv[]){
   hdummy->GetYaxis()->SetTitleSize(0.12);
   hdummy->GetXaxis()->SetTitle("m_{#gamma#gamma} (GeV)");
   hdummy->GetXaxis()->SetTitleSize(0.12);
-  hdummy->Draw("HIST");
-	if (doBands) twoSigmaBand_r->Draw("L3 SAME");
-	if (doBands) oneSigmaBand_r->Draw("L3 SAME");
+  if ( isRun2 == 0) hdummy->Draw("HIST");
+	if ( isRun2 == 0){if (doBands) twoSigmaBand_r->Draw("L3 SAME");}
+  if ( isRun2 == 0){if (doBands) oneSigmaBand_r->Draw("L3 SAME");}
   hdummy->GetYaxis()->SetNdivisions(808);
 
   TLine *line3 = new TLine(100,0.,180,0.);
   line3->SetLineColor(kRed);
   //line3->SetLineStyle(kDashed);
   line3->SetLineWidth(4.0);
-  line3->Draw();
-  hdatasub->Draw("PESAME");
+  if ( isRun2 == 0) line3->Draw();
+  if ( isRun2 == 0) hdatasub->Draw("PESAME");
   // enf extra bit for ratio plot///
     CMS_lumi( canv, 4, 0);
 		canv->Print(Form("%s/bkgplot_%s.pdf",outDir.c_str(),catname.c_str()));
