@@ -627,7 +627,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral())
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
   fileName = "Yields-Table_%s.tex"%Label
-  file = open(fileName,"a")
+  file = open(fileName,"w")
   file.write("\\begin{table}[H]\n")
   file.write("\t\\begin{center}\n")
   file.write("\t\t\\begin{tabular}{c|c|c|c|c}\n")
