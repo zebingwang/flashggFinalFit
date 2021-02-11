@@ -12,7 +12,7 @@ signalScriptCfg = {
   'ext':'HHWWggTest_%s_NODE'%_year,
   'analysis':'HHWWgg', # To specify which replacement dataset mapping (defined in ./python/replacementMap.py)
   'year':'%s'%_year, # Use 'combined' if merging all years: not recommended
-  'massPoints':'120,125,130',
+  'massPoints':'125',
 
   #Photon shape systematics  
   'scales':'HighR9EB,HighR9EE,LowR9EB,LowR9EE,Gain1EB,Gain6EB', # separate nuisance per year

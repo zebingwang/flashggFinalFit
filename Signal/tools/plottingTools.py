@@ -433,14 +433,13 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   orginal_Data=_hists['data'].Integral()
   orginal_pdf=_hists['pdf'].Integral()
   Scale=orginal_Data
-  print orginal_Data
-  if ( "SL" in Label):
+  if ( "SL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.441*0.000970198
-  elif ( "FL" in Label):
+  elif ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.1071*0.000970198
-  elif ( "FH" in Label):
+  elif ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.4544*0.000970198
-  elif ( "ZZ" in Label):
+  elif ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.4888*0.000119992
   #  elif ( "tth" in Label):
     #  Scale=31.049*0.4888*0.000119992
@@ -573,12 +572,12 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat0.DrawLatex(0.77,0.93,"%s TeV"%(sqrts__.split("TeV")[0]))
   if ( "SL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow2ql#nu#gamma#gamma") #WWgg
-  if ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
+  elif ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     print "FL in label"
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrowl#nul#nu#gamma#gamma") #WWgg
-  if ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
+  elif ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
-  if ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
+  elif ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowZZ#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
   elif ( "tth" in Label):
     lat0.DrawLatex(0.16+offset,0.83,"ttHJetToGG") #WWgg
