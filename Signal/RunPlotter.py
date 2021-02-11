@@ -68,7 +68,6 @@ if opt.loadCatWeights != '':
 hists = od()
 hists['data'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
 hists['data_2016'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
-hists['0'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
 hists['data_2017'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
 hists['data_2018'] = xvar.createHistogram("h_data", ROOT.RooFit.Binning(opt.nBins))
 print opt.nBins

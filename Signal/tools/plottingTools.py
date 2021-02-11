@@ -571,14 +571,14 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat0.SetTextSize(0.045)
   lat0.DrawLatex(0.15,0.93,"#bf{CMS} #it{%s}"%_opt.label)
   lat0.DrawLatex(0.77,0.93,"%s TeV"%(sqrts__.split("TeV")[0]))
-  if ( "SL" in Label):
+  if ( "SL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow2ql#nu#gamma#gamma") #WWgg
-  elif ( "FL" in Label):
+  if ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     print "FL in label"
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrowl#nul#nu#gamma#gamma") #WWgg
-  elif ( "FH" in Label):
+  if ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
-  elif ( "ZZ" in Label):
+  if ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowZZ#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
   elif ( "tth" in Label):
     lat0.DrawLatex(0.16+offset,0.83,"ttHJetToGG") #WWgg
@@ -608,7 +608,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   else: yearStr, yearExt = _opt.years, "_%s"%_opt.years
 
   if _opt.cats == 'all' and "SL" in Label: 
-      catStr, catExt = "All categories", "all"
+      catStr, catExt = "SL all categories", "all"
   elif _opt.cats == 'all' and "FL" in Label:
       catStr, catExt = "FL category", "all"
   elif _opt.cats == 'all' and "FH" in Label:
@@ -626,9 +626,35 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat1.DrawLatex(0.85,0.620,"2017 : %.4f"%_hists['data_2017'].Integral())
   lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral())
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
-
+  fileName = "Yields-Table_%s.tex"%Label
+  file = open(fileName,"a")
+  file.write("\\begin{table}[H]\n")
+  file.write("\t\\begin{center}\n")
+  file.write("\t\t\\begin{tabular}{c|c|c|c|c}\n")
+  file.write("\t\t\tMC Sample & Run2 Unweighted & 2016 Weighted & 2017 Weighted & 2018 Weighted \\\ \\hline \n")
+  #  for i, name in enumerate(names):
+  name = Label 
+  name=name.replace("_","\_")
+  unweighted_val =1
+  Run2Weighted_val = _hists['data'].Integral()
+  Weighted_val_2016 = _hists['data_2016'].Integral()
+  Weighted_val_2017 = _hists['data_2017'].Integral()
+  Weighted_val_2018 = _hists['data_2018'].Integral()
+  file.write("\t\t\t\t\t %s & %s & %s & %s & %s \\\ \n"%(name,round(Run2Weighted_val,5),round(Weighted_val_2016,5),round(Weighted_val_2017,5),round(Weighted_val_2017,5)))
+  file.write("\t\t\end{tabular}\n")
+  file.write("\t\caption{ weighted  MC yields}\n")
+  file.write("\t\\end{center}\n")
+  file.write("\end{table}\n")  
+  file.close()
+  if ( _opt.cats == "all"):
+      output = ROOT.TFile(Label+'_Run2_AllCats.root',"RECREATE")
+  else:
+      output = ROOT.TFile(Label+'Run2_'+_opt.cats+".root","RECREATE")
+  output.mkdir("wsig_13TeV")
+  _hists['pdf'].SetName("Run2_%s_%s"%(Label,_opt.cats))
+  _hists['pdf'].Write()
+  output.Close()
   canv.Update()
-
   # Save canvas
   canv.SaveAs("%s/smodel_%s%s%s.pdf"%(_outdir,catExt,procExt,yearExt))
   canv.SaveAs("%s/smodel_%s%s%s.png"%(_outdir,catExt,procExt,yearExt))
