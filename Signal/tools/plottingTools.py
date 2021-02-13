@@ -552,7 +552,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
       _hists['data_%s'%year].SetLineStyle(2)
       _hists['data_%s'%year].SetLineWidth(2)
       _hists['data_%s'%year].Scale(Scale)
-      print "Data year Inte:",year,"  ",_hists['data_%s'%year].Integral()
+      print "Data year Inte:",year,"  ",_hists['data_%s'%year].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
       _hists['pdf_%s'%year].Draw("Same Hist C")
   # Set style: data
   _hists['data'].SetMarkerStyle(25)
@@ -620,10 +620,10 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
  
   lat1.DrawLatex(0.85,0.86,"%s"%catStr)
   lat1.DrawLatex(0.85,0.725,"Weighted events :")
-  lat1.DrawLatex(0.85,0.69,"Run2 : %.4f"%_hists['data'].Integral())
-  lat1.DrawLatex(0.85,0.655,"2016 : %.4f"%_hists['data_2016'].Integral())
-  lat1.DrawLatex(0.85,0.620,"2017 : %.4f"%_hists['data_2017'].Integral())
-  lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral())
+  lat1.DrawLatex(0.85,0.69,"Run2 : %.4f"%_hists['data'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
+  lat1.DrawLatex(0.85,0.655,"2016 : %.4f"%_hists['data_2016'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
+  lat1.DrawLatex(0.85,0.620,"2017 : %.4f"%_hists['data_2017'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
+  lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
   fileName = "Yields-Table_%s.tex"%Label
   file = open(fileName,"w")
@@ -636,9 +636,9 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   name=name.replace("_","\_")
   unweighted_val =1
   Run2Weighted_val = _hists['data'].Integral()
-  Weighted_val_2016 = _hists['data_2016'].Integral()
-  Weighted_val_2017 = _hists['data_2017'].Integral()
-  Weighted_val_2018 = _hists['data_2018'].Integral()
+  Weighted_val_2016 = _hists['data_2016'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
+  Weighted_val_2017 = _hists['data_2017'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
+  Weighted_val_2018 = _hists['data_2018'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
   file.write("\t\t\t\t\t %s & %s & %s & %s & %s \\\ \n"%(name,round(Run2Weighted_val,5),round(Weighted_val_2016,5),round(Weighted_val_2017,5),round(Weighted_val_2017,5)))
   file.write("\t\t\end{tabular}\n")
   file.write("\t\caption{ weighted  MC yields}\n")
