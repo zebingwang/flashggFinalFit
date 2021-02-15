@@ -987,14 +987,14 @@ int main(int argc, char* argv[]){
 				}
 				profCurve->GetXaxis()->SetRangeUser(0.9*errLow2Value,1.1*errHigh2Value);
 				profCurve->GetYaxis()->SetRangeUser(0.,5.);
-        if ( isRun2 == 0){
+        // if ( isRun2 == 0){
 				profCurve->Draw("ALP");
-        }
+        // }
 				TLine line;
 				line.SetLineWidth(2);
 				line.SetLineStyle(kDashed);
 				line.SetLineColor(kRed);
-        if ( isRun2 == 0){
+        // if ( isRun2 == 0){
 				line.DrawLine(nomBkg-errLow1,0.,nomBkg-errLow1,1.);
 				line.DrawLine(nomBkg+errHigh1,0.,nomBkg+errHigh1,1.);
 				line.DrawLine(0.9*errLow2Value,1.,1.1*errHigh2Value,1.);
@@ -1002,7 +1002,7 @@ int main(int argc, char* argv[]){
 				line.DrawLine(nomBkg-errLow2,0.,nomBkg-errLow2,4.);
 				line.DrawLine(nomBkg+errHigh2,0.,nomBkg+errHigh2,4.);
 				line.DrawLine(0.9*errLow2Value,4.,1.1*errHigh2Value,4.);
-        }
+        // }
 				temp->Print(Form("%s/normProfs/%s_mass%6.2f.pdf",outDir.c_str(),catname.c_str(),center));
 				delete profCurve;
 				delete temp;
@@ -1050,13 +1050,15 @@ int main(int argc, char* argv[]){
 			twoSigmaBand->SetLineColor(kYellow);
 			twoSigmaBand->SetFillColor(kYellow);
 			twoSigmaBand->SetMarkerColor(kYellow);
-      if ( isRun2 == 0){
-			twoSigmaBand->Draw("L3 SAME");}
+      // if ( isRun2 == 0){
+			twoSigmaBand->Draw("L3 SAME");
+      // }
 			oneSigmaBand->SetLineColor(kGreen);
 			oneSigmaBand->SetFillColor(kGreen);
 			oneSigmaBand->SetMarkerColor(kGreen);
-      if ( isRun2 == 0){
-			oneSigmaBand->Draw("L3 SAME");}
+      // if ( isRun2 == 0){
+			oneSigmaBand->Draw("L3 SAME");
+      // }
 			leg->AddEntry(oneSigmaBand,"#pm1#sigma","F");
 			leg->AddEntry(twoSigmaBand,"#pm2#sigma","F");
 			twoSigmaBand_r->SetLineColor(kYellow);
@@ -1102,8 +1104,9 @@ int main(int argc, char* argv[]){
 				sigHist->SetLineWidth(3);
 				sigHist->SetFillColor(38);
 				sigHist->SetFillStyle(3001);
-        if ( isRun2 == 0){
-				sigHist->Draw("HISTsame");}
+        // if ( isRun2 == 0){
+				sigHist->Draw("HISTsame");
+        // }
 				leg->AddEntry(sigHist,"Sig model m_{H}=125GeV","LF");
 				outFile->cd();
 				sigHist->Write();
@@ -1203,17 +1206,22 @@ int main(int argc, char* argv[]){
   hdummy->GetYaxis()->SetTitleSize(0.12);
   hdummy->GetXaxis()->SetTitle("m_{#gamma#gamma} (GeV)");
   hdummy->GetXaxis()->SetTitleSize(0.12);
-  if ( isRun2 == 0) hdummy->Draw("HIST");
-	if ( isRun2 == 0){if (doBands) twoSigmaBand_r->Draw("L3 SAME");}
-  if ( isRun2 == 0){if (doBands) oneSigmaBand_r->Draw("L3 SAME");}
+  // if ( isRun2 == 0) hdummy->Draw("HIST");
+  hdummy->Draw("HIST");
+	// if ( isRun2 == 0){
+    if (doBands) twoSigmaBand_r->Draw("L3 SAME");
+    if (doBands) oneSigmaBand_r->Draw("L3 SAME");
+  // }
   hdummy->GetYaxis()->SetNdivisions(808);
 
   TLine *line3 = new TLine(100,0.,180,0.);
   line3->SetLineColor(kRed);
   //line3->SetLineStyle(kDashed);
   line3->SetLineWidth(4.0);
-  if ( isRun2 == 0) line3->Draw();
-  if ( isRun2 == 0) hdatasub->Draw("PESAME");
+  // if ( isRun2 == 0)
+    line3->Draw();
+  // if  ( isRun2 == 0)
+    hdatasub->Draw("PESAME");
   // enf extra bit for ratio plot///
     CMS_lumi( canv, 4, 0);
 		canv->Print(Form("%s/bkgplot_%s.pdf",outDir.c_str(),catname.c_str()));

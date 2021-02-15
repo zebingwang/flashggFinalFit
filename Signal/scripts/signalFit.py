@@ -168,7 +168,8 @@ for mp in opt.massPoints.split(","):
   f = ROOT.TFile(WSFileName,"read")
   inputWS = f.Get(inputWSName__)
   if ( opt.analysis == 'HHWWgg' ):
-     d = reduceDataset(inputWS.data("%s_%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catRVFit)),aset)
+     print "%s_%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),mp,opt.HHWWggLabel,sqrts__,catRVFit)
+     d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),opt.HHWWggLabel,sqrts__,catRVFit)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(procRVFit.split("_")[0]),mp,sqrts__,catRVFit)),aset)
   nominalDatasets[mp] = d.Clone()

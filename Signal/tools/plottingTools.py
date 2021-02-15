@@ -437,7 +437,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
     Scale=31.049*0.441*0.000970198
   elif ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.1071*0.000970198
-  elif ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
+  elif ( "FH" in Label and "ZZ" not in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.4544*0.000970198
   elif ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     Scale=31.049*0.4888*0.000119992
@@ -551,7 +551,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
       _hists['data_%s'%year].SetLineColor( colorMap[year] )  
       _hists['data_%s'%year].SetLineStyle(2)
       _hists['data_%s'%year].SetLineWidth(2)
-      _hists['data_%s'%year].Scale(Scale)
+      #  _hists['data_%s'%year].Scale(Scale)
       print "Data year Inte:",year,"  ",_hists['data_%s'%year].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
       _hists['pdf_%s'%year].Draw("Same Hist C")
   # Set style: data
@@ -559,6 +559,9 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   _hists['data'].SetMarkerColor(1)
   _hists['data'].SetLineColor(1)
   _hists['data'].SetLineWidth(2)
+  _hists['data_2016'].Scale(Scale)
+  _hists['data_2017'].Scale(Scale)
+  _hists['data_2018'].Scale(Scale)
   print _hists['data'].Integral()
   _hists['data'].Draw("Same PE")
   
@@ -575,7 +578,7 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   elif ( "FL" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     print "FL in label"
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrowl#nul#nu#gamma#gamma") #WWgg
-  elif ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
+  elif ( "FH" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label and "ZZ" not in Label):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowWW#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
   elif ( "ZZ" in Label and "tth" not in Label and "vbf" not in Label and "wzh" not in Label and "ggh" not in Label ):
     lat0.DrawLatex(0.16+offset,0.83,"HH#rightarrowZZ#gamma#gamma#rightarrow4q#gamma#gamma") #WWgg
