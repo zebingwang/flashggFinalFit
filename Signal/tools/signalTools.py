@@ -11,8 +11,8 @@ def reduceDataset(_d,_argset): return _d.reduce(_argset)
 
 def splitRVWV(_d,_argset,mode="RV"):
   # Split into RV/WV senario at dZ = 1cm
-  if mode == "RV": return _d.reduce(_argset,"abs(dZ)<=10000.")
-  elif mode == "WV": return _d.reduce(_argset,"abs(dZ)>10000.")
+  if mode == "RV": return _d.reduce(_argset,"abs(dZ)<=1.")
+  elif mode == "WV": return _d.reduce(_argset,"abs(dZ)>1.")
   else:
     print " --> [ERROR] unrecognised mode (%s) in splitRVWV function"%mode
     return 0

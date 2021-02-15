@@ -107,8 +107,15 @@ for pidx, proc in enumerate(procsToFTest):
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.HHWWggLabel,sqrts__,opt.cat)),aset)
   else:
      d = reduceDataset(inputWS.data("%s_%s_%s_%s"%(procToData(proc.split("_")[0]),opt.mass,sqrts__,opt.cat)),aset)
-  datasets_RV[opt.mass] = splitRVWV(d,aset,mode="RV")
-  datasets_WV[opt.mass] = splitRVWV(d,aset,mode="WV")
+  if (opt.analysis == 'HHWWgg' or  "single" in opt.HHWWggLabel):  
+    print "========================================="
+    print "HHWWgg analysis , so do not split RV and WV"
+    print "========================================="
+    datasets_WV[opt.mass] = splitRVWV(d,aset,mode="WV")
+    datasets_RV[opt.mass] = d
+  else:
+    datasets_RV[opt.mass] = splitRVWV(d,aset,mode="RV")
+    datasets_WV[opt.mass] = splitRVWV(d,aset,mode="WV")
 
   # Run fTest: RV
   # If numEntries below threshold then keep as n = 1

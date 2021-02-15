@@ -189,9 +189,9 @@ for cat,f in inputFiles.iteritems():
             p.Scale(1.979)
     hists['pdf'] += p
 
+  print "==========Integarl pdf:",hists['pdf'].Integral()
   # Per-year pdf histograms
   if len(opt.years.split(",")) > 1:
-    print "Hist old pdf:",hists['pdf'].Integral()
     #  hists['pdf_2016']=hists['pdf'].Clone()
     #  hists['pdf_2016'].Scale(0)
     #  print "Before:",hists['pdf_2016'].GetMaximum()
