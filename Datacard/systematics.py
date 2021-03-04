@@ -72,16 +72,16 @@ theory_systematics = [
                 # Shape uncertainties: enter direct XS measurements
                 # Scale weights are grouped: [1,2], [3,6], [4,8]
                 #  {'name':'scaleWeights[0]','title':'CMS_hgg_scaleWeight_0','type':'factory','prior':'lnN','correlateAcrossYears':1}, # nominal weight
-                {'name':'scaleWeights[1]','title':'CMS_hgg_scaleWeight_1','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'scaleWeights[2]','title':'CMS_hgg_scaleWeight_2','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'scaleWeights[3]','title':'CMS_hgg_scaleWeight_3','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'scaleWeights[4]','title':'CMS_hgg_scaleWeight_4','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'scaleWeights[5]','title':'CMS_hgg_scaleWeight_5','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['norm','shape']}, #Unphysical
-                {'name':'scaleWeights[6]','title':'CMS_hgg_scaleWeight_6','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'scaleWeights[7]','title':'CMS_hgg_scaleWeight_7','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['norm','shape']}, #Unphysical
-                {'name':'scaleWeights[8]','title':'CMS_hgg_scaleWeight_8','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
-                {'name':'alphaSWeights[0]','title':'CMS_hgg_alphaSWeight_0','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
-                {'name':'alphaSWeights[0]','title':'CMS_hgg_alphaSWeight_1','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
+                #  {'name':'scaleWeights[1]','title':'CMS_hgg_scaleWeight_1','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'scaleWeights[2]','title':'CMS_hgg_scaleWeight_2','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'scaleWeights[3]','title':'CMS_hgg_scaleWeight_3','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'scaleWeights[4]','title':'CMS_hgg_scaleWeight_4','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'scaleWeights[5]','title':'CMS_hgg_scaleWeight_5','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['norm','shape']}, #Unphysical
+                #  {'name':'scaleWeights[6]','title':'CMS_hgg_scaleWeight_6','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'scaleWeights[7]','title':'CMS_hgg_scaleWeight_7','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['norm','shape']}, #Unphysical
+                #  {'name':'scaleWeights[8]','title':'CMS_hgg_scaleWeight_8','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape','mnorm']},
+                #  {'name':'alphaSWeights[0]','title':'CMS_hgg_alphaSWeight_0','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
+                #  {'name':'alphaSWeights[0]','title':'CMS_hgg_alphaSWeight_1','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']},
 
                 # Theory uncertainties for constrained to SM bins
                 #{'name':'THU_qqH_Yield_qqH_cnstr','title':'THU_qqH_Yield_qqH_cnstr','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':'theory_uncertainties/thu_qqh_stxs_constrain.json'},
@@ -98,7 +98,7 @@ theory_systematics = [
                 #{'name':'alphaS_qqH_cnstr','title':'alphaS_qqH_cnstr','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':'theory_uncertainties/thu_qqh_stxs_constrain.json'}
               ]
 # PDF weight
-for i in range(1,60): theory_systematics.append( {'name':'pdfWeights[%g]'%i, 'title':'CMS_hgg_pdfWeight_%g'%i, 'type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']} )
+#  for i in range(1,60): theory_systematics.append( {'name':'pdfWeights[%g]'%i, 'title':'CMS_hgg_pdfWeight_%g'%i, 'type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['shape']} )
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -117,7 +117,7 @@ experimental_systematics = [
                 {'name':'lumi_13TeV_Beam_Current_Calibration','title':'lumi_13TeV_Beam_Current_Calibration','type':'constant','prior':'lnN','correlateAcrossYears':-1,'value':{'2016':'-','2017':'1.003','2018':'1.002'}},
                 {'name':'lumi_13TeV_Ghosts_And_Satellites','title':'lumi_13TeV_Ghosts_And_Satellites','type':'constant','prior':'lnN','correlateAcrossYears':-1,'value':{'2016':'1.004','2017':'1.001','2018':'-'}},
                 {'name':'LooseMvaSF','title':'CMS_hgg_LooseMvaSF','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'PreselSF','title':'CMS_hgg_PreselSF','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'PreselSF','title':'CMS_hgg_PreselSF','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'electronVetoSF','title':'CMS_hgg_electronVetoSF','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'TriggerWeight','title':'CMS_hgg_TriggerWeight','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'MuonIDWeight','title':'CMS_hgg_MuonID','type':'factory','prior':'lnN','correlateAcrossYears':0},
@@ -137,20 +137,30 @@ experimental_systematics = [
                 {'name':'JECHF','title':'CMS_scale_j_HF','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'JECEC2','title':'CMS_scale_j_EC2','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'JECRelativeBal','title':'CMS_scale_j_RelativeBal','type':'factory','prior':'lnN','correlateAcrossYears':1},
-                {'name':'JECAbsolute2016','title':'CMS_scale_j_Absolute_y','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'JECBBEC12016','title':'CMS_scale_j_BBEC1_y','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'JECHF2016','title':'CMS_scale_j_HF_y','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'JECEC22016','title':'CMS_scale_j_EC2_y','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'JECRelativeSample2016','title':'CMS_scale_j_RelativeSample_y','type':'factory','prior':'lnN','correlateAcrossYears':0},
-               
+                {'name':'JECAbsolute2018','title':'CMS_scale_j_Absolute_y_2018','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECBBEC12018','title':'CMS_scale_j_BBEC1_y_2018','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECHF2018','title':'CMS_scale_j_HF_y_2018','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECEC22018','title':'CMS_scale_j_EC2_y_2018','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECRelativeSample2018','title':'CMS_scale_j_RelativeSample_y_2018','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECAbsolute2017','title':'CMS_scale_j_Absolute_y_2017','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECBBEC12017','title':'CMS_scale_j_BBEC1_y_2017','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECHF2017','title':'CMS_scale_j_HF_y_2017','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECEC22017','title':'CMS_scale_j_EC2_y_2017','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECRelativeSample2017','title':'CMS_scale_j_RelativeSample_y_2017','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECAbsolute2016','title':'CMS_scale_j_Absolute_y_2016','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECBBEC12016','title':'CMS_scale_j_BBEC1_y_2016','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECHF2016','title':'CMS_scale_j_HF_y_2016','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECEC22016','title':'CMS_scale_j_EC2_y_2016','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'JECRelativeSample2016','title':'CMS_scale_j_RelativeSample_y_2016','type':'factory','prior':'lnN','correlateAcrossYears':1},
+
                 {'name':'JEC','title':'CMS_scale_j','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'JER','title':'CMS_res_j','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'metJecUncertainty','title':'CMS_hgg_MET_scale_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'metJerUncertainty','title':'CMS_hgg_MET_res_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'metPhoUncertainty','title':'CMS_hgg_MET_PhotonScale','type':'factory','prior':'lnN','correlateAcrossYears':1},
-                {'name':'metUncUncertainty','title':'CMS_hgg_MET_Unclustered','type':'factory','prior':'lnN','correlateAcrossYears':1},
+                {'name':'metUncUncertainty','title':'CMS_hgg_MET_Unclustered','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 # HEM issue systematic
-                #  {'name':'JetHEM','title':'CMS_hgg_JetHEM','type':'factory','prior':'lnN','correlateAcrossYears':0}
+                {'name':'JetHEM','title':'CMS_hgg_JetHEM','type':'factory','prior':'lnN','correlateAcrossYears':1}
               ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
