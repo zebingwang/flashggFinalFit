@@ -3,8 +3,9 @@ eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" "ggh")
-# Names=("SingleHiggs_ttHJetToGG_2016_all_CategorizedTrees" "SingleHiggs_VHToGG_2016_all_CategorizedTrees" "SingleHiggs_VBFHToGG_2016_all_CategorizedTrees" "SingleHiggs_GluGluHToGG_2016_all_CategorizedTrees")
-Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
+Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
+# Names=("ttHJetToGG" "VHToGG" "VBFHToGG" "GluGluHToGG")
+# Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
 years=("2017")
 for year in ${years[@]}
 do
@@ -12,14 +13,18 @@ do
   do
     Name=${Names[$i]}
     procs=${SingleHiggs[$i]}
+    # year='2017'
     ext='SL'
     cat='HHWWggTag_SLDNN_0,HHWWggTag_SLDNN_1,HHWWggTag_SLDNN_2,HHWWggTag_SLDNN_3' #output cat name, it will be used in subsequence step
     InputTreeCats='HHWWggTag_SL_0,HHWWggTag_SL_1,HHWWggTag_SL_2,HHWWggTag_SL_3' #input cat name in the tree
     catNames=(${cat//,/ })
     mass='125'
-    TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/Signal_SL_DNN_Categorized/"
+    # TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
+    TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
+    # TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/SL_DNN_Categorized_LOSignals_noPtOverM-Training/"
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/SL/"
     doSelections="0"
-    Selections='dipho_pt > 54' # Seletions you want to applied.
+    Selections='dipho_pt > 91' # Seletions you want to applied.
     Replace="HHWWggTag_SLDNN_0"
     ############################################
     #  Tree selectors#
@@ -52,7 +57,7 @@ do
     fi
   if [ $year -eq "2018" ]
   then
-    sed -i "s#metUncUncertainty\"#metUncUncertainty\",\"JetHEM\"#g" SingleHiggsSelections_Run.C
+  sed -i "s#metUncUncertainty\"#metUncUncertainty\",\"JetHEM\"#g" SingleHiggsSelections_Run.C
   fi
     root -b -q SingleHiggsSelections_Run.C
     mv ${Name}_${year}.root  ../Trees2WS/
@@ -62,8 +67,8 @@ do
 # start tree to workspace
 ########################################
 
-if [ ! -d "../Signal/Input/${year}/" ]; then
-  mkdir ../Signal/Input/${year}
+if [ ! -d "$InputWorkspace/Signal/Input/${year}/" ]; then
+  mkdir -p $InputWorkspace/Signal/Input/${year}
 fi
 # Signal tree to data ws
 if [ $year -eq "2018" ]
@@ -75,21 +80,15 @@ cp HHWWgg_config.py HHWWgg_config_run.py
 fi
 sed -i "s#2017#${year}#g" HHWWgg_config_run.py
 sed -i "s#auto#${cat}#g" HHWWgg_config_run.py
-echo "python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${cat}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics"
 rm -rf ws*
 python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics
 rm HHWWgg_config_run.py
 for catName in ${catNames[@]}
 do
-cp ws_${procs}/${Name}_${year}_${procs}.root ../Signal/Input/${year}/output_M125_${procs}_${catName}.root
+cp ws_${procs}/${Name}_${year}_${procs}.root $InputWorkspace/Signal/Input/${year}/Shifted_M125_${procs}_${catName}.root
+cp ws_${procs}/${Name}_${year}_${procs}.root $InputWorkspace/Signal/Input/${year}/output_M125_${procs}_${catName}.root
 done
 rm ${Name}_${year}.root
-#########################################
-#shift dataset
-#########################################
-cd ../Signal/
-python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/${year}/ --procs ${procs} --cats ${cat}
-
 #######################################
 # Run ftest
 ######################################
@@ -100,7 +99,7 @@ sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#HHWWggTest#${ext}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
-sed -i "s#INPUTDIR#${path}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
+sed -i "s#INPUTDIR#${InputWorkspace}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 #######################################
@@ -115,11 +114,12 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonS
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
 for catName in ${catNames[@]}
 do
-  echo "Start plot"
-  mkdir outdir_${ext}_${procs}_${year}_single_Higgs/
+mkdir outdir_${ext}_${procs}_${year}_single_Higgs/
 cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${catName}.root outdir_${ext}_${procs}_${year}_single_Higgs/CMS-HGG_sigfit_${ext}_${procs}_${year}_single_Higgs_${catName}.root
-python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${procs}_${year}_single_Higgs --HHWWggLabel $ext
+python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${procs}_${year}_single_Higgs --HHWWggLabel ${ext}_${procs}
 done
+
+
 
 rm HHWWgg_config_Run.py
 

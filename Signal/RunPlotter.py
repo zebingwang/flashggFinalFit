@@ -214,15 +214,15 @@ for cat,f in inputFiles.iteritems():
   for p in hpdfs.itervalues(): p.Delete()
   w.Delete()
   fin.Close()
-if ( opt.cats == "all"):
-    output = ROOT.TFile(opt.HHWWggLabel+'_Run2_AllCats.root',"RECREATE")
-else:
-    output = ROOT.TFile(opt.HHWWggLabel+'Run2_'+opt.cats+".root","RECREATE")
-output.mkdir("wsig_13TeV")
-hists['pdf'].SetName("Run2_SL")
-print hists['pdf'].GetMaximum()
-hists['pdf'].Write()
-output.Close()
+#  if ( opt.cats == "all"):
+    #  output = ROOT.TFile(opt.HHWWggLabel+'_Run2_AllCats.root',"RECREATE")
+#  else:
+    #  output = ROOT.TFile(opt.HHWWggLabel+'Run2_'+opt.cats+".root","RECREATE")
+#  output.mkdir("wsig_13TeV")
+#  hists['pdf'].SetName("Run2_SL")
+#  print hists['pdf'].GetMaximum()
+#  hists['pdf'].Write()
+#  output.Close()
 # Make plot
 if not os.path.isdir("%s/outdir_%s/Plots"%(swd__,opt.ext)): os.system("mkdir %s/outdir_%s/Plots"%(swd__,opt.ext))
 plotSignalModel(hists,opt,_outdir="%s/outdir_%s/Plots"%(swd__,opt.ext),Label=opt.HHWWggLabel)

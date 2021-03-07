@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-nodes=("cHHH2p45" "cHHH5")
+nodes=("cHHH2p45")
 years=("2016")
 singleHiggs="tth,wzh,vbf,ggh"
 for node in ${nodes[@]}
@@ -72,8 +72,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-# root -b -q  Selections_Run.C
-# root -b -q DataSelections_Run.C
+root -b -q  Selections_Run.C
+root -b -q DataSelections_Run.C
 rm Selections_Run.C
 rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -98,9 +98,9 @@ fi
 sed -i "s#2017#${year}#g" HHWWgg_config_run.py
 sed -i "s#auto#${cat}#g" HHWWgg_config_run.py
 rm -rf ws*
-# python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
+python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${procs}_node_${node}_${year}.root --inputMass node_${node} --productionMode ${procs}  --year ${year} --doSystematics
 # data tree to data ws
-# python trees2ws_data.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./Data_13TeV_${year}.root
+python trees2ws_data.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./Data_13TeV_${year}.root
 rm HHWWgg_config_run.py
 for catName in ${catNames[@]}
 do
@@ -109,17 +109,12 @@ do
   fi
   cp ws_${procs}/${procs}_node_${node}_${year}_${procs}.root ${InputWorkspace}/Signal/Input/${year}/Shifted_M125_${procs}_node_${node}_${catName}.root
   cp ${InputWorkspace}/Signal/Input/${year}/Shifted_M125_${procs}_node_${node}_${catName}.root ${InputWorkspace}/Signal/Input/${year}/output_M125_${procs}_node_${node}_${catName}.root
-
   cp ws/Data_13TeV_${year}.root ${InputWorkspace}/Background/Input/${procs}_${year}/allData.root
 done
 rm ${procs}_node_${node}_${year}.root
 rm Data_13TeV_${year}.root
 
-#########################################
-#shift dataset
-#########################################
 cd ../Signal/
-# python ./scripts/shiftHiggsDatasets_test.py --inputDir ./Input/${year}/ --procs ${procs} --cats ${cat} --HHWWggLabel node_${node}
 cp ./tools/replacementMapHHWWgg.py ./tools/replacementMap.py
 sed -i "s#REPLACEMET_CATWV#${Replace}#g" ./tools/replacementMap.py
 
@@ -134,22 +129,22 @@ sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
 sed -i "s#HHWWggTest#${ext}#g" HHWWgg_config_Run.py
 sed -i "s#INPUTDIR#${InputWorkspace}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "--doPlots"
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "--doPlots"
 
 #######################################
 # Run photon sys
 ######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode calcPhotonSyst
 
 
 #######################################
 #Run signal Fit
 #######################################
-# python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
+python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit --groupSignalFitJobsByCat
 for catName in ${catNames[@]}
 do
 cp outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${procs}_${year}_${catName}.root outdir_${ext}_${year}_node_${node}/CMS-HGG_sigfit_${ext}_${year}_node_${node}_${catName}.root
-# python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${year}_node_${node} --HHWWggLabel $ext
+python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${year}_node_${node} --HHWWggLabel $ext
 done
 
 rm HHWWgg_config_Run.py
@@ -168,7 +163,7 @@ cmsenv
 # make clean
 make
 
-# python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
+python RunBackgroundScripts.py --inputConfig HHWWgg_cofig_Run.py --mode fTestParallel
 
 rm HHWWgg_cofig_Run.py
 ########################################
@@ -181,7 +176,7 @@ rm Datacard*.txt
 rm -rf yields_*/
 cp systematics_${year}.py systematics.py
 #copy signal  and bkg model
-rm -rf SingleHiggs_${procs}_node_${node}_${year}
+rm -rf SingleHiggs_${procs}_node_${node}_${year}/
 cp -rf SingleHiggs_${ext}_${year}/ SingleHiggs_${procs}_node_${node}_${year}/
 if [ ! -d "./SingleHiggs_${procs}_node_${node}_${year}/Models/" ]; then
   mkdir -p ./SingleHiggs_${procs}_node_${node}_${year}/Models/
@@ -190,7 +185,7 @@ fi
 #
 #   Add singleHiggs procs to RunYields.py 
 ###################
-python RunYields.py --cats ${cat} --inputWSDirMap ${year}=${InputWorkspace}/Signal/Input/${year} --procs ${procs},${singleHiggs} --doSystematics True --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models --ignore-warnings True
+python RunYields.py --cats ${cat} --inputWSDirMap ${year}=${InputWorkspace}/Signal/Input/${year} --procs ${procs},${singleHiggs} --doSystematics True --doHHWWgg True --HHWWggLabel node_${node} --batch local --ext SingleHiggs  --bkgModelWSDir ./Models --sigModelWSDir ./Models 
 python makeDatacard.py --years ${year} --prune True --ext SingleHiggs  --doSystematics True --pruneThreshold 0.000001
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
 mv ./SingleHiggs_${procs}_node_${node}_${year}/*.root SingleHiggs_${procs}_node_${node}_${year}/Models/
@@ -201,7 +196,7 @@ cp ${path}/Signal/outdir_${ext}_${year}_node_${node}/signalFit/output/CMS-HGG_si
 done
 cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}.txt
 
-python RunYields.py --cats $cat --inputWSDirMap $year=${InputWorkspace}/Signal/Input/${year}/ --procs ${procs} --doHHWWgg True --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics True --ext ${procs}_node_${node} --ignore-warnings True
+python RunYields.py --cats $cat --inputWSDirMap $year=${InputWorkspace}/Signal/Input/${year}/ --procs ${procs} --doHHWWgg True --HHWWggLabel node_${node} --batch local --sigModelWSDir ./Models --bkgModelWSDir ./Models --doSystematics True --ext ${procs}_node_${node} 
 python makeDatacard.py --years $year --prune True --ext ${procs}_node_${node} --pruneThreshold 0.00001 --doSystematics
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
 cp Datacard_cleaned.txt ./SingleHiggs_${procs}_node_${node}_${year}/HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt
@@ -213,7 +208,7 @@ echo "br_HH_WWgg    rateParam * GluGluToHHTo2G2Qlnu_*_hwwhgg_node_${node} 0.0009
 echo "br_WW_qqlnu   rateParam * GluGluToHHTo2G2Qlnu_*_hwwhgg_node_${node} 0.441" >>$datacard
 echo "nuisance edit  freeze xs_HH" >> $datacard
 echo "nuisance edit  freeze br_WW_qqlnu" >>  $datacard
-echo "nuisance edit  freeze br_WW_qqlnu" >> $datacard
+echo "nuisance edit  freeze br_HH_WWgg" >> $datacard
 done
 
 cd ./SingleHiggs_${procs}_node_${node}_${year}

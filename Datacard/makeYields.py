@@ -182,6 +182,11 @@ for year in years:
         # Input model ws
         if opt.cat == "NOTAG":
             _modelWSFile, _model = '-', '-'
+        elif opt.mergeYears:
+            _modelWSFile = "%s/CMS-HGG_sigfit_%s_%s_%s_%s.root" % (
+                opt.sigModelWSDir, opt.sigModelExt, _proc_s0, _cat,year)
+            _model = "%s_%s:%s_%s" % (
+                outputWSName__, sqrts__, outputWSObjectTitle__, _id)
         else:
             _modelWSFile = "%s/CMS-HGG_sigfit_%s_%s_%s.root" % (
                 opt.sigModelWSDir, opt.sigModelExt, _proc_s0, _cat)
@@ -202,12 +207,12 @@ if(not opt.skipBkg) & (opt.cat != "NOTAG"):
     _proc_data = "data_obs"
     if opt.mergeYears:
         _cat = opt.cat
-        if(opt.doHHWWgg == 'True' and "HH" in proc):
+        if(opt.doHHWWgg == 'True'):
             _modelWSFile = "%s/CMS-HGG_%s_%s.root" % (
                 opt.bkgModelWSDir, opt.bkgModelExt, _cat)
             _model_bkg = "%s:CMS_hgg_%s_%s_bkgshape" % (
                 bkgWSName__, _cat, sqrts__)
-            _model_data = "%s:roohist_data_mass_%s" % (bkgWSName__, _cat)
+            _model_data = "%s:roohist_data_mass_%s_%s" % (bkgWSName__, _cat,sqrts__)
         else:
             _modelWSFile = "%s/CMS-HGG_%s_%s.root" % (
                 opt.bkgModelWSDir, opt.bkgModelExt, _cat)
@@ -308,8 +313,6 @@ for ir, r in data[data['type'] == 'sig'].iterrows():
 
     # Open input WS file and extract workspace
     f_in = ROOT.TFile(r.inputWSFile)
-    print "Input WS:", r.inputWSFile
-    print "Input nominal:", r.nominalDataName
     inputWS = f_in.Get(inputWSName__)
     # Extract nominal RooDataSet and yield
     rdata_nominal = inputWS.data(r.nominalDataName)
@@ -347,11 +350,9 @@ for ir, r in data[data['type'] == 'sig'].iterrows():
         # For experimental systematics: skip NOTAG events
         if "NOTAG" not in r['cat']:
             # Skip centralObjectWeight correction as concerns events in acceptance
-            print "chuw check input:",r['nominalDataName'],experimentalFactoryType,r['proc'], r['year'], opt.ignore_warnings
             experimentalSystYields = calcSystYields(r['nominalDataName'], contents, inputWS, experimentalFactoryType,
                                                     skipCOWCorr=True, proc=r['proc'], year=r['year'], ignoreWarnings=opt.ignore_warnings)
             for s, f in experimentalFactoryType.iteritems():
-                print "chuw check sys:",s,f
                 if f in ['a_w', 'a_h']:
                     for direction in ['up', 'down']:
                         data.at[ir, "%s_%s_yield" % (

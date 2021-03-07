@@ -176,7 +176,6 @@ for pidx, proc in enumerate(procsToFTest):
 if not os.path.isdir("%s/outdir_%s/fTest/json"%(swd__,opt.ext)): os.system("mkdir %s/outdir_%s/fTest/json"%(swd__,opt.ext))
 if( opt.analysis == 'HHWWgg' or "single" in opt.HHWWggLabel ):
     ff = open("%s/outdir_%s/fTest/json/nGauss_%s_%s.json"%(swd__,opt.ext,opt.procs,opt.cat),"w")
-    print "file:","%s/outdir_%s/fTest/json/nGauss_%s_%s.json"%(swd__,opt.ext,opt.procs,opt.cat)
 else:
     ff = open("%s/outdir_%s/fTest/json/nGauss_%s.json"%(swd__,opt.ext,opt.cat),"w")
 ff.write("{\n")
@@ -184,7 +183,6 @@ ff.write("{\n")
 pitr = 1
 for ir,r in df.sort_values('sumEntries',ascending=False).iterrows():
   k = "\"%s__%s\""%(r['proc'],opt.cat)
-  print "    %-90s : {\"nRV\":%s,\"nWV\":%s}"%(k,r['nRV'],r['nWV'])
   ff.write("    %-90s : {\"nRV\":%s,\"nWV\":%s}"%(k,r['nRV'],r['nWV']))
   # Drop comma for last proc
   if pitr == len(df): ff.write("\n")

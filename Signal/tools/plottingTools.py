@@ -628,12 +628,12 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   lat1.DrawLatex(0.85,0.620,"2017 : %.4f"%_hists['data_2017'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
   lat1.DrawLatex(0.85,0.585,"2018 : %.4f"%_hists['data_2018'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140))))
   lat1.DrawLatex(0.83,0.8,"%s %s"%(procStr,yearStr))
-  fileName = "Yields-Table_%s.tex"%Label
-  file = open(fileName,"w")
-  file.write("\\begin{table}[H]\n")
-  file.write("\t\\begin{center}\n")
-  file.write("\t\t\\begin{tabular}{c|c|c|c|c}\n")
-  file.write("\t\t\tMC Sample & Run2 Unweighted & 2016 Weighted & 2017 Weighted & 2018 Weighted \\\ \\hline \n")
+  #  fileName = "Yields-Table_%s.tex"%Label
+  #  file = open(fileName,"w")
+  #  file.write("\\begin{table}[H]\n")
+  #  file.write("\t\\begin{center}\n")
+  #  file.write("\t\t\\begin{tabular}{c|c|c|c|c}\n")
+  #  file.write("\t\t\tMC Sample & Run2 Unweighted & 2016 Weighted & 2017 Weighted & 2018 Weighted \\\ \\hline \n")
   #  for i, name in enumerate(names):
   name = Label 
   name=name.replace("_","\_")
@@ -642,20 +642,20 @@ def plotSignalModel(_hists,_opt,_outdir=".",Label="cHHH1",offset=0.02):
   Weighted_val_2016 = _hists['data_2016'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
   Weighted_val_2017 = _hists['data_2017'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
   Weighted_val_2018 = _hists['data_2018'].Integral((_hists['data'].FindBin(105)),(_hists['data'].FindBin(140)))
-  file.write("\t\t\t\t\t %s & %s & %s & %s & %s \\\ \n"%(name,round(Run2Weighted_val,5),round(Weighted_val_2016,5),round(Weighted_val_2017,5),round(Weighted_val_2017,5)))
-  file.write("\t\t\end{tabular}\n")
-  file.write("\t\caption{ weighted  MC yields}\n")
-  file.write("\t\\end{center}\n")
-  file.write("\end{table}\n")  
-  file.close()
-  if ( _opt.cats == "all"):
-      output = ROOT.TFile(Label+'_Run2_AllCats.root',"RECREATE")
-  else:
-      output = ROOT.TFile(Label+'Run2_'+_opt.cats+".root","RECREATE")
-  output.mkdir("wsig_13TeV")
-  _hists['pdf'].SetName("Run2_%s_%s"%(Label,_opt.cats))
-  _hists['pdf'].Write()
-  output.Close()
+  #  file.write("\t\t\t\t\t %s & %s & %s & %s & %s \\\ \n"%(name,round(Run2Weighted_val,5),round(Weighted_val_2016,5),round(Weighted_val_2017,5),round(Weighted_val_2017,5)))
+  #  file.write("\t\t\end{tabular}\n")
+  #  file.write("\t\caption{ weighted  MC yields}\n")
+  #  file.write("\t\\end{center}\n")
+  #  file.write("\end{table}\n")
+  #  file.close()
+  #  if ( _opt.cats == "all"):
+      #  output = ROOT.TFile(Label+'_Run2_AllCats.root',"RECREATE")
+  #  else:
+      #  output = ROOT.TFile(Label+'Run2_'+_opt.cats+".root","RECREATE")
+  #  output.mkdir("wsig_13TeV")
+  #  _hists['pdf'].SetName("Run2_%s_%s"%(Label,_opt.cats))
+  #  _hists['pdf'].Write()
+  #  output.Close()
   canv.Update()
   # Save canvas
   canv.SaveAs("%s/smodel_%s%s%s.pdf"%(_outdir,catExt,procExt,yearExt))

@@ -89,7 +89,6 @@ def writeProcesses(f, d, options):
 def writeSystematic(f, d, s, options, stxsMergeScheme=None, scaleCorrScheme=None):
 
     # For signal shape systematics add simple line
-    print "chuw: process:", s['name']
     if s['type'] == 'signal_shape':
         stitle = "%s_%s" % (outputWSNuisanceTitle__, s['title'])
         if s['mode'] != 'other':
@@ -150,7 +149,6 @@ def writeSystematic(f, d, s, options, stxsMergeScheme=None, scaleCorrScheme=None
                         if r['proc'] == "data_obs":
                             continue
                         # Extract value and add to line (with checks)
-                        print "chuw check:",r['proc'],s['name']
                         if "HH" not in r['proc'] and "HH" in s['name']:
                             sval = "-"
                         else:
