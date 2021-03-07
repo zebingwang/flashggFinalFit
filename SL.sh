@@ -213,9 +213,10 @@ done
 
 cd ./SingleHiggs_${procs}_node_${node}_${year}
 echo "Combine results without singleH:"
-combine HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
+combine HHWWgg_${procs}_node_${node}_${ext}_${year}_no_singleH.txt  -m 125.38 -M AsymptoticLimits --run=blind combine FH_run2.txt  -M AsymptoticLimits --run=blind  --freezeParameters MH
+ 
 echo "Combine results singleH:"
-combine HHWWgg_${procs}_node_${node}_${ext}_${year}.txt  -m 125 -M AsymptoticLimits --run=blind  --setParameterRanges  MH=120,130
+combine HHWWgg_${procs}_node_${node}_${ext}_${year}.txt  -m 125.38 -M AsymptoticLimits --run=blind  --freezeParameters MH
 cd $path
 done
 done
