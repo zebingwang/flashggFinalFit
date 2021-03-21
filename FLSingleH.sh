@@ -19,9 +19,12 @@ do
     InputTreeCats='HHWWggTag_2' #input cat name in the tree
     catNames=(${cat//,/ })
     mass='125'
+    # TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
     TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
+    # TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/SL_DNN_Categorized_LOSignals_noPtOverM-Training/"
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass/" #where you place output workspace
     doSelections="1"
-    Selections='dipho_pt > 91' # Seletions you want to applied.
+    Selections='((Leading_Photon_pt/CMS_hgg_mass) > 1/3. \&\& (Subleading_Photon_pt/CMS_hgg_mass) > 1/4. ) \&\& dipho_pt > 91' # Seletions you want to applied.
     Replace="HHWWggTag_FL_0"
     ############################################
     #  Tree selectors#
@@ -64,8 +67,8 @@ do
 # start tree to workspace
 ########################################
 
-if [ ! -d "../Signal/Input/${year}/" ]; then
-  mkdir ../Signal/Input/${year}
+if [ ! -d "$InputWorkspace/Signal/Input/${year}/" ]; then
+  mkdir -p $InputWorkspace/Signal/Input/${year}
 fi
 # Signal tree to data ws
 if [ $year -eq "2018" ]
@@ -77,24 +80,19 @@ cp HHWWgg_config.py HHWWgg_config_run.py
 fi
 sed -i "s#2017#${year}#g" HHWWgg_config_run.py
 sed -i "s#auto#${cat}#g" HHWWgg_config_run.py
-echo "python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${cat}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics"
 rm -rf ws*
 python trees2ws.py --inputConfig HHWWgg_config_run.py --inputTreeFile ./${Name}_${year}.root --inputMass ${mass} --productionMode ${procs}  --year ${year} --doSystematics
 rm HHWWgg_config_run.py
 for catName in ${catNames[@]}
 do
-cp ws_${procs}/${Name}_${year}_${procs}.root ../Signal/Input/${year}/output_M125_${procs}_${catName}.root
+cp ws_${procs}/${Name}_${year}_${procs}.root $InputWorkspace/Signal/Input/${year}/Shifted_M125_${procs}_${catName}.root
+cp ws_${procs}/${Name}_${year}_${procs}.root $InputWorkspace/Signal/Input/${year}/output_M125_${procs}_${catName}.root
 done
 rm ${Name}_${year}.root
-#########################################
-#shift dataset
-#########################################
-cd ../Signal/
-python ./scripts/shiftHiggsDatasets_single_higgs.py --inputDir ./Input/${year}/ --procs ${procs} --cats ${cat}
-
 #######################################
 # Run ftest
 ######################################
+cd ../Signal
 echo "Run FTest"
 cp HHWWgg_single_higgs.py HHWWgg_config_Run.py
 sed -i "s#NODE#node_${node}#g" HHWWgg_config_Run.py
@@ -102,7 +100,7 @@ sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
 sed -i "s#PROCS#${procs}#g" HHWWgg_config_Run.py
 sed -i "s#HHWWggTest#${ext}#g" HHWWgg_config_Run.py
 sed -i "s#CAT#${cat}#g" HHWWgg_config_Run.py
-sed -i "s#INPUTDIR#${path}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
+sed -i "s#INPUTDIR#${InputWorkspace}/Signal/Input/${year}/#g" HHWWgg_config_Run.py
 python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode fTest --modeOpts "doPlots"
 
 #######################################
@@ -118,8 +116,8 @@ python RunSignalScripts.py --inputConfig HHWWgg_config_Run.py --mode signalFit -
 for catName in ${catNames[@]}
 do
 mkdir outdir_${ext}_${procs}_${year}_single_Higgs/
-cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${catName}.root outdir_${ext}_${procs}_${year}_single_Higgs_${catName}.root
-python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${procs}_${year}_single_Higgs --HHWWggLabel $ext
+cp ${path}/Signal/outdir_${ext}_${year}_single_Higgs/signalFit/output/CMS-HGG_sigfit_${ext}_${year}_single_Higgs_${procs}_${year}_${catName}.root outdir_${ext}_${procs}_${year}_single_Higgs/CMS-HGG_sigfit_${ext}_${procs}_${year}_single_Higgs_${catName}.root
+python RunPlotter.py --procs all --years $year --cats $catName --ext ${ext}_${procs}_${year}_single_Higgs --HHWWggLabel ${ext}_${procs}
 done
 
 

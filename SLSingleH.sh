@@ -93,6 +93,7 @@ rm ${Name}_${year}.root
 # Run ftest
 ######################################
 echo "Run FTest"
+cd ../Signal
 cp HHWWgg_single_higgs.py HHWWgg_config_Run.py
 sed -i "s#NODE#node_${node}#g" HHWWgg_config_Run.py
 sed -i "s#YEAR#${year}#g" HHWWgg_config_Run.py
