@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 nodes=("cHHH1")
-years=("2017")
-singleHiggs="tth,wzh,vbf"
+years=("2018")
+singleHiggs="tth,wzh"
 for node in ${nodes[@]}
 do
   for year in ${years[@]}
@@ -16,8 +16,8 @@ do
     
     cat='HHWWggTag_FL_0' #Final cat name 
     
-    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded/GluGluToHHTo2G2l2nu_node_cHHH1_2017.root"
-    DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root"
+    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Signal/FL_NLO_2018_hadded//GluGluToHHTo2G2l2nu_node_cHHH1_2018.root"
+    DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Data_Trees/Data_2018.root"
     InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass/" 
 
     Replace='HHWWggTag_FL_0'
@@ -72,8 +72,8 @@ else
   sed -i "s#SELECTIONS##g" DataSelections_Run.C #No Selection
 fi
 
-# root -b -q  Selections_Run.C
-# root -b -q DataSelections_Run.C
+root -b -q  Selections_Run.C
+root -b -q DataSelections_Run.C
 rm Selections_Run.C
 rm DataSelections_Run.C
 mv ${procs}_node_${node}_${year}.root  ../Trees2WS/
@@ -205,9 +205,9 @@ for datacard in $datacards
 do
 echo "xs_HH         rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 31.049" >>$datacard
 echo "br_HH_WWgg    rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.000970198" >>$datacard
-echo "br_WW_qqlnu   rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.1071" >>$datacard
+echo "br_WW_2l2nu   rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.1071" >>$datacard
 echo "nuisance edit  freeze xs_HH" >> $datacard
-echo "nuisance edit  freeze br_WW_qqlnu" >>  $datacard
+echo "nuisance edit  freeze br_WW_2l2nu" >>  $datacard
 echo "nuisance edit  freeze br_HH_WWgg" >> $datacard
 done
 
