@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-nodes=("cHHH1")
+nodes=("cHHH1" "cHHH2p45" "cHHH5" "cHHH0")
 years=("2018")
 singleHiggs="tth,wzh"
 for node in ${nodes[@]}
@@ -16,9 +16,13 @@ do
     
     cat='HHWWggTag_FL_0' #Final cat name 
     
-    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Signal/FL_NLO_2018_hadded//GluGluToHHTo2G2l2nu_node_cHHH1_2018.root"
+    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Signal/FL_NLO_2018_hadded//GluGluToHHTo2G2l2nu_node_${node}_2018.root"
+    # SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded//GluGluToHHTo2G2l2nu_node_${node}_2017.root"
+    # SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Signal/FL_NLO_2016_hadded/GluGluToHHTo2G2l2nu_node_${node}_2016.root"
     DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Data_Trees/Data_2018.root"
-    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass/" 
+    # DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Data_Trees/Data_2016.root"
+    # DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root"
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt91/" 
 
     Replace='HHWWggTag_FL_0'
     doSelections="1"

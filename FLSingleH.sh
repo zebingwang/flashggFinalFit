@@ -4,9 +4,9 @@ source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" "ggh")
 # Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
-Names=("ttHJetToGG" "VHToGG" "VBFHToGG" "GluGluHToGG")
-# Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
-years=("2017")
+# Names=("ttHJetToGG" "VHToGG" "VBFHToGG" "GluGluHToGG")
+Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
+years=("2016")
 for year in ${years[@]}
 do
   for (( i = 0 ; i < 4 ; i++ ))
@@ -20,9 +20,9 @@ do
     catNames=(${cat//,/ })
     mass='125'
     # TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
-    TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
-    # TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/SL_DNN_Categorized_LOSignals_noPtOverM-Training/"
-    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass/" #where you place output workspace
+    TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Single_H_hadded/"
+    # TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Single_H_2018_hadded/"
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt91/" #where you place output workspace
     doSelections="1"
     Selections='((Leading_Photon_pt/CMS_hgg_mass) > 1/3. \&\& (Subleading_Photon_pt/CMS_hgg_mass) > 1/4. ) \&\& dipho_pt > 91' # Seletions you want to applied.
     Replace="HHWWggTag_FL_0"
