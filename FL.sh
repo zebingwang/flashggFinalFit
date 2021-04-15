@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-nodes=("cHHH1" "cHHH2p45" "cHHH5" "cHHH0")
-years=("2018")
+nodes=("cHHH1")
+years=("2017" "2016" "2018")
 singleHiggs="tth,wzh"
 for node in ${nodes[@]}
 do
@@ -16,17 +16,23 @@ do
     
     cat='HHWWggTag_FL_0' #Final cat name 
     
+if [ $year -eq "2018" ] 
+then
     SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Signal/FL_NLO_2018_hadded//GluGluToHHTo2G2l2nu_node_${node}_2018.root"
-    # SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded//GluGluToHHTo2G2l2nu_node_${node}_2017.root"
-    # SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Signal/FL_NLO_2016_hadded/GluGluToHHTo2G2l2nu_node_${node}_2016.root"
     DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/Data_Trees/Data_2018.root"
-    # DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Data_Trees/Data_2016.root"
-    # DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root"
-    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt91/" 
+elif [ $year -eq "2017" ] 
+then
+    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Signal/FL_NLO_2017_hadded//GluGluToHHTo2G2l2nu_node_${node}_2017.root"
+    DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Data_Trees/Data_2017.root"
+else
+    SignalTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Signal/FL_NLO_2016_hadded/GluGluToHHTo2G2l2nu_node_${node}_2016.root"
+    DataTreeFile="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2016/Data_Trees/Data_2016.root"
+fi
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt97/" 
 
     Replace='HHWWggTag_FL_0'
     doSelections="1"
-    Selections='((Leading_Photon_pt/CMS_hgg_mass) > 1/3. \&\& (Subleading_Photon_pt/CMS_hgg_mass) > 1/4. ) \&\& dipho_pt > 91' # Seletions you want to applied.
+    Selections='((Leading_Photon_pt/CMS_hgg_mass) > 1/3. \&\& (Subleading_Photon_pt/CMS_hgg_mass) > 1/4. ) \&\& dipho_pt > 97' # Seletions you want to applied.
     catNames=(${cat//,/ })
     eval `scramv1 runtime -sh`
     source ./setup.sh

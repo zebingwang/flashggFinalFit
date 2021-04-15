@@ -24,7 +24,15 @@ theory_systematics = [
                 #  {'name':'BR_hgg','title':'BR_hgg','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"0.98/1.021"},
                 {'name':'pdf_ggHH','title':'pdf_ggHH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.030"},
                 {'name':'m_top_unc_HH','title':'m_top_unc_HH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.026"},
-                {'name':'QCDscale_ggHH','title':'QCDscale_ggHH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"0.950/1.022"},
+                {'name':'alpha_s_ggHH','title':'alpha_s_ggHH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.021"},
+                {'name':'alpha_s_ttH','title':'alpha_s_ttH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.02"},
+                {'name':'alpha_s_ggH','title':'alpha_s_ggH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.026"},
+                {'name':'pdf_ttH','title':'pdf_ttH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.030"},
+                {'name':'pdf_VH','title':'pdf_VH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.025"},
+                {'name':'pdf_ggH','title':'pdf_ggH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.019"},
+                {'name':'QCDscale_VH','title':'QCDscale_VH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"0.969/1.038"},
+                {'name':'QCDscale_ttH','title':'QCDscale_ttH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"0.908/1.058"},
+                {'name':'QCDscale_ggH','title':'QCDscale_ggH','type':'constant','prior':'lnN','correlateAcrossYears':1,'value':"1.039"},
                 # WG1 scheme for ggH (includes inclusive N3LO unc so dont have this + QCDscale_ggH)
                 #{'name':'THU_ggH_Mu','title':'THU_ggH_Mu','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['inorm']},
                 #{'name':'THU_ggH_Res','title':'THU_ggH_Res','type':'factory','prior':'lnN','correlateAcrossYears':1,'tiers':['inorm']},
@@ -155,9 +163,6 @@ experimental_systematics = [
 
                 {'name':'JEC','title':'CMS_scale_j','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 {'name':'JER','title':'CMS_res_j','type':'factory','prior':'lnN','correlateAcrossYears':0},
-                {'name':'metJecUncertainty','title':'CMS_hgg_MET_scale_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
-                {'name':'metJerUncertainty','title':'CMS_hgg_MET_res_j','type':'factory','prior':'lnN','correlateAcrossYears':1},
-                {'name':'metPhoUncertainty','title':'CMS_hgg_MET_PhotonScale','type':'factory','prior':'lnN','correlateAcrossYears':1},
                 {'name':'metUncUncertainty','title':'CMS_hgg_MET_Unclustered','type':'factory','prior':'lnN','correlateAcrossYears':0},
                 # HEM issue systematic
                 {'name':'JetHEM','title':'CMS_hgg_JetHEM','type':'factory','prior':'lnN','correlateAcrossYears':1}

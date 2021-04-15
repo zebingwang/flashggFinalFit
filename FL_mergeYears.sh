@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-node=("cHHH1")
+node=("NLO_2")
 singleHiggs="tth,wzh"
 echo "==================="
 ext='FL_Run2combinedData_dipho_pt91'
 procs='GluGluToHHTo2G2l2nu'
 cat='HHWWggTag_FL_0' #Final cat name 
-InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt91/" 
+InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/FL_withPt_over_Mass_dipho_pt91_LO/" 
 hadd_workspaceDir="/afs/cern.ch/user/c/chuw/chuw/HHWWgg/flashgg/CMSSW_10_6_8/" #flashgg Dir,used hadd_workspaces
 catNames=(${cat//,/ })
 
@@ -62,6 +62,18 @@ fi
 #
 #   Add singleHiggs procs to RunYields.py 
 ###################
+if [ "$node" = "cHHH1" ]
+then
+XS=31.049
+elif [ "$node" = "cHHH2p45" ]
+then
+XS=13.126
+elif [ "$node" = "cHHH5" ]
+then
+XS=91.174
+else
+XS=1
+fi
 cp ${path}/Background/outdir_${ext}/CMS-HGG_multipdf_*.root ./FL_run2_dipho_pt91_${node}/Models/
 cp -rf ./SingleHiggs_${procs}_node_${node}_2016/* FL_run2_dipho_pt91_${node}/
 cp -rf ./SingleHiggs_${procs}_node_${node}_2017/* FL_run2_dipho_pt91_${node}/
@@ -72,8 +84,8 @@ python makeDatacard.py --years 2016,2017,2018 --prune True --ext SingleHiggs --p
 python cleanDatacard.py --datacard Datacard.txt --factor 2 --removeDoubleSided
 cp Datacard_cleaned.txt  FL_run2_dipho_pt91_${node}/FL_run2_dipho_pt91_${node}_merged.txt
 cd FL_run2_dipho_pt91_${node}/
-echo "xs_HH         rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 31.049" >>FL_run2_dipho_pt91_${node}_merged.txt
-echo "br_HH_WWgg    rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.000970198" >>FL_run2_dipho_pt91_${node}_merged.txt
+echo "xs_HH         rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} $XS" >>FL_run2_dipho_pt91_${node}_merged.txt
+echo "br_HH_WWgg    rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.000910198" >>FL_run2_dipho_pt91_${node}_merged.txt
 echo "br_WW_2l2nu   rateParam * GluGluToHHTo2G2l2nu_*_hwwhgg_node_${node} 0.1071" >> FL_run2_dipho_pt91_${node}_merged.txt
 echo "nuisance edit  freeze xs_HH" >> FL_run2_dipho_pt91_${node}_merged.txt
 echo "nuisance edit  freeze br_WW_2l2nu" >> FL_run2_dipho_pt91_${node}_merged.txt

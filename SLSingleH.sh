@@ -3,26 +3,27 @@ eval `scramv1 runtime -sh`
 source ./setup.sh
 ############################################
 SingleHiggs=("tth" "wzh" "vbf" "ggh")
-Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
+# Names=("SingleHiggs_ttHJetToGG_2017_CategorizedTrees" "SingleHiggs_VHToGG_2017_all_CategorizedTrees" "SingleHiggs_VBFHToGG_2017_CategorizedTrees" "SingleHiggs_GluGluHToGG_2017_CategorizedTrees")
+Names=("SingleHiggs_ttHJetToGG_2018_all_CategorizedTrees" "SingleHiggs_VHToGG_2018_all_CategorizedTrees" "SingleHiggs_VBFHToGG_2018_all_CategorizedTrees" "SingleHiggs_GluGluHToGG_2018_all_CategorizedTrees") 
 # Names=("ttHJetToGG" "VHToGG" "VBFHToGG" "GluGluHToGG")
 # Names=("ttHJetToGG_M125" "VHToGG_M125" "VBFHToGG_M125" "GluGluHToGG_M125")
-years=("2017")
+years=("2018")
 for year in ${years[@]}
 do
   for (( i = 0 ; i < 4 ; i++ ))
   do
     Name=${Names[$i]}
     procs=${SingleHiggs[$i]}
-    # year='2017'
+    # year='2018'
     ext='SL'
     cat='HHWWggTag_SLDNN_0,HHWWggTag_SLDNN_1,HHWWggTag_SLDNN_2,HHWWggTag_SLDNN_3' #output cat name, it will be used in subsequence step
     InputTreeCats='HHWWggTag_SL_0,HHWWggTag_SL_1,HHWWggTag_SL_2,HHWWggTag_SL_3' #input cat name in the tree
     catNames=(${cat//,/ })
     mass='125'
     # TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
-    TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2017/Single_H_2017_Hadded/"
+    TreePath="/eos/user/a/atishelm/ntuples/HHWWgg_flashgg/January_2021_Production/2018/HHWWyyDNN_WithHggFactor2-200Epochs-3ClassMulticlass_EvenSingleH_2Hgg_withKinWeightCut10_BalanceYields/Single_H/"
     # TreePath="/eos/user/c/chuw/HHWWgg_ntuple/2016/SL_DNN_Categorized_LOSignals_noPtOverM-Training/"
-    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/SL/"
+    InputWorkspace="/eos/user/c/chuw/HHWWggWorkspace/SL_multiClass/"
     doSelections="0"
     Selections='dipho_pt > 91' # Seletions you want to applied.
     Replace="HHWWggTag_SLDNN_0"

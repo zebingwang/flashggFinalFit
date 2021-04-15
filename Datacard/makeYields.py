@@ -155,7 +155,6 @@ for year in years:
         else:
             _inputWSFile = glob.glob(
                 "%s/output*M%s*_%s_%s.root" % (inputWSDirMap[year], opt.mass, proc, opt.cat))[0]
-
         if (opt.doHHWWgg == 'True' and opt.klScan == "False" and "HH" in proc):
             _nominalDataName = "%s_%s_%s_%s" % (
                 _proc_s0, opt.HHWWggLabel, sqrts__, opt.cat)
@@ -172,7 +171,8 @@ for year in years:
             f = ROOT.TFile(_inputWSFile)
             w = f.Get(inputWSName__)
             sumw = w.data(_nominalDataName).sumEntries()
-            if sumw == 0.:
+            sumEvents = w.data(_nominalDataName).numEntries()
+            if sumw == 0. or sumEvents<5 :
                 skipProc = True
             w.Delete()
             f.Close()

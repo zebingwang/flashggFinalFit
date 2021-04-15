@@ -144,20 +144,116 @@ for cat,f in inputFiles.iteritems():
       print "Check:",_id,"  ",d
       d.fillHistogram(hists['temp'],alist)
       print "inte befor:",hists['data'].Integral()
-      if("2017" in _id and "SL_cHHH1" in opt.HHWWggLabel):
-        print "DO NOT APPLY SCALE FACTOR"
-        if ("HHWWggTag_SLDNN_0" in _id):
-            print "tag0"
-            hists['temp'].Scale(1.993)
-        elif ("HHWWggTag_SLDNN_1" in _id):
-            print "tag1"
-            hists['temp'].Scale(1.984)
-        elif ( "HHWWggTag_SLDNN_2" in _id ):
-            print "tag2"
-            hists['temp'].Scale(2.007)
-        else: 
-            print "tag3"
-            hists['temp'].Scale(1.979)
+      if ("2016" in _id and "SL_ggh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.10763082136166)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(16.31621491153269)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(1.4848720739943575)
+        else:
+            hists['temp'].Scale(1.9381961323036647)
+      elif ("2016" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(2.105072710777347)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(3.2341060605784646)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(1.9342078611025468)
+        else:
+            hists['temp'].Scale(2.0000852484799445)          
+      elif ("2016" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(2.358350289222103)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.9344774986332813)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(1.8482669281664237)
+        else:
+            hists['temp'].Scale(2.039303215498302)       
+      elif ("2016" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.6087244627241823)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(2.155306121059539)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(1.7353147566908373)
+        else:
+            hists['temp'].Scale(2.1727825600287014)     
+      elif ("2017" in _id and "SL_ggh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.361644453061934)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(2.1947380796012137)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.1174899999815473)
+        else:
+            hists['temp'].Scale(1.8261651957415976)  
+      elif ("2017" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.6052963439926915)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.360599438620242)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.7881689294271332)
+        else:
+            hists['temp'].Scale(1.898467594456713)     
+      elif ("2017" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.8571149863036869)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(2.0069646235634884)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.0603325123427942)
+        else:
+            hists['temp'].Scale(2.0055034138441683) 
+      elif ("2017" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.8369935863649554)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.8778975264714415)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.009671726265621)
+        else:
+            hists['temp'].Scale(2.0695097844194352) 
+      elif ("2018" in _id and "SL_ggh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(2.9439253607842923)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.5545821972528449)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(1.7317840844136394)
+        else:
+            hists['temp'].Scale(1.9933329815341454)  
+      elif ("2018" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.377476698801358)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.6840119929049455)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.453590915616557)
+        else:
+            hists['temp'].Scale(1.6267911329478102)     
+      elif ("2018" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(1.56117375884851)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(1.8784161102792605)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.0372605789812197)
+        else:
+            hists['temp'].Scale(2.0113059008697514) 
+      elif ("2018" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            hists['temp'].Scale(2.1150135613987335)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            hists['temp'].Scale(2.0122411491071848)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            hists['temp'].Scale(2.0679575486634367)
+        else:
+            hists['temp'].Scale(2.0484747516951183) 
+      else:
+       print "Donot apply any SFs" 
       hists['data'].Add(hists['temp'],hists['data'])
       if ("2017" in _id ):
           hists['data_2017'].Add(hists['temp'],hists['data_2017'])
@@ -178,17 +274,117 @@ for cat,f in inputFiles.iteritems():
       hists['pdf'] = p.Clone("h_pdf")
       hists['pdf'].Reset()
     # Fill
-    if ("2017" in _id and "SL_cHHH1" in opt.HHWWggLabel):
+    if ("2016" in _id and "SL_ggh" in opt.HHWWggLabel):
         if "HHWWggTag_SLDNN_0" in _id:
-            p.Scale(1.993)
+            p.Scale(1.10763082136166)
         elif "HHWWggTag_SLDNN_1" in _id:
-            p.Scale(1.984)
+            p.Scale(16.31621491153269)
         elif "HHWWggTag_SLDNN_2" in _id:
-            p.Scale(2.007)
+            p.Scale(1.4848720739943575)
         else:
-            p.Scale(1.979)
+            p.Scale(1.9381961323036647)
+    elif ("2016" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(2.105072710777347)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(3.2341060605784646)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(1.9342078611025468)
+        else:
+            p.Scale(2.0000852484799445)          
+    elif ("2016" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(2.358350289222103)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.9344774986332813)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(1.8482669281664237)
+        else:
+            p.Scale(2.039303215498302)       
+    elif ("2016" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.6087244627241823)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(2.155306121059539)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(1.7353147566908373)
+        else:
+            p.Scale(2.1727825600287014)     
+    elif ("2017" in _id and "SL_ggh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.361644453061934)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(2.1947380796012137)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.1174899999815473)
+        else:
+            p.Scale(1.8261651957415976)  
+    elif ("2017" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.6052963439926915)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.360599438620242)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.7881689294271332)
+        else:
+            p.Scale(1.898467594456713)     
+    elif ("2017" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.8571149863036869)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(2.0069646235634884)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.0603325123427942)
+        else:
+            p.Scale(2.0055034138441683) 
+    elif ("2017" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.8369935863649554)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.8778975264714415)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.009671726265621)
+        else:
+            p.Scale(2.0695097844194352) 
+    elif ("2018" in _id and "SL_ggh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(2.9439253607842923)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.5545821972528449)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(1.7317840844136394)
+        else:
+            p.Scale(1.9933329815341454)  
+    elif ("2018" in _id and "SL_vbf" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.377476698801358)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.6840119929049455)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.453590915616557)
+        else:
+            p.Scale(1.6267911329478102)     
+    elif ("2018" in _id and "SL_wzh" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(1.56117375884851)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(1.8784161102792605)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.0372605789812197)
+        else:
+            p.Scale(2.0113059008697514) 
+    elif ("2018" in _id and "SL_tth" in opt.HHWWggLabel):
+        if "HHWWggTag_SLDNN_0" in _id:
+            p.Scale(2.1150135613987335)
+        elif "HHWWggTag_SLDNN_1" in _id:
+            p.Scale(2.0122411491071848)
+        elif "HHWWggTag_SLDNN_2" in _id:
+            p.Scale(2.0679575486634367)
+        else:
+            p.Scale(2.0484747516951183) 
+    else:
+       print "Donot apply any SFs"
     hists['pdf'] += p
-
   print "==========Integarl pdf:",hists['pdf'].Integral()
   # Per-year pdf histograms
   if len(opt.years.split(",")) > 1:
@@ -201,7 +397,7 @@ for cat,f in inputFiles.iteritems():
           hists['pdf_%s'%year] = hists['pdf'].Clone()
           hists['pdf_%s'%year].Scale(0)
       # Fill
-      print hists['pdf_2016'].GetMaximum()
+      #  print hists['pdf_2016'].GetMaximum()
       for _id,p in hpdfs.iteritems():
           #  print "P value:",_id,p.Integral()
           if year in _id:

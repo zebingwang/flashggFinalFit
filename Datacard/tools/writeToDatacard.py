@@ -149,8 +149,20 @@ def writeSystematic(f, d, s, options, stxsMergeScheme=None, scaleCorrScheme=None
                         if r['proc'] == "data_obs":
                             continue
                         # Extract value and add to line (with checks)
-                        if "HH" not in r['proc'] and "HH" in s['name']:
-                            sval = "-"
+                        print "============"
+                        if "HH" in s['name'] or "ttH" in s['name'] or "VH" in s['name'] or "ggH" in s['name'] or "VBF" in s['name']:
+                            if "HH"  in r['proc'] and "HH" in s['name']:
+                                sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
+                            elif "tth"  in r['proc'] and "ttH" in s['name']:
+                                sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
+                            elif "wzh"  in r['proc'] and "VH" in s['name']:
+                                sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
+                            elif "ggh"  in r['proc'] and "ggH" in s['name'] and "HH" not in s['name']:
+                                sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
+                            elif "vbf"  in r['proc'] and "VBF" in s['name']:
+                                sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
+                            else:
+                                sval = "-"
                         else:
                             sval = r["%s%s%s" % (s['name'], mergeStr, tierStr)]
                         lsyst = addSyst(lsyst, sval, stitle, r['proc'], cat)
