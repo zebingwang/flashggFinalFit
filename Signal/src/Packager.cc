@@ -17,7 +17,7 @@
 using namespace std;
 using namespace RooFit;
 
-Packager::Packager(WSTFileWrapper *ws, RooWorkspace *wsSave  , vector<string> procs, int nCats, int mhLow, int mhHigh, vector<int> skipMasses, int sqrts, bool skipPlots, string outDir, 
+Packager::Packager(WSTFileWrapper *ws, RooWorkspace *wsSave  , vector<string> procs, int nCats, int mhLow, int mhHigh, vector<int> skipMasses, int sqrts, bool skipPlots, string outDir,
 		   RooWorkspace *wsMerge, const vector<int>& cats, const vector<string>& flashggCats):
   WS(ws),
   mergeWS(wsMerge),
@@ -62,7 +62,7 @@ void Packager::packageOutput(bool split, string process , string tag){
 			bool merge = mergeWS != 0 && ( find(cats_.begin(),cats_.end(),cat) == cats_.end() );
 			for (vector<string>::iterator proc=procs_.begin(); proc!=procs_.end(); proc++){
 				RooDataSet *tempData = 0;
-				if( merge ) { 
+				if( merge ) {
 					tempData = (RooDataSet*)mergeWS->data(Form("sig_%s_mass_m%d_%s",proc->c_str(),mh,catname.c_str()));
 					if(tempData && !saveWS->data(Form("sig_%s_mass_m%d_%s",proc->c_str(),mh,catname.c_str())))  saveWS->import(*tempData); //FIXME
 				} else {
@@ -123,7 +123,7 @@ void Packager::packageOutput(bool split, string process , string tag){
 			}
 			else {
         for (int m =120; m<131; m=m+5){
-				MH->setVal(m);norm->getVal(); 
+				MH->setVal(m);norm->getVal();
         }
 				runningNormSum->add(*norm);
         runningNormSumVal+= norm->getVal();
@@ -209,7 +209,7 @@ void Packager::packageOutput(bool split, string process , string tag){
 				//effAccGraph->SetPoint(p,mh,norm->getVal()/(XS_value*normalization->GetBR(mh)));
 			 //std::cout << " [INFO] eff*acc " << norm->getVal()/(XS_value*normalization->GetBR(mh)) << std::endl;
 				p++;
-			} 
+			}
         string extension="";
         if (split_){
         extension=Form("_%s_%s",process.c_str(),tag.c_str());
@@ -246,7 +246,8 @@ void Packager::packageOutput(bool split, string process , string tag){
 
 
 void Packager::makePlots(){
-	RooRealVar *mass = (RooRealVar*)saveWS->var("CMS_hgg_mass");
+	//RooRealVar *mass = (RooRealVar*)saveWS->var("CMS_hgg_mass");
+	RooRealVar *mass = (RooRealVar*)saveWS->var("CMS_hza_mass");//bing
 	RooRealVar *MH = (RooRealVar*)saveWS->var("MH");
 	RooAddPdf *sumPdfsAllCats = (RooAddPdf*)saveWS->pdf("sigpdfrelAllCats_allProcs");
 	map<int,RooDataSet*> dataSets;
