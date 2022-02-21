@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 # ol = '/afs/cern.ch/work/a/atishelm/private/ecall1algooptimization/PileupMC_v2/Plot/ntuples/'
 #ol = '/eos/user/a/atishelm/www/EcalL1Optimization/BX-1/'
-ol = '/afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/ALP_SigModel/fit_results_17/'
+ol = '/afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/ALP_SigModel/fit_results_16/'
 parser = argparse.ArgumentParser()
 parser.add_argument("-SM","--SM_Radion",action="store_true", default=False, help="Display SM limits", required=False)
 parser.add_argument("-pb","--pb", action="store_true", default=False, help="Display limits in pb unit", required=False)
@@ -113,12 +113,16 @@ def plotUpperLimits(masses, limit, ALP_xs, name):
         elif name == 'Br':
             #frame.GetYaxis().SetTitle("95% CL limits on #sigma(gg#rightarrow H#rightarrow Za#rightarrow 2l + 2#gamma)(fb)")
             frame.GetYaxis().SetTitle("95% CL limits on Br(pp#rightarrow H#rightarrow Za#rightarrow 2l + 2#gamma)")
-            frame.SetMinimum(0.000001) # need Minimum > 0 for log scale
-            frame.SetMaximum(1.) # CMS HH
+            #frame.SetMinimum(0.000001) # need Minimum > 0 for log scale
+            #frame.SetMaximum(1.) # CMS HH
+            frame.SetMinimum(0.)
+            frame.SetMaximum(0.001)
         else:
             frame.GetYaxis().SetTitle("95% CL limits on #sigma(pp#rightarrow H#rightarrow Za#rightarrow 2l + 2#gamma)(fb)")
-            frame.SetMinimum(0.1) # need Minimum > 0 for log scale
-            frame.SetMaximum(8*1e4) # CMS HH
+            #frame.SetMinimum(0.1) # need Minimum > 0 for log scale
+            #frame.SetMaximum(8*1e4) # CMS HH
+            frame.SetMinimum(0.)
+            frame.SetMaximum(30.)
 
 
     frame.GetXaxis().SetLimits(0, 32)
@@ -169,7 +173,7 @@ def plotUpperLimits(masses, limit, ALP_xs, name):
     label.SetTextFont(42)
     label.SetTextSize(0.045)
     label.SetLineWidth(2)
-    label.DrawLatex(0.7,0.7 + yboost,"STAT only");
+    #label.DrawLatex(0.7,0.7 + yboost,"STAT only");
     print " "
     # c.SaveAs("UpperLimit.png")
 
@@ -179,6 +183,7 @@ def plotUpperLimits(masses, limit, ALP_xs, name):
     if args.SM_Radion: outFile += "SM_"
 
     c.SaveAs(outFile + name+"_UpperLimit.pdf")
+    c.SaveAs(outFile + name+"_UpperLimit.png")
     c.SaveAs(outFile + name+"_UpperLimit.C")
     c.Close()
 
@@ -312,7 +317,8 @@ def main():
     masses = [ 5, 15, 30]
     for m in masses:
         values.append(m)
-        file_name = ol + "M"+str(m)+"/higgsCombineTest.AsymptoticLimits.mH"+str(m)+".root"
+        #file_name = ol + "M"+str(m)+"/higgsCombineTest.AsymptoticLimits.mH"+str(m)+".root"
+        file_name = ol + "M"+str(m)+"/higgsCombineTest.AsymptoticLimits.mH125.root"
         #print file_name
         limit[m] = getLimits(file_name)
 

@@ -652,7 +652,8 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	}
 	RooPlot *plot = mgg->frame();
 	plot->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
-	plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
+	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
+	plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
 	if (!unblind) {
 		//mgg->setRange("unblind_up",135,180);
 		//mgg->setRange("unblind_down",100,115);
@@ -863,7 +864,8 @@ int main(int argc, char* argv[]){
 	cout<< "[INFO] " << "Plotting data and nominal curve" << endl;
 	RooPlot *plot = mgg->frame();
 	RooPlot *plotLC = mgg->frame();
-	plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
+	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
+	plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
 	plot->SetTitle("");
 	data->plotOn(plot,Binning(80),Invisible());
   ///start extra bit for ratio plot///
@@ -1157,7 +1159,8 @@ int main(int argc, char* argv[]){
   hdummy->SetMinimum(hdatasub->GetHistogram()->GetMinimum()-1);
   hdummy->GetYaxis()->SetTitle("data - best fit PDF");
   hdummy->GetYaxis()->SetTitleSize(0.12);
-  hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
+  //hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
+  hdummy->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
   hdummy->GetXaxis()->SetTitleSize(0.12);
   hdummy->Draw("HIST");
 	if (doBands) twoSigmaBand_r->Draw("L3 SAME");

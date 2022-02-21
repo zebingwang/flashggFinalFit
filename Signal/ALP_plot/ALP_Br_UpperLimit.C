@@ -1,17 +1,16 @@
 void ALP_Br_UpperLimit()
 {
 //=========Macro generated from canvas: c/c
-//=========  (Thu May  6 13:48:35 2021) by ROOT version 6.12/07
+//=========  (Mon May 24 13:11:55 2021) by ROOT version 6.12/07
    TCanvas *c = new TCanvas("c", "c",0,0,800,600);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    c->SetHighLightColor(2);
-   c->Range(-4.571429,-6.9,33.52381,0.6);
+   c->Range(-4.571429,-0.00015,33.52381,0.0011);
    c->SetFillColor(0);
    c->SetBorderMode(0);
    c->SetBorderSize(2);
-   c->SetLogy();
    c->SetGridx();
    c->SetGridy();
    c->SetTickx(1);
@@ -26,8 +25,8 @@ void ALP_Br_UpperLimit()
    c->SetFrameBorderMode(0);
    
    TH1F *hframe__1 = new TH1F("hframe__1","",1000,0,32);
-   hframe__1->SetMinimum(1e-06);
-   hframe__1->SetMaximum(1);
+   hframe__1->SetMinimum(0);
+   hframe__1->SetMaximum(0.001);
    hframe__1->SetDirectory(0);
    hframe__1->SetStats(0);
    hframe__1->SetLineStyle(0);
@@ -61,12 +60,12 @@ void ALP_Br_UpperLimit()
    15,
    5};
    Double_t Graph0_fy1[6] = {
-   0.000252335,
-   0.0003137169,
-   0.0002715827,
-   6.583599e-05,
-   6.401111e-05,
-   5.243015e-05};
+   0.0003928212,
+   0.000548955,
+   0.0004715696,
+   0.0001105034,
+   0.0001063448,
+   7.601319e-05};
    TGraph *graph = new TGraph(6,Graph0_fx1,Graph0_fy1);
    graph->SetName("Graph0");
    graph->SetTitle("Graph");
@@ -81,8 +80,8 @@ void ALP_Br_UpperLimit()
    graph->SetMarkerStyle(20);
    
    TH1F *Graph_Graph1 = new TH1F("Graph_Graph1","Graph",100,2.5,32.5);
-   Graph_Graph1->SetMinimum(2.630148e-05);
-   Graph_Graph1->SetMaximum(0.0003398456);
+   Graph_Graph1->SetMinimum(2.871901e-05);
+   Graph_Graph1->SetMaximum(0.0005962492);
    Graph_Graph1->SetDirectory(0);
    Graph_Graph1->SetStats(0);
    Graph_Graph1->SetLineStyle(0);
@@ -117,12 +116,12 @@ void ALP_Br_UpperLimit()
    15,
    5};
    Double_t Graph1_fy2[6] = {
-   0.0001711481,
-   0.0002105849,
-   0.0001919543,
-   8.831358e-05,
-   9.064907e-05,
-   7.424874e-05};
+   0.0002645919,
+   0.000363463,
+   0.0003276008,
+   0.0001519422,
+   0.0001527357,
+   0.0001122591};
    graph = new TGraph(6,Graph1_fx2,Graph1_fy2);
    graph->SetName("Graph1");
    graph->SetTitle("Graph");
@@ -135,8 +134,8 @@ void ALP_Br_UpperLimit()
    graph->SetMarkerStyle(20);
    
    TH1F *Graph_Graph2 = new TH1F("Graph_Graph2","Graph",100,2.5,32.5);
-   Graph_Graph2->SetMinimum(6.061513e-05);
-   Graph_Graph2->SetMaximum(0.0002242185);
+   Graph_Graph2->SetMinimum(8.713868e-05);
+   Graph_Graph2->SetMaximum(0.0003885834);
    Graph_Graph2->SetDirectory(0);
    Graph_Graph2->SetStats(0);
    Graph_Graph2->SetLineStyle(0);
@@ -168,9 +167,9 @@ void ALP_Br_UpperLimit()
    15,
    30};
    Double_t Graph2_fy3[3] = {
-   0.000111851,
-   0.000136557,
-   0.0001257762};
+   0.0001706963,
+   0.000232686,
+   0.0002210068};
    graph = new TGraph(3,Graph2_fx3,Graph2_fy3);
    graph->SetName("Graph2");
    graph->SetTitle("Graph");
@@ -180,8 +179,8 @@ void ALP_Br_UpperLimit()
    graph->SetMarkerStyle(20);
    
    TH1F *Graph_Graph3 = new TH1F("Graph_Graph3","Graph",100,2.5,32.5);
-   Graph_Graph3->SetMinimum(0.0001093804);
-   Graph_Graph3->SetMaximum(0.0001390276);
+   Graph_Graph3->SetMinimum(0.0001644973);
+   Graph_Graph3->SetMaximum(0.000238885);
    Graph_Graph3->SetDirectory(0);
    Graph_Graph3->SetStats(0);
    Graph_Graph3->SetLineStyle(0);
@@ -207,14 +206,14 @@ void ALP_Br_UpperLimit()
    graph->SetHistogram(Graph_Graph3);
    
    graph->Draw("l");
-   TLatex *   tex = new TLatex(0.96,0.936,"41.5 fb^{-1} (13 TeV)");
+   TLatex *   tex = new TLatex(0.96,0.936,"35.9 fb^{-1} (13 TeV)");
 tex->SetNDC();
    tex->SetTextAlign(31);
    tex->SetTextFont(42);
    tex->SetTextSize(0.048);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.12,0.936,"CMS");
+      tex = new TLatex(0.2,0.936,"CMS");
 tex->SetNDC();
    tex->SetTextFont(61);
    tex->SetTextSize(0.052);
@@ -229,8 +228,8 @@ tex->SetNDC();
    tex->Draw();
    
    TH1F *hframe__2 = new TH1F("hframe__2","",1000,0,32);
-   hframe__2->SetMinimum(1e-06);
-   hframe__2->SetMaximum(1);
+   hframe__2->SetMinimum(0);
+   hframe__2->SetMaximum(0.001);
    hframe__2->SetDirectory(0);
    hframe__2->SetStats(0);
    hframe__2->SetLineStyle(0);
@@ -301,12 +300,6 @@ tex->SetNDC();
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    leg->Draw();
-      tex = new TLatex(0.7,0.5,"STAT only");
-tex->SetNDC();
-   tex->SetTextFont(42);
-   tex->SetTextSize(0.045);
-   tex->SetLineWidth(2);
-   tex->Draw();
    c->Modified();
    c->cd();
    c->SetSelected(c);

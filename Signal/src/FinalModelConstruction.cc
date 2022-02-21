@@ -1458,7 +1458,8 @@ void FinalModelConstruction::getNormalization(){
 	} else {
      if (verbosity_>1) std::cout << "[INFO] xs " << xs->getVal() << ", brSpline " << brSpline->getVal() << ", eaSpline " << eaSpline->getVal() << ", rateNuisTerm " << rateNuisTerm->getVal() << ", intLumi " << intLumi->getVal() << std::endl;
   }
-	finalNorm = new RooFormulaVar(Form("%s_norm",finalPdf->GetName()),Form("%s_norm",finalPdf->GetName()),"@0*@1*@2*@3",RooArgList(*xs,*brSpline,*eaSpline,*rateNuisTerm));
+	//finalNorm = new RooFormulaVar(Form("%s_norm",finalPdf->GetName()),Form("%s_norm",finalPdf->GetName()),"@0*@1*@2*@3",RooArgList(*xs,*brSpline,*eaSpline,*rateNuisTerm));
+  finalNorm = new RooFormulaVar(Form("%s_norm",finalPdf->GetName()),Form("%s_norm",finalPdf->GetName()),"@0*@1",RooArgList(*brSpline,*rateNuisTerm));//bing
   // make some debug checks
   //for (int m =120; m<131; m=m+5){
 	for (int m =mhLow_; m<mhHigh_+1; m=m+1){//bing
@@ -1467,7 +1468,8 @@ void FinalModelConstruction::getNormalization(){
   }
 
   // these are for plotting
-  finalNormThisLum = new RooFormulaVar(Form("%s_normThisLumi",finalPdf->GetName()),Form("%s_normThisLumi",finalPdf->GetName()),"@0*@1*@2*@3*@4",RooArgList(*xs,*brSpline,*eaSpline,*rateNuisTerm,*intLumi));
+  //finalNormThisLum = new RooFormulaVar(Form("%s_normThisLumi",finalPdf->GetName()),Form("%s_normThisLumi",finalPdf->GetName()),"@0*@1*@2*@3*@4",RooArgList(*xs,*brSpline,*eaSpline,*rateNuisTerm,*intLumi));
+  finalNormThisLum = new RooFormulaVar(Form("%s_normThisLumi",finalPdf->GetName()),Form("%s_normThisLumi",finalPdf->GetName()),"@0*@1*@2",RooArgList(*brSpline,*rateNuisTerm,*intLumi));//bing
 	extendPdfRel = new RooExtendPdf(Form("extend%s",finalPdf->GetName()),Form("extend%s",finalPdf->GetName()),*finalPdf,*finalNorm);
   extendPdf = new RooExtendPdf(Form("extend%sThisLumi",finalPdf->GetName()),Form("extend%sThisLumi",finalPdf->GetName()),*finalPdf,*finalNormThisLum);
   // do secondary models // obsolete shoudl be removed since we don't make these measurements in run 2

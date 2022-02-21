@@ -444,7 +444,8 @@ void plot(RooRealVar *mass, RooMultiPdf *pdfs, RooCategory *catIndex, RooDataSet
   hdummy->SetMinimum(hdatasub->GetHistogram()->GetMinimum()-1);
   hdummy->GetYaxis()->SetTitle("data - best fit PDF");
   hdummy->GetYaxis()->SetTitleSize(0.12);
-  hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
+  //hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
+  hdummy->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
   hdummy->GetXaxis()->SetTitleSize(0.12);
   hdummy->Draw("HIST");
   hdummy->GetYaxis()->SetNdivisions(808);
@@ -730,12 +731,12 @@ vector<string> flashggCats_;
 	functionClasses.push_back("Bernstein");
 	functionClasses.push_back("Exponential");
 	functionClasses.push_back("PowerLaw");
-	//functionClasses.push_back("Laurent");
+	functionClasses.push_back("Laurent");
 	map<string,string> namingMap;
 	namingMap.insert(pair<string,string>("Bernstein","pol"));
 	namingMap.insert(pair<string,string>("Exponential","exp"));
 	namingMap.insert(pair<string,string>("PowerLaw","pow"));
-	//namingMap.insert(pair<string,string>("Laurent","lau"));
+	namingMap.insert(pair<string,string>("Laurent","lau"));
 
 	// store results here
 

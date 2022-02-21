@@ -30,7 +30,8 @@ lumi_14TeV = "3000 fb^{-1}"
 lumi_13TeV = "35.9 fb^{-1}"
 lumi_8TeV  = "19.7 fb^{-1}"
 lumi_7TeV  = "5.1 fb^{-1}"
-lumi_sqrtS = "41.5 fb^{-1}"
+#lumi_sqrtS = "41.5 fb^{-1}"
+lumi_sqrtS = "35.9 fb^{-1}"
 
 drawLogo      = False
 outOfFrame    = False
@@ -121,7 +122,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
         latex.SetTextFont(cmsTextFont)
         latex.SetTextAlign(11)
         latex.SetTextSize(cmsTextSize*t)
-        latex.DrawLatex(l,1-t+lumiTextOffset*t,cmsText)
+        latex.DrawLatex(l+0.08,1-t+lumiTextOffset*t,cmsText)
 
     pad.cd()
 

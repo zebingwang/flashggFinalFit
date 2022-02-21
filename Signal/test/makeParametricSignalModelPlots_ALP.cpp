@@ -551,7 +551,8 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   canv->SetLeftMargin(0.16);
   canv->SetTickx(); canv->SetTicky();
   plot->SetTitle("");
-  plot->GetXaxis()->SetTitle("m_{a} (GeV)");
+  //plot->GetXaxis()->SetTitle("m_{a} (GeV)");
+  plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
   plot->GetXaxis()->SetTitleSize(0.05);
   plot->GetYaxis()->SetTitleSize(0.05);
   //plot->GetYaxis()->SetTitleOffset(1.5);
