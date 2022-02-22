@@ -1096,7 +1096,8 @@ int main(int argc, char *argv[]){
         }
       }
     }
-    // this guy constructs the final model with systematics, eff*acc etc. if (isFlashgg_){
+    // this guy constructs the final model with systematics, eff*acc etc. 
+    if (isFlashgg_){
 
       outWS->import(*intLumi_);
       FinalModelConstruction finalModel(massList_, mass_,MH,intLumi_,mhLow_,mhHigh_,proc,cat,doSecondaryModels_,systfilename_,skipMasses_,verbose_,procs_, flashggCats_,plotDir_, isProblemCategory,isCutBased_,sqrts_,doQuadraticSigmaSum_);
