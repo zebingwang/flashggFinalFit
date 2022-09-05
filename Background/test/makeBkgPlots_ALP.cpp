@@ -705,6 +705,7 @@ int main(int argc, char* argv[]){
 
 	string bkgFileName;
 	string sigFileName;
+	string channelName;
 	string outFileName;
 	string outDir;
 	int cat;
@@ -734,6 +735,7 @@ int main(int argc, char* argv[]){
 		("help,h", 																																		 			"Show help")
 		("bkgFileName,b", po::value<string>(&bkgFileName), 																	"Input file name")
 		("sigFileName,s", po::value<string>(&sigFileName), 																	"Input file name")
+		("channel", po::value<string>(&channelName), 																	"Channel name")
 		("outFileName,o", po::value<string>(&outFileName)->default_value("BkgPlots.root"),	"Output file name")
 		("outDir,d", po::value<string>(&outDir)->default_value("BkgPlots"),						 			"Output directory")
 		("cat,c", po::value<int>(&cat),																								 			"Category")
@@ -810,9 +812,11 @@ int main(int argc, char* argv[]){
 	if (isMultiPdf) {
 		mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts));
 		//mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts));//FIXED
-		mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",to_string(cat).c_str(),sqrts));//FIXED
+		mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",to_string(cat).c_str(),sqrts));
+		//mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV_%s",to_string(cat).c_str(),sqrts,channelName.c_str()));//bing
 		if (!mpdf || !mcat){
 			cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts) << ") or multicat ("<< Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts) <<")" << endl;
+			//cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts) << ") or multicat ("<< Form("pdfindex_%s_%dTeV_%s",catname.c_str(),sqrts,channelName.c_str()) <<")" << endl;//bing
 			exit(0);
 		}
 	}
@@ -823,6 +827,7 @@ int main(int argc, char* argv[]){
 			exit(0);
 		}
 		mcat = new RooCategory(Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts),"c");
+		//mcat = new RooCategory(Form("pdfindex_%s_%dTeV_%s",catname.c_str(),sqrts,channelName.c_str()),"c");//bing
 		RooArgList temp;
 		temp.add(*bpdf);
 		mpdf = new RooMultiPdf(Form("tempmpdf_%s",catname.c_str()),"",*mcat,temp);

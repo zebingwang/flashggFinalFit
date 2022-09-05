@@ -609,6 +609,7 @@ int main(int argc, char* argv[]){
   lumi_sqrtS = "13 TeV";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
 
   string fileName;
+  string channelName;
   int ncats;
   int singleCategory;
   string datfile;
@@ -626,6 +627,7 @@ vector<string> flashggCats_;
   desc.add_options()
     ("help,h",                                                                                  "Show help")
     ("infilename,i", po::value<string>(&fileName),                                              "In file name")
+    ("channel", po::value<string>(&channelName),                                              "channel name")
     ("ncats,c", po::value<int>(&ncats)->default_value(5),                                       "Number of categories")
     ("singleCat", po::value<int>(&singleCategory)->default_value(-1),                           "Run A single Category")
     ("datfile,d", po::value<string>(&datfile)->default_value("dat/fTest.dat"),                  "Right results to datfile for BiasStudy")
@@ -962,10 +964,12 @@ vector<string> flashggCats_;
 			string catindexname;
 			string catname;
 			if (isFlashgg_){
-				catindexname = Form("pdfindex_%s_%s",flashggCats_[cat].c_str(),ext.c_str());
+        catindexname = Form("pdfindex_%s_%s",flashggCats_[cat].c_str(),ext.c_str());
+				//catindexname = Form("pdfindex_%s_%s_%s",flashggCats_[cat].c_str(),ext.c_str(),channelName.c_str());//bing
 				catname = Form("%s",flashggCats_[cat].c_str());
 			} else {
-				catindexname = Form("pdfindex_%d_%s",cat,ext.c_str());
+        catindexname = Form("pdfindex_%d_%s",cat,ext.c_str());
+				//catindexname = Form("pdfindex_%d_%s_%s",cat,ext.c_str(),channelName.c_str());//bing
 				catname = Form("cat%d",cat);
 			}
 			RooCategory catIndex(catindexname.c_str(),"c");

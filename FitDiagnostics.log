@@ -1,0 +1,626 @@
+/afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/ALP_SigModel_param_UL_X10/fit_results_runII/M30
+
+>>> random number generator seed is 123456
+>>> method used is FitDiagnostics
+[#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing RooUniform::prior
+Saving snapshot 'clean'
+Saved snapshot 'clean'
+  ToyMCSampleOpt  -- Generating Asimov with histogram for pdf pdf_bincat0_13TeV_obsOnly: in 280 x-bins 
+[#1] INFO:Eval -- RooRealVar::setRange(lumi_13TeV) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(pho_SFs_Sys) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(lep_dataMC) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(pho_PUWeight_Sys) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(lep_scale) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(pho_smear) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(pho_scale) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(ShowerShape) new range named 'optimizeBoundRange' created with bounds [-7,7]
+[#1] INFO:Eval -- RooRealVar::setRange(lep_smear) new range named 'optimizeBoundRange' created with bounds [-7,7]
+SimNLL created with 0 channels, 0 generic constraints, 41 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+Minuit2Minimizer: Minimize with max-calls 20500 convergence for edm < 0.1 strategy 1
+Minuit2Minimizer::Minuit  - Changing default options
+             StorageLevel :               0
+MnSeedGenerator: for initial parameters FCN = 0
+MnSeedGenerator: Initial state:   - FCN =                0 Edm =  7.88747e-31 NCalls =    165
+VariableMetric: start iterating until Edm is < 0.0001
+VariableMetric: Initial state   - FCN =                0 Edm =  7.88747e-31 NCalls =    165
+VariableMetric: Iteration #   0 - FCN =                0 Edm =  7.88747e-31 NCalls =    165
+VariableMetric: Iteration #   1 - FCN =                0 Edm =  7.88747e-31 NCalls =    170
+VariableMetric: After Hessian   - FCN =                0 Edm =  7.88747e-31 NCalls =   1155
+VariableMetric: Iteration #   2 - FCN =                0 Edm =  7.88747e-31 NCalls =   1155
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = 0
+Edm   = 7.88746556919986562e-31
+Nfcn  = 1155
+CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+ShowerShape	  = 0	 +/-  1
+lep_dataMC	  = 0	 +/-  1
+lep_scale	  = 0	 +/-  1
+lep_smear	  = 0	 +/-  1
+lumi_13TeV	  = 0	 +/-  1
+pho_PUWeight_Sys	  = 0	 +/-  1
+pho_SFs_Sys	  = 0	 +/-  1
+pho_scale	  = 0	 +/-  1
+pho_smear	  = 0	 +/-  1
+SimNLL created with 1 channels, 0 generic constraints, 41 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+do first Minimization 
+Minuit2Minimizer: Minimize with max-calls 24000 convergence for edm < 0.1 strategy 1
+Minuit2Minimizer::Minuit  - Changing default options
+             StorageLevel :               0
+MnSeedGenerator: for initial parameters FCN = 0
+MnSeedGenerator: Initial state:   - FCN =                0 Edm =  1.22052e-08 NCalls =    197
+MnSeedGenerator: Negative G2 found - new state:   - FCN =                0 Edm =  1.22052e-08 NCalls =    197
+VariableMetric: start iterating until Edm is < 0.0001
+VariableMetric: Initial state   - FCN =                0 Edm =  1.22052e-08 NCalls =    197
+VariableMetric: Iteration #   0 - FCN =                0 Edm =  1.22052e-08 NCalls =    197
+VariableMetric: Iteration #   1 - FCN = -1.233824775682e-08 Edm =  4.11454e-09 NCalls =    294
+VariableMetric: After Hessian   - FCN = -1.233824775682e-08 Edm =  4.11454e-09 NCalls =    367
+VariableMetric: Iteration #   2 - FCN = -1.233824775682e-08 Edm =  4.11454e-09 NCalls =    367
+Number of iterations 3
+----------> Iteration 0
+            FVAL = 0 Edm = 1.22051559758e-08 Nfcn = 197
+            Error matrix change = 1
+            Parameters :  p0 = 0 p1 = 0 p2 = 0 p3 = 0 p4 = 0 p5 = 0 p6 = 0 p7 = 0 p8 = 0 p9 = 0 p10 = 0 p11 = 0 p12 = 0 p13 = 0 p14 = 0 p15 = 0 p16 = 0 p17 = 0 p18 = 0 p19 = 0 p20 = 0 p21 = 0 p22 = 0 p23 = 0 p24 = 0 p25 = 0 p26 = 0 p27 = 0 p28 = 0 p29 = 0 p30 = 0 p31 = 0 p32 = 0 p33 = 0.100247 p34 = 0.14667 p35 = 0.286296 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = 0 p40 = 0 p41 = 0 p42 = 0 p43 = 0 p44 = 0 p45 = 0 p46 = 0 p47 = 264
+----------> Iteration 1
+            FVAL = -1.23382477568e-08 Edm = 4.1145388956e-09 Nfcn = 294
+            Error matrix change = 0.500027
+            Parameters :  p0 = 0 p1 = 0 p2 = 0 p3 = 0 p4 = 0 p5 = 0 p6 = 0 p7 = 0 p8 = 0 p9 = 0 p10 = 0 p11 = 0 p12 = 0 p13 = 0 p14 = 0 p15 = 0 p16 = 0 p17 = 0 p18 = 0 p19 = 0 p20 = 0 p21 = 0 p22 = 0 p23 = 0 p24 = 0 p25 = 0 p26 = 0 p27 = 0 p28 = 0 p29 = 0 p30 = 0 p31 = 0 p32 = 0 p33 = 0.100247 p34 = 0.146707 p35 = 0.286296 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = 0 p40 = 0 p41 = 0 p42 = 0 p43 = 0 p44 = 0 p45 = 0 p46 = 0 p47 = 264
+----------> Iteration 2
+            FVAL = -1.23382477568e-08 Edm = 4.1145388956e-09 Nfcn = 367
+            Error matrix change = 1
+            Parameters :  p0 = 0 p1 = 0 p2 = 0 p3 = 0 p4 = 0 p5 = 0 p6 = 0 p7 = 0 p8 = 0 p9 = 0 p10 = 0 p11 = 0 p12 = 0 p13 = 0 p14 = 0 p15 = 0 p16 = 0 p17 = 0 p18 = 0 p19 = 0 p20 = 0 p21 = 0 p22 = 0 p23 = 0 p24 = 0 p25 = 0 p26 = 0 p27 = 0 p28 = 0 p29 = 0 p30 = 0 p31 = 0 p32 = 0 p33 = 0.100247 p34 = 0.146707 p35 = 0.286296 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = 0 p40 = 0 p41 = 0 p42 = 0 p43 = 0 p44 = 0 p45 = 0 p46 = 0 p47 = 264
+Minuit2Minimizer : Invalid Minimum - status = 2
+FVAL  = -1.23382e-08
+Edm   = 4.11454e-09
+Nfcn  = 367
+  [WARNING] Found [pdfindex_0_13TeV] at boundary. 
+       RooCategory::pdfindex_0_13TeV = _pdf2(idx = 2)
+
+ [WARNING] After the fit some parameters are at their boundary.
+ [WARNING] Are you sure your model is correct?
+Minimized in : Real time 0:00:00, CP time 0.010
+FINAL NLL - NLL0 VALUE = -1.233824776e-08
+Initial minimization failed. Aborting.
+do first Minimization 
+Minuit2Minimizer: Minimize with max-calls 24500 convergence for edm < 0.1 strategy 1
+Minuit2Minimizer::Minuit  - Changing default options
+             StorageLevel :               0
+MnSeedGenerator: for initial parameters FCN = -9.094947017729e-13
+MnSeedGenerator: Initial state:   - FCN = -9.094947017729e-13 Edm =      7383.05 NCalls =    197
+MnSeedGenerator: Negative G2 found - new state:   - FCN =  -12.43918751317 Edm =      7748.73 NCalls =    413
+VariableMetric: start iterating until Edm is < 0.0001
+VariableMetric: Initial state   - FCN =  -12.43918751317 Edm =      7748.73 NCalls =    413
+VariableMetric: Iteration #   0 - FCN =  -12.43918751317 Edm =      7748.73 NCalls =    413
+VariableMetric: Iteration #   1 - FCN =  -2704.487736266 Edm =       145.06 NCalls =    552
+VariableMetric: Iteration #   2 - FCN =  -3001.169761695 Edm =      129.761 NCalls =    667
+VariableMetric: Iteration #   3 - FCN =  -3070.338449415 Edm =      43.0002 NCalls =    773
+VariableMetric: Iteration #   4 - FCN =  -3099.456674228 Edm =      13.9432 NCalls =    874
+VariableMetric: Iteration #   5 - FCN =  -3110.355604565 Edm =      19.6847 NCalls =    976
+VariableMetric: Iteration #   6 - FCN =  -3118.659500167 Edm =      8.76871 NCalls =   1084
+VariableMetric: Iteration #   7 - FCN =  -3125.810115387 Edm =      5.86766 NCalls =   1189
+VariableMetric: Iteration #   8 - FCN =  -3132.145809745 Edm =      2.67336 NCalls =   1290
+VariableMetric: Iteration #   9 - FCN =   -3135.53501785 Edm =      1.09747 NCalls =   1390
+VariableMetric: Iteration #  10 - FCN =  -3139.147889987 Edm =      1.50129 NCalls =   1493
+VariableMetric: Iteration #  11 - FCN =  -3143.992801367 Edm =     0.881555 NCalls =   1595
+VariableMetric: Iteration #  12 - FCN =   -3145.02264725 Edm =     0.307692 NCalls =   1695
+VariableMetric: Iteration #  13 - FCN =  -3145.321455807 Edm =     0.445852 NCalls =   1797
+VariableMetric: Iteration #  14 - FCN =  -3146.156843053 Edm =     0.456955 NCalls =   1900
+VariableMetric: Iteration #  15 - FCN =  -3147.270681586 Edm =     0.209939 NCalls =   2002
+VariableMetric: Iteration #  16 - FCN =  -3147.666916787 Edm =      0.07198 NCalls =   2103
+VariableMetric: Iteration #  17 - FCN =  -3147.783273681 Edm =   0.00909162 NCalls =   2203
+VariableMetric: Iteration #  18 - FCN =  -3147.802064931 Edm =   0.00288368 NCalls =   2304
+VariableMetric: Iteration #  19 - FCN =  -3147.807742945 Edm =   0.00105429 NCalls =   2405
+VariableMetric: Iteration #  20 - FCN =  -3147.809803812 Edm =  0.000195452 NCalls =   2506
+VariableMetric: Iteration #  21 - FCN =  -3147.810213836 Edm =  0.000116219 NCalls =   2607
+VariableMetric: Iteration #  22 - FCN =  -3147.810626072 Edm =  2.83429e-05 NCalls =   2714
+Number of iterations 24
+----------> Iteration 0
+            FVAL = -12.4391875132 Edm = 7748.73438983 Nfcn = 413
+            Error matrix change = 1
+            Parameters :  p0 = 0 p1 = 0 p2 = 0 p3 = 0 p4 = 0 p5 = 0 p6 = 0 p7 = 0 p8 = 0 p9 = 0 p10 = 0 p11 = 0 p12 = 0 p13 = 0 p14 = 0 p15 = 0 p16 = 0 p17 = 0 p18 = 0 p19 = 0 p20 = 0 p21 = 0 p22 = 0 p23 = 0 p24 = 3.8864 p25 = 0 p26 = 0 p27 = 0 p28 = 0 p29 = 0 p30 = 0 p31 = 0 p32 = 0 p33 = 0.100247 p34 = 0.375961 p35 = 0.286296 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = 0 p40 = 0 p41 = 0 p42 = 0 p43 = 0 p44 = 0 p45 = 0 p46 = 0 p47 = 1 p48 = 264
+----------> Iteration 1
+            FVAL = -2704.48773627 Edm = 145.059683907 Nfcn = 552
+            Error matrix change = 0.525481
+            Parameters :  p0 = -0.0110757 p1 = 0 p2 = 0 p3 = 0 p4 = -0.0401609 p5 = 0 p6 = 0 p7 = 0 p8 = 1.82943 p9 = 0 p10 = 0 p11 = 0 p12 = 3.96111 p13 = 0 p14 = 0 p15 = 0 p16 = -0.00531794 p17 = 0 p18 = 0 p19 = 0 p20 = -0.231017 p21 = 0 p22 = 0 p23 = 0 p24 = 3.95628 p25 = 0 p26 = 0 p27 = 0 p28 = 3.91475 p29 = 0 p30 = 0 p31 = 0 p32 = -3.52033 p33 = 0.100247 p34 = 1.05723 p35 = 0.405139 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = -10.9553 p40 = -0.593326 p41 = -0.593326 p42 = -12.8254 p43 = -13.1298 p44 = -4.70373 p45 = -6.79081 p46 = -6.91685 p47 = 0.272969 p48 = 161.043
+----------> Iteration 2
+            FVAL = -3001.1697617 Edm = 129.760929853 Nfcn = 667
+----------> Iteration 3
+            FVAL = -3070.33844942 Edm = 43.0002415112 Nfcn = 773
+----------> Iteration 4
+            FVAL = -3099.45667423 Edm = 13.9432457057 Nfcn = 874
+----------> Iteration 5
+            FVAL = -3110.35560457 Edm = 19.6847466326 Nfcn = 976
+----------> Iteration 6
+            FVAL = -3118.65950017 Edm = 8.7687138075 Nfcn = 1084
+----------> Iteration 7
+            FVAL = -3125.81011539 Edm = 5.86766096891 Nfcn = 1189
+----------> Iteration 8
+            FVAL = -3132.14580974 Edm = 2.67335508413 Nfcn = 1290
+----------> Iteration 9
+            FVAL = -3135.53501785 Edm = 1.09746559346 Nfcn = 1390
+----------> Iteration 10
+            FVAL = -3139.14788999 Edm = 1.5012940984 Nfcn = 1493
+----------> Iteration 11
+            FVAL = -3143.99280137 Edm = 0.881555059502 Nfcn = 1595
+----------> Iteration 12
+            FVAL = -3145.02264725 Edm = 0.307692040346 Nfcn = 1695
+----------> Iteration 13
+            FVAL = -3145.32145581 Edm = 0.445851588622 Nfcn = 1797
+----------> Iteration 14
+            FVAL = -3146.15684305 Edm = 0.456954556473 Nfcn = 1900
+----------> Iteration 15
+            FVAL = -3147.27068159 Edm = 0.209939363606 Nfcn = 2002
+----------> Iteration 16
+            FVAL = -3147.66691679 Edm = 0.0719800401426 Nfcn = 2103
+----------> Iteration 17
+            FVAL = -3147.78327368 Edm = 0.00909162327489 Nfcn = 2203
+----------> Iteration 18
+            FVAL = -3147.80206493 Edm = 0.00288368272992 Nfcn = 2304
+----------> Iteration 19
+            FVAL = -3147.80774294 Edm = 0.00105428665055 Nfcn = 2405
+----------> Iteration 20
+            FVAL = -3147.80980381 Edm = 0.000195451575334 Nfcn = 2506
+----------> Iteration 21
+            FVAL = -3147.81021384 Edm = 0.000116218572825 Nfcn = 2607
+----------> Iteration 22
+            FVAL = -3147.81062607 Edm = 2.83429063515e-05 Nfcn = 2714
+            Error matrix change = 0.0271318
+            Parameters :  p0 = 1.95434e-05 p1 = 0 p2 = 0 p3 = 0 p4 = -1.58774e-05 p5 = 0 p6 = 0 p7 = 0 p8 = -0.00139235 p9 = 0 p10 = 0 p11 = 0 p12 = -0.00051951 p13 = 0 p14 = 0 p15 = 0 p16 = -1.03583e-05 p17 = 0 p18 = 0 p19 = 0 p20 = 0.000263256 p21 = 0 p22 = 0 p23 = 0 p24 = 5.12144e-06 p25 = 0 p26 = 0 p27 = 0 p28 = 0.000375491 p29 = 0 p30 = 0 p31 = 0 p32 = 0.00507996 p33 = 0.100247 p34 = 0.145086 p35 = 0.286521 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = -0.00159767 p40 = 0.000629822 p41 = 0.000629822 p42 = 0.00126852 p43 = -0.000842815 p44 = 0.000467016 p45 = -0.000761103 p46 = -0.0010204 p47 = 3.58634e-06 p48 = 264.017
+----------> Iteration 23
+            FVAL = -3147.81062607 Edm = 2.83429063515e-05 Nfcn = 2714
+            Error matrix change = 0.0271318
+            Parameters :  p0 = 1.95434e-05 p1 = 0 p2 = 0 p3 = 0 p4 = -1.58774e-05 p5 = 0 p6 = 0 p7 = 0 p8 = -0.00139235 p9 = 0 p10 = 0 p11 = 0 p12 = -0.00051951 p13 = 0 p14 = 0 p15 = 0 p16 = -1.03583e-05 p17 = 0 p18 = 0 p19 = 0 p20 = 0.000263256 p21 = 0 p22 = 0 p23 = 0 p24 = 5.12144e-06 p25 = 0 p26 = 0 p27 = 0 p28 = 0.000375491 p29 = 0 p30 = 0 p31 = 0 p32 = 0.00507996 p33 = 0.100247 p34 = 0.145086 p35 = 0.286521 p36 = -0.0396102 p37 = 0.000109401 p38 = -5.34624 p39 = -0.00159767 p40 = 0.000629822 p41 = 0.000629822 p42 = 0.00126852 p43 = -0.000842815 p44 = 0.000467016 p45 = -0.000761103 p46 = -0.0010204 p47 = 3.58634e-06 p48 = 264.017
+Minuit2Minimizer : Valid minimum - status = 0
+FVAL  = -3147.81062607189233
+Edm   = 2.83429063515444897e-05
+Nfcn  = 2714
+CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle	  = 1.95434e-05	 +/-  0.996381	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle	  = -1.58774e-05	 +/-  0.989748	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle	  = -0.00139235	 +/-  0.975353	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle	  = -0.00051951	 +/-  0.915242	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle	  = -1.03583e-05	 +/-  0.991198	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle	  = 0.000263256	 +/-  0.993211	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle	  = 5.12144e-06	 +/-  0.972693	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle	  = 0.000375491	 +/-  0.945441	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle	  = 0	 +/-  0.989616	(limited)
+CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu	  = 0	 +/-  0.989616	(limited)
+ShowerShape	  = 0.00507996	 +/-  0.968446
+env_pdf_0_13TeV_bern1_p0	  = 0.100247	 +/-  4.20651	(limited)
+env_pdf_0_13TeV_bern2_p0	  = 0.145086	 +/-  0.212487	(limited)
+env_pdf_0_13TeV_bern2_p1	  = 0.286521	 +/-  0.0560645	(limited)
+env_pdf_0_13TeV_exp1_p1	  = -0.0396102	 +/-  0.21164	(limited)
+env_pdf_0_13TeV_lau1_l1	  = 0.000109401	 +/-  0.229799	(limited)
+env_pdf_0_13TeV_pow1_p1	  = -5.34624	 +/-  4.05198	(limited)
+lep_dataMC	  = -0.00159767	 +/-  0.942322
+lep_scale	  = 0.000629822	 +/-  0.998977
+lep_smear	  = 0.000629822	 +/-  0.998977
+lumi_13TeV	  = 0.00126852	 +/-  0.939163
+pho_PUWeight_Sys	  = -0.000842815	 +/-  0.9281
+pho_SFs_Sys	  = 0.000467016	 +/-  0.97985
+pho_scale	  = -0.000761103	 +/-  0.861877
+pho_smear	  = -0.0010204	 +/-  0.888991
+r	  = 3.58634e-06	 +/-  0.0320633	(limited)
+shapeBkg_bkg_mass_cat0_13TeV__norm	  = 264.017	 +/-  18.1929	(limited)
+  [WARNING] Found [env_pdf_0_13TeV_exp1_p1] at boundary. 
+       RooRealVar::env_pdf_0_13TeV_exp1_p1 = -0.0396102 +/- 0.21164  L(-1 - 0) 
+  [WARNING] Found [env_pdf_0_13TeV_lau1_l1] at boundary. 
+       RooRealVar::env_pdf_0_13TeV_lau1_l1 = 0.000109401 +/- 0.229799  L(1e-06 - 0.999999) 
+  [WARNING] Found [env_pdf_0_13TeV_pow1_p1] at boundary. 
+       RooRealVar::env_pdf_0_13TeV_pow1_p1 = -5.34624 +/- 4.05198  L(-9 - 1) 
+ [WARNING] After the fit some parameters are at their boundary.
+ [WARNING] Are you sure your model is correct?
+Minimized in : Real time 0:00:00, CP time 0.080
+FINAL NLL - NLL0 VALUE = -3147.810626
+Minuit2Minimizer: Minimize with max-calls 24500 convergence for edm < 0.1 strategy 1
+Minuit2Minimizer::Minuit  - Changing default options
+             StorageLevel :               0
+MnSeedGenerator: for initial parameters FCN = 0
+MnSeedGenerator: Initial state:   - FCN =                0 Edm =  3.18075e-05 NCalls =    197
+MnSeedGenerator: Negative G2 found - new state:   - FCN =                0 Edm =  3.18075e-05 NCalls =    197
+VariableMetric: start iterating until Edm is < 0.0001
+VariableMetric: Initial state   - FCN =                0 Edm =  3.18075e-05 NCalls =    197
+VariableMetric: Iteration #   0 - FCN =                0 Edm =  3.18075e-05 NCalls =    197
+VariableMetric: Iteration #   1 - FCN = -3.143995628463e-05 Edm =  4.12926e-06 NCalls =    298
+VariableMetric: After Hessian   - FCN = -3.143995628463e-05 Edm =  4.12926e-06 NCalls =    369
+VariableMetric: Iteration #   2 - FCN = -3.143995628463e-05 Edm =  4.12926e-06 NCalls =    369
+Minuit2Minimizer : Invalid Minimum - status = 2
+FVAL  = -3.144e-05
+Edm   = 4.12926e-06
+Nfcn  = 369
+
+  RooFitResult: minimized FCN value: -3.144e-05, estimated distance to minimum: 4.12926e-06
+                covariance matrix quality: Not calculated at all
+                Status : MINIMIZE=-1 HESSE=302 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  CMS_hgg_nuisance_deltafracright    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu_In    0.0000e+00
+                    MH    1.2500e+02
+        ShowerShape_In    0.0000e+00
+         lep_dataMC_In    0.0000e+00
+          lep_scale_In    0.0000e+00
+          lep_smear_In    0.0000e+00
+         lumi_13TeV_In    0.0000e+00
+  n_exp_bincat0_13TeV_proc_bkg_mass    1.0000e+00
+   pho_PUWeight_Sys_In    0.0000e+00
+        pho_SFs_Sys_In    0.0000e+00
+          pho_scale_In    0.0000e+00
+          pho_smear_In    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle    1.9543e-05    1.9153e-09 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle   -1.5877e-05    2.1630e-09 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle   -1.3924e-03    1.8177e-08 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle   -5.1951e-04    1.7189e-07 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle   -1.0358e-05    1.0236e-09 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle    2.6326e-04    1.1611e-08 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle    5.1214e-06    2.0479e-08 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle    3.7549e-04    1.8846e-07 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu    0.0000e+00    0.0000e+00 +/-  0.00e+00  <none>
+           ShowerShape    5.0800e-03   -9.9423e-09 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern1_p0    1.0025e-01    1.0025e-01 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern2_p0    1.4509e-01    1.4617e-01 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern2_p1    2.8652e-01    2.8650e-01 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_exp1_p1   -3.9610e-02   -3.9610e-02 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_lau1_l1    1.0940e-04    1.0940e-04 +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_pow1_p1   -5.3462e+00   -5.3462e+00 +/-  0.00e+00  <none>
+            lep_dataMC   -1.5977e-03   -4.5050e-08 +/-  0.00e+00  <none>
+             lep_scale    6.2982e-04   -1.7844e-09 +/-  0.00e+00  <none>
+             lep_smear    6.2982e-04   -1.7844e-09 +/-  0.00e+00  <none>
+            lumi_13TeV    1.2685e-03   -9.7826e-08 +/-  0.00e+00  <none>
+      pho_PUWeight_Sys   -8.4282e-04   -8.8356e-08 +/-  0.00e+00  <none>
+           pho_SFs_Sys    4.6702e-04   -4.5869e-07 +/-  0.00e+00  <none>
+             pho_scale   -7.6110e-04   -3.0197e-08 +/-  0.00e+00  <none>
+             pho_smear   -1.0204e-03   -2.8983e-08 +/-  0.00e+00  <none>
+                     r    3.5863e-06    1.1135e-06 +/-  0.00e+00  <none>
+  shapeBkg_bkg_mass_cat0_13TeV__norm    2.6402e+02    2.6399e+02 +/-  0.00e+00  <none>
+
+Running Minos for POI 
+Run Minos in  Real time 0:00:00, CP time 0.010
+
+[#1] INFO:Eval -- RooRealVar::setRange(r) new range named 'err68' created with bounds [1.29099e-06,1.29099e-06]
+
+  RooFitResult: minimized FCN value: -3.144e-05, estimated distance to minimum: 4.12926e-06
+                covariance matrix quality: Not calculated at all
+                Status : MINIMIZE=-1 HESSE=302 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  CMS_hgg_nuisance_deltafracright    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle_In    0.0000e+00
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu_In    0.0000e+00
+                    MH    1.2500e+02
+        ShowerShape_In    0.0000e+00
+         lep_dataMC_In    0.0000e+00
+          lep_scale_In    0.0000e+00
+          lep_smear_In    0.0000e+00
+         lumi_13TeV_In    0.0000e+00
+  n_exp_bincat0_13TeV_proc_bkg_mass    1.0000e+00
+   pho_PUWeight_Sys_In    0.0000e+00
+        pho_SFs_Sys_In    0.0000e+00
+          pho_scale_In    0.0000e+00
+          pho_smear_In    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue (+HiError,-LoError)    GblCorr.
+  --------------------  ------------  ----------------------------------  --------
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle    1.9543e-05    1.9153e-09         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle   -1.5877e-05    2.1630e-09         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle   -1.3924e-03    1.8177e-08         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle   -5.1951e-04    1.7189e-07         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle   -1.0358e-05    1.0236e-09         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle    2.6326e-04    1.1611e-08         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle    5.1214e-06    2.0479e-08         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle    3.7549e-04    1.8846e-07         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+  CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu    0.0000e+00    0.0000e+00         +/-  0.00e+00  <none>
+           ShowerShape    5.0800e-03   -9.9423e-09         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern1_p0    1.0025e-01    1.0025e-01         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern2_p0    1.4509e-01    1.4617e-01         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_bern2_p1    2.8652e-01    2.8650e-01         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_exp1_p1   -3.9610e-02   -3.9610e-02         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_lau1_l1    1.0940e-04    1.0940e-04         +/-  0.00e+00  <none>
+  env_pdf_0_13TeV_pow1_p1   -5.3462e+00   -5.3462e+00         +/-  0.00e+00  <none>
+            lep_dataMC   -1.5977e-03   -4.5050e-08         +/-  0.00e+00  <none>
+             lep_scale    6.2982e-04   -1.7844e-09         +/-  0.00e+00  <none>
+             lep_smear    6.2982e-04   -1.7844e-09         +/-  0.00e+00  <none>
+            lumi_13TeV    1.2685e-03   -9.7826e-08         +/-  0.00e+00  <none>
+      pho_PUWeight_Sys   -8.4282e-04   -8.8356e-08         +/-  0.00e+00  <none>
+           pho_SFs_Sys    4.6702e-04   -4.5869e-07         +/-  0.00e+00  <none>
+             pho_scale   -7.6110e-04   -3.0197e-08         +/-  0.00e+00  <none>
+             pho_smear   -1.0204e-03   -2.8983e-08         +/-  0.00e+00  <none>
+                     r    3.5863e-06    1.1135e-06 (+0.00e+00,--0.00e+00)  <none>
+  shapeBkg_bkg_mass_cat0_13TeV__norm    2.6402e+02    2.6399e+02         +/-  0.00e+00  <none>
+
+
+ --- FitDiagnostics ---
+Best fit r: 1.11352e-06  1.77469e-07/+1.77469e-07  (68% CL)
+Done in 0.00 min (cpu), 0.00 min (real)
+Printing Message Summary From ... combine_logger.out
+----------------------------------------------
+Messages of type INFO : 119
+Messages of type DEBUG : 3
+Messages of type ERROR : 1
+----------------------------------------------
+INFO: (function: run) Combine.cc: 962 -- Generate Asimov toy from parameter values ... 
+INFO: (function: run) Combine.cc: 966 -- CMS_channel = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_deltafracright = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16APV_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_16_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_17_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_17_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_18_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Scale_M30_18_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16APV_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_16_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_17_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_17_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_18_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_lep_Smear_M30_18_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16APV_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_16_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_17_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_17_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_18_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Scale_M30_18_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16APV_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_16_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_17_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_17_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_18_ChanEle_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu = 0 
+INFO: (function: run) Combine.cc: 966 -- CMS_hgg_nuisance_pho_Smear_M30_18_ChanMu_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- CMS_hza_mass = 116.384 
+INFO: (function: run) Combine.cc: 966 -- MH = 125 (constant)
+INFO: (function: run) Combine.cc: 966 -- ShowerShape = 0 
+INFO: (function: run) Combine.cc: 966 -- ShowerShape_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_bern1_p0 = 0.100247 
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_bern2_p0 = 0.14667 
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_bern2_p1 = 0.286296 
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_exp1_p1 = -0.0396102 
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_lau1_l1 = 0.000109401 
+INFO: (function: run) Combine.cc: 966 -- env_pdf_0_13TeV_pow1_p1 = -5.34624 
+INFO: (function: run) Combine.cc: 966 -- lep_dataMC = 0 
+INFO: (function: run) Combine.cc: 966 -- lep_dataMC_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- lep_scale = 0 
+INFO: (function: run) Combine.cc: 966 -- lep_scale_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- lep_smear = 0 
+INFO: (function: run) Combine.cc: 966 -- lep_smear_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- lumi_13TeV = 0 
+INFO: (function: run) Combine.cc: 966 -- lumi_13TeV_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- n_exp_bincat0_13TeV_proc_bkg_mass = 1 (constant)
+INFO: (function: run) Combine.cc: 966 -- pdfindex_0_13TeV = 2 
+INFO: (function: run) Combine.cc: 966 -- pho_PUWeight_Sys = 0 
+INFO: (function: run) Combine.cc: 966 -- pho_PUWeight_Sys_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- pho_SFs_Sys = 0 
+INFO: (function: run) Combine.cc: 966 -- pho_SFs_Sys_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- pho_scale = 0 
+INFO: (function: run) Combine.cc: 966 -- pho_scale_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- pho_smear = 0 
+INFO: (function: run) Combine.cc: 966 -- pho_smear_In = 0 (constant)
+INFO: (function: run) Combine.cc: 966 -- r = 0 
+INFO: (function: run) Combine.cc: 966 -- shapeBkg_bkg_mass_cat0_13TeV__norm = 264 
+INFO: (function: generateAsimov) ToyMCSamplerOpt.cc: 139 -- Using internal logic for binned/unbinned Asimov dataset generation
+INFO: (function: generateWithHisto) ToyMCSamplerOpt.cc: 214 -- Generating asimov with histogram for pdf pdf_bincat0_13TeV_obsOnly: in 280 x-bins
+INFO: (function: improveOnce) CascadeMinimizer.cc: 188 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=1, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 211 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 216 -- Minimization success! status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 188 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=1, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 211 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 216 -- Minimization success! status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 188 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=1, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 211 -- Minimisation finished with status=-1
+DEBUG: (function: improveOnce) CascadeMinimizer.cc: 217 -- Minimization ended with latest status != 0 or 1
+INFO: (function: anyParameterAtBoundaries) utils.cc: 1039 -- Found parameter pdfindex_0_13TeV at boundary (within ~1sigma): 7.69844e+218+/-0
+INFO: (function: minimize) CascadeMinimizer.cc: 480 -- After fit, some parameters are found at the boundary (within ~1sigma)
+INFO: (function: improveOnce) CascadeMinimizer.cc: 188 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=1, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 211 -- Minimisation finished with status=0
+INFO: (function: improveOnce) CascadeMinimizer.cc: 216 -- Minimization success! status=0
+INFO: (function: anyParameterAtBoundaries) utils.cc: 1039 -- Found parameter env_pdf_0_13TeV_exp1_p1 at boundary (within ~1sigma): -0.0396102+/-0.21164
+INFO: (function: anyParameterAtBoundaries) utils.cc: 1039 -- Found parameter env_pdf_0_13TeV_lau1_l1 at boundary (within ~1sigma): 0.000109401+/-0.229799
+INFO: (function: anyParameterAtBoundaries) utils.cc: 1039 -- Found parameter env_pdf_0_13TeV_pow1_p1 at boundary (within ~1sigma): -5.34624+/-4.05198
+INFO: (function: minimize) CascadeMinimizer.cc: 480 -- After fit, some parameters are found at the boundary (within ~1sigma)
+INFO: (function: improveOnce) CascadeMinimizer.cc: 188 -- Minimisation configured with Type=Minuit2, Algo=Migrad, strategy=1, tolerance=0.1
+INFO: (function: improveOnce) CascadeMinimizer.cc: 211 -- Minimisation finished with status=-1
+DEBUG: (function: improveOnce) CascadeMinimizer.cc: 217 -- Minimization ended with latest status != 0 or 1
+INFO: (function: doFit) FitterAlgoBase.cc: 343 -- Running Minos for POI r
+ERROR: (function: runSpecific) [WARNING]: Unable to determine uncertainties on all fit parameters in s+b fit. Have a look at https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part3/nonstandard/#fit-parameter-uncertainties for more information.
+DEBUG: (function: runSpecific) FitDiagnostics.cc: 443 -- Fit S+B, status = 302, numBadNLL = 0, covariance quality = 0

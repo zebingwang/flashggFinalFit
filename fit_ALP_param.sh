@@ -46,7 +46,7 @@ for ((iBin=0; iBin<$nMass; iBin++))
     #./bin/fTest_ALP -i $path_in_bkg/ALP_data_bkg_Am${massList[$iBin]}_workspace.root --saveMultiPdf $path_bkg/CMS-HGG_mva_13TeV_multipdf.root -D $path_bkg/HZAmassInde_fTest -c 1 --isFlashgg 0 --isData 0 -f data17, --mhLow 110 --mhHigh 180  --mhLowBlind 115 --mhHighBlind 135
 
     #./bin/makeBkgPlots_ALP -b $path_bkg/CMS-HGG_mva_13TeV_multipdf.root -d $path_bkg/BkgPlots -o $path_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 --mhVal 125.0 --mhLow 110 --mhHigh 180 --intLumi $Lumi_run2 -c 0 --isFlashgg 0  --mhLowBlind 115 --mhHighBlind 135
-    echo "./bin/makeBkgPlots_ALP -b $path_bkg/CMS-HGG_mva_13TeV_multipdf.root -d $path_bkg/BkgPlots -o $path_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 --mhVal 125.0 --mhLow 110 --mhHigh 180 --intLumi $Lumi_run2 -c 0 --isFlashgg 0  --mhLowBlind 115 --mhHighBlind 135"
+    #echo "./bin/makeBkgPlots_ALP -b $path_bkg/CMS-HGG_mva_13TeV_multipdf.root -d $path_bkg/BkgPlots -o $path_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 --mhVal 125.0 --mhLow 110 --mhHigh 180 --intLumi $Lumi_run2 -c 0 --isFlashgg 0  --mhLowBlind 115 --mhHighBlind 135"
 done
 
 #./bin/makeBkgPlots_ALP -b ./ALP_BkgModel_param/fit_results_run2/1/CMS-HGG_mva_13TeV_multipdf.root -d ./ALP_BkgModel_param/fit_results_run2/1/BkgPlots -o ./ALP_BkgModel_param/fit_results_run2/1/BkgPlots.root -S 13 --isMultiPdf --useBinnedData  --doBands --massStep 1 --mhVal 125.0 --mhLow 110 --mhHigh 180 --intLumi 134.3 -c 0 --isFlashgg 0  --mhLowBlind 115 --mhHighBlind 135 --verbose 2
@@ -91,9 +91,9 @@ for ((iBin=0; iBin<$nMass; iBin++))
 
       path_out_bkg="$dir_out_sig/fit_results_${lable}/M${massList[$iBin]}/${years[$jBin]}"
 
-      ./bin/signalFTest_ALP -i $path_in_sig/ALP_data_sig_Am${massList[$iBin]}_${years[$jBin]}_workspace.root -d $path_out_bkg/ALPmassInde_data_sig.dat -o $path_out_bkg/HZAmassInde_ftest -p data -f cat0 -m 125 --mhLowBlind 110 --mhHighBlind 140  --verbose 1
+      #./bin/signalFTest_ALP -i $path_in_sig/ALP_data_sig_Am${massList[$iBin]}_${years[$jBin]}_workspace.root -d $path_out_bkg/ALPmassInde_data_sig.dat -o $path_out_bkg/HZAmassInde_ftest -p data -f cat0 -m 125 --mhLowBlind 110 --mhHighBlind 140  --verbose 1
 
-      sed -i "s/data/ggh/" $path_out_bkg/ALPmassInde_data_sig.dat
+      #sed -i "s/data/ggh/" $path_out_bkg/ALPmassInde_data_sig.dat
 
 
       #echo "./bin/SignalFit_ALP -i $path_in_sig/ALP_data_sig_Am${massList[$iBin]}_Hm120_${years[$jBin]}_workspace.root,$path_in_sig/ALP_data_sig_Am${massList[$iBin]}_Hm125_${years[$jBin]}_workspace.root,$path_in_sig/ALP_data_sig_Am${massList[$iBin]}_Hm130_${years[$jBin]}_workspace.root -o $path_out_bkg/CMS-HGG_sigfit_data_ggh_cat0.root -p $path_out_bkg/plots_ALP --procs ggh -f cat0 -d $path_out_bkg/ALPmassInde_data_sig.dat -s empty.dat --nBins ${nBins[$[iBin*nYear] + $jBin]} --changeIntLumi ${Lumis[$jBin]} --useSSF 1 -L 110 --mhHigh 140 --massList 120,125,130 --useDCBplusGaus 1 "
@@ -115,7 +115,7 @@ for ((iBin=0; iBin<$nMass; iBin++))
     #cp ../Background/ALP_BkgModel_param/fit_results_${lable}/${massList[$iBin]}/CMS-HGG_mva_13TeV_multipdf.root $dir_out_sig/fit_results_${lable}/M${massList[$iBin]}
 
     cd $dir_out_sig/fit_results_${lable}/M${massList[$iBin]}
-    #combine datacard_ALPmass${massList[$iBin]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001
+    combine datacard_ALPmass${massList[$iBin]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001
 
     #text2workspace.py datacard_ALPmass${massList[$iBin]}.txt -m 125 -o datacard_ALPmass${massList[$iBin]}.root
 
@@ -130,7 +130,7 @@ for ((iBin=0; iBin<$nMass; iBin++))
 
 done
 
-#cd ALP_plot_param
-#python com_plot.py -fb -y ${lable}
-#mv ALP_xs_UpperLimit.png ALP_xs_UpperLimit_${lable}.png
-#mv ALP_Br_UpperLimit.png ALP_Br_UpperLimit_${lable}.png
+cd ALP_plot_param
+python com_plot.py -fb -y ${lable}
+mv ALP_xs_UpperLimit.png ALP_xs_UpperLimit_${lable}.png
+mv ALP_Br_UpperLimit.png ALP_Br_UpperLimit_${lable}.png

@@ -95,6 +95,9 @@ parser = OptionParser()
 parser.add_option("-i", "--infilename",
                   help="Input file (binned signal from flashgg)")
 parser.add_option("-s", "--sysinfilename", help="Input sys files")
+parser.add_option("--NormSys", help="Input normalization sys files")
+parser.add_option("--BDTSys", help="Input BDT sys files")
+parser.add_option("--channel", help="channel name")
 parser.add_option("-o", "--outfilename", default="cms_hgg_datacard.txt",
                   help="Name of card to print (default: %default)")
 parser.add_option("-p", "--procs", default="ggh,vbf,wh,zh,tth",
@@ -158,10 +161,10 @@ outFile = open(options.outfilename, 'w')
 ## PROCS HANDLING & DICT ######################################################
 ###############################################################################
 # convert flashgg style to combine style process
-combProc = {'ggH_16': 'ggH_Za_16', 'ggH_17': 'ggH_Za_17',
+combProc = {'ggH_16': 'ggH_Za_16', 'ggH_16APV': 'ggH_Za_16APV', 'ggH_17': 'ggH_Za_17',
             'ggH_18': 'ggH_Za_18', 'ggh': 'ggH_hZa', 'bkg_mass': 'bkg_mass'}
 flashggProc = {'ggH_hZa': 'ggh', 'bkg_mass': 'bkg_mass'}
-procId = {'ggH_Za_16': -2, 'ggH_Za_17': -1, 'ggH_Za_18': 0, 'bkg_mass': 1}
+procId = {'ggH_Za_16': -3, 'ggH_Za_16APV': -2, 'ggH_Za_17': -1, 'ggH_Za_18': 0, 'bkg_mass': 1}
 bkgProcs = ['bkg_mass']  # what to treat as background
 
 # split procs vector
@@ -235,7 +238,7 @@ fileDetails['data_obs'] = [dataFile, dataWS, 'roohist_data_mass_$CHANNEL']
 fileDetails['bkg_mass'] = [bkgFile, bkgWS,
                            'CMS_hgg_$CHANNEL_%dTeV_bkgshape' % sqrts]
 
-years = ['16', '17', '18']
+years = ['16', '16APV', '17', '18']
 for year in years:
     fileDetails['ggH_Za_'+year] = [sigFile.replace('$PROC', "ggh").replace(
         ".root", "_"+year+".root"), sigWS, 'hggpdfsmrel_%dTeV_ggh_$CHANNEL' % sqrts]
@@ -248,8 +251,8 @@ for year in years:
 ## GENERAL ANALYSIS SYSTEMATIC SETUP  #########################################
 ###############################################################################
 
-lumiSyst = 0.025  # Correct for Moriond17
-
+#lumiSyst = 0.025  # Correct for Moriond17
+lumiSyst = {'ggH_Za_16':0.012, 'ggH_Za_16APV':0.012, 'ggH_Za_17':0.023, 'ggH_Za_18':0.025}
 # Printing Functions
 
 
@@ -263,7 +266,7 @@ def printLumiSyst():
             if p in bkgProcs:
                 outFile.write('- ')
             else:
-                outFile.write('%5.3f ' % (1.+lumiSyst))
+                outFile.write('%5.3f ' % (1.+lumiSyst[p]))
     outFile.write('\n')
     outFile.write('\n')
 
@@ -375,11 +378,11 @@ def printObsProcBinLines():
 def printMultiPdf():
     if options.isMultiPdf:
         for c in options.cats:
-            outFile.write('pdfindex_%s_%dTeV  discrete\n' % (c, sqrts))
+            outFile.write('pdfindex_%s_%dTeV_%s  discrete\n' % (c, sqrts, options.channel))
 ###############################################################################
 
 
-massList = [1, 5, 15, 30]
+massList = [1,2,3,4,5,6,7,8,9,10,15,20,25,30]
 m = massList.index(options.mA)
 
 
@@ -395,9 +398,93 @@ def printSyst():
         1.013, 1.013, 1.014, 1.013], "ggH_Za_18": [1.013, 1.013, 1.0014, 1.013]}
     sys_name = {'pho_SFs_Sys': pho_SFs_Sys, 'pho_SFs_corr': pho_SFs_corr,
                 'pho_PUWeight_Sys': pho_PUWeight_Sys, 'lep_dataMC_Sys': lep_dataMC_Sys}
+    
+    NormSysFiles = options.NormSys.split(',')
+    BDTSysFiles = options.BDTSys.split(',')
 
-    print '[INFO] Sys...'
-    for sys in sys_name:
+    File_NormSys = open(NormSysFiles[0], 'r')
+
+    NormSys = {}
+    for line in File_NormSys.readlines()[1:]:
+        if line.split()[0] == 'sample': 
+            NormSys_names = line.split()[2:]
+            NormSys_name = []
+            for i in range(len(NormSys_names)/2):
+                NormSys[NormSys_names[i*2].rstrip('_up')] = {}
+                NormSys_name.append(NormSys_names[i*2].rstrip('_up'))
+                for year in years:
+                    NormSys[NormSys_names[i*2].rstrip('_up')]['ggH_Za_'+year] = []
+                
+
+    for f_norm in NormSysFiles:
+        
+        File_NormSys = open(f_norm, 'r')
+
+        for line in File_NormSys.readlines():
+            if line.split(':')[0]=="year":
+                if line.split(':')[1].lstrip().rstrip('\n') == "-2016":
+                    year = "16APV"
+                else:
+                    year = line.split(':')[1].lstrip().rstrip('\n').lstrip('20')
+            elif line.split()[0] == 'sample': 
+                continue
+            else:
+                for j in range(len(NormSys_name)):
+                    NormSys_up = abs(float(line.split()[3:][1::2][j*2].split(":")[1].rstrip(")")))
+                    NormSys_dn = abs(float(line.split()[3:][1::2][j*2+1].split(":")[1].rstrip(")")))
+
+                    if NormSys_up >= NormSys_dn:
+                        NormSys_val = NormSys_up
+                    else:
+                        NormSys_val = NormSys_dn
+                    #print NormSys#[NormSys_name[j]]
+                    NormSys[NormSys_name[j]]['ggH_Za_'+year].append(1+NormSys_val)
+
+
+    #for f_BDT in BDTSysFiles:
+    #    File_BDTSys = open(f_BDT, 'r')
+
+    BDTSys = {}
+    File_BDTSys = open(BDTSysFiles[0], 'r')
+    for line in File_BDTSys.readlines()[1:]:
+        if line.split()[0] == 'sample': 
+            BDTSys_names = line.split()[2:]
+            BDTSys_name = []
+            for i in range(len(BDTSys_names)/2):
+                BDTSys[BDTSys_names[i*2].rstrip('_up')] = {}
+                BDTSys_name.append(BDTSys_names[i*2].rstrip('_up'))
+                for year in years:
+                    BDTSys[BDTSys_names[i*2].rstrip('_up')]['ggH_Za_'+year] = []
+                
+
+    for f_BDT in BDTSysFiles:
+        
+        File_BDTSys = open(f_BDT, 'r')
+
+        for line in File_BDTSys.readlines():
+            if line.split(':')[0]=="year":
+                if line.split(':')[1].lstrip().rstrip('\n') == "-2016":
+                    year = "16APV"
+                else:
+                    year = line.split(':')[1].lstrip().rstrip('\n').lstrip('20')
+            elif line.split()[0] == 'sample': 
+                continue
+            else:
+                for j in range(len(BDTSys_name)):
+                    BDTSys_up = abs(float(line.split()[2:][1::2][j*2].split(":")[1].rstrip(")")))
+                    BDTSys_dn = abs(float(line.split()[2:][1::2][j*2+1].split(":")[1].rstrip(")")))
+
+                    if BDTSys_up >= BDTSys_dn:
+                        BDTSys_val = BDTSys_up
+                    else:
+                        BDTSys_val = BDTSys_dn
+                    #print BDTSys#[BDTSys_name[j]]
+                    BDTSys[BDTSys_name[j]]['ggH_Za_'+year].append(1+BDTSys_val)
+
+
+
+    print '[INFO] Normalization Sys...'
+    for sys in NormSys:
         outFile.write('%-35s   lnN   ' % (sys))
         for c in options.cats:
             for p in options.procs:
@@ -406,7 +493,21 @@ def printSyst():
                 if p in bkgProcs:
                     outFile.write('- ')
                 else:
-                    outFile.write('%5.3f ' % (sys_name[sys][p][m]))
+                    outFile.write('%5.3f ' % (NormSys[sys][p][m]))
+        outFile.write('\n')
+        outFile.write('\n')
+
+    print '[INFO] BDT Sys...'
+    for sys in BDTSys:
+        outFile.write('%-35s   lnN   ' % (sys))
+        for c in options.cats:
+            for p in options.procs:
+                if '%s:%s' % (p, c) in options.toSkip:
+                    continue
+                if p in bkgProcs:
+                    outFile.write('- ')
+                else:
+                    outFile.write('%5.3f ' % (BDTSys[sys][p][m]))
         outFile.write('\n')
         outFile.write('\n')
 
@@ -414,6 +515,7 @@ def printSyst():
 def printShapeSys():
     print '[INFO] Shape Sys...'
     ShapeSysFiles = options.sysinfilename.split(',')
+    #print ShapeSysFiles
 
     for f in ShapeSysFiles:
         file_sys = open(f, 'r')
@@ -422,13 +524,14 @@ def printShapeSys():
             lines[l] = lines[l].rstrip('\n')
             sys_shapes = filter(None, lines[l].split("\t"))
             #print sys_shapes
+            #print sys_shapes
             sys_val = [s for s in sys_shapes[1:] if float(s) != 0.0]
             #print sys_val[0]
             line_sys = 'CMS_hgg_nuisance_' + sys_shapes[0] + '\tparam\t0.0\t' + str(1.0)
 
             outFile.write(line_sys+'\n')
 
-    line = 'pdfindex_0_13TeV\t\t\t discrete'
+    line = 'pdfindex_0_13TeV_'+options.channel+'\t\t\t discrete'
     outFile.write(line+'\n')
 ###############################################################################
 ## MAIN #######################################################################
