@@ -22,6 +22,7 @@
 #include "RooFFTConvPdf.h"
 #include "RooProdPdf.h"
 #include "RooNumConvPdf.h"
+#include "RooGaussModel.h"
 
 #include "boost/algorithm/string/split.hpp"
 #include "boost/algorithm/string/classification.hpp"
@@ -30,6 +31,7 @@
 #include "../interface/PdfModelBuilder.h"
 
 #include "HiggsAnalysis/CombinedLimit/interface/HGGRooPdfs.h"
+#include "HiggsAnalysis/CombinedLimit/interface/HZGRooPdfs.h"
 #include "HiggsAnalysis/CombinedLimit/interface/RooBernsteinFast.h"
 
 using namespace std;
@@ -52,6 +54,11 @@ PdfModelBuilder::PdfModelBuilder():
   recognisedPdfTypes.push_back("Laurent");
   recognisedPdfTypes.push_back("KeysPdf");
   recognisedPdfTypes.push_back("File");
+  //bing
+  recognisedPdfTypes.push_back("BernsteinStepxGau");
+  recognisedPdfTypes.push_back("PowerLawStepxGau");
+  recognisedPdfTypes.push_back("LaurentStepxGau");
+  recognisedPdfTypes.push_back("ExponentialStepxGau");
 
   wsCache = new RooWorkspace("PdfModelBuilderCache");
 
@@ -111,11 +118,11 @@ RooAbsPdf* PdfModelBuilder::getBernstein(string prefix, int order){
   }
   //bing
   RooRealVar *fgaus = new RooRealVar("fgaus", "gaus fraction",0.5,0.,1.) ;
-  RooRealVar *mean = new RooRealVar("mean","mean",10,0.0,10.0) ;
-  RooRealVar *sigma = new RooRealVar("sigma","sigma",8,-10.,20.) ;
-  RooGaussian *gaus = new RooGaussian("gaus","gaus",*obs_var,*mean,*sigma) ;
+  RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),10,0.0,10.0) ;
+  RooRealVar *sigma = new RooRealVar(Form("%s_sigma",prefix.c_str()),Form("%s_sigma",prefix.c_str()),8,-10.,20.) ;
+  RooGaussian *gaus = new RooGaussian(Form("%s_gaus",prefix.c_str()),Form("%s_gaus",prefix.c_str()),*obs_var,*mean,*sigma) ;
 
-  RooRealVar *step_value = new RooRealVar("step_value", "step value", 115., 110., 130.);
+  RooRealVar *step_value = new RooRealVar(Form("%s_step",prefix.c_str()), Form("%s_step",prefix.c_str()), 105., 100., 110.);
     
   //RooBernstein *bern = new RooBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   if (order==1) {
@@ -126,67 +133,67 @@ RooAbsPdf* PdfModelBuilder::getBernstein(string prefix, int order){
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
     //RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
 
-    RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+    RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
   } else if (order==2) {
 	RooBernsteinFast<2> *bern = new RooBernsteinFast<2>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   	//bing
     //RooAddPdf *bern_gaus = new RooAddPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(),RooArgList(*bern,*gaus),*fgaus) ;
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
-    RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+    RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
   } else if (order==3) {
 	RooBernsteinFast<3> *bern = new RooBernsteinFast<3>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   	//bing
     //RooAddPdf *bern_gaus = new RooAddPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(),RooArgList(*bern,*gaus),*fgaus) ;
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
-     RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+     RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
   } else if (order==4) {
 	RooBernsteinFast<4> *bern = new RooBernsteinFast<4>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   	//bing
     //RooAddPdf *bern_gaus = new RooAddPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(),RooArgList(*bern,*gaus),*fgaus) ;
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
-     RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+     RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
   } else if (order==5) {
 	RooBernsteinFast<5> *bern = new RooBernsteinFast<5>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   	//bing
     //RooAddPdf *bern_gaus = new RooAddPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(),RooArgList(*bern,*gaus),*fgaus) ;
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
-     RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+     RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
   } else if (order==6) {
 	RooBernsteinFast<6> *bern = new RooBernsteinFast<6>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
   	//bing
     //RooAddPdf *bern_gaus = new RooAddPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(),RooArgList(*bern,*gaus),*fgaus) ;
     //RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(prefix.append("gaus").c_str(),prefix.append("gaus").c_str(), *obs_var, *bern, *gaus);
-     RooGenericPdf *step_func = new RooGenericPdf("step_func", "step_func", "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
+     RooGenericPdf *step_func = new RooGenericPdf(Form("%s_stepfunc",prefix.c_str()), Form("%s_stepfunc",prefix.c_str()), "1e-20+( @0 > @1) * @2", RooArgSet(*obs_var, *step_value, *bern));
     obs_var->setRange(-200, 500);
-    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf("bern_gaus", "bern_gaus", *obs_var, *gaus, *step_func);
-    obs_var->setRange(110, 180);
-    return bern;
-    //return bern_gaus;
+    RooFFTConvPdf *bern_gaus = new RooFFTConvPdf(Form("%s_berngaus",prefix.c_str()), Form("%s_berngaus",prefix.c_str()), *obs_var, *gaus, *step_func);
+    obs_var->setRange(95, 180);
+    //return bern;
+    return bern_gaus;
 //  } else if (order==7) {
 //	RooBernsteinFast<7> *bern = new RooBernsteinFast<7>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
  // 	return bern;
@@ -197,6 +204,334 @@ RooAbsPdf* PdfModelBuilder::getBernstein(string prefix, int order){
   //return bern;
   //bkgPdfs.insert(pair<string,RooAbsPdf*>(bern->GetName(),bern));
 
+}
+
+RooAbsPdf* PdfModelBuilder::getBernsteinStepxGau(string prefix, int order){
+  
+  RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),0.);
+  RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),1.5,0.1,3);
+  //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),1.5,0.1,3);//6GeV
+  //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),2,0.1,3);//9GeV
+  //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),1.5,0.1,3);//5GeV
+  //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),10,1,20);//1GeV
+  //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),1.5,0.1,3);//16GeV
+  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),115,110,125);//1GeV
+  RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,100,115);
+  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,100,120);//6GeV
+  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,101,110);//16GeV
+  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,100,110);//5GeV
+  RooArgList *coeffList = new RooArgList();
+  //coeffList->add(RooConst(1.0)); // no need for cnstant in this interface
+  
+  for (int i=0; i<order; i++){
+    string name = Form("%s_b%d",prefix.c_str(),i);
+    //params.insert(pair<string,RooRealVar*>(name, new RooRealVar(name.c_str(),name.c_str(),1.0,0.,5.)));
+    RooRealVar *param = new RooRealVar(name.c_str(),name.c_str(),0.3,-14.,15.);
+    //RooRealVar *param = new RooRealVar(name.c_str(),name.c_str(),0.3,-14.,15.);//6GeV
+    //RooRealVar *param = new RooRealVar(name.c_str(),name.c_str(),6,-14.,15.);//5GeV
+    params.insert(pair<string,RooRealVar*>(name,param));
+    coeffList->add(*params[name]);
+  }
+  //RooBernstein *bern = new RooBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
+  if (order==1) {
+  RooGaussStepBernstein *bern =new RooGaussStepBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*mean,*sigma,*step, *coeffList);
+    	return bern;
+  } else if (order==2) {
+    RooGaussStepBernstein *bern =new RooGaussStepBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*mean,*sigma,*step, *coeffList);
+  	return bern;
+  } else if (order==3) {
+    RooGaussStepBernstein *bern =new RooGaussStepBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*mean,*sigma,*step, *coeffList);
+  	return bern;
+  } else if (order==4) {
+    RooGaussStepBernstein *bern =new RooGaussStepBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*mean,*sigma,*step, *coeffList);
+  	return bern;
+  } else if (order==5) {
+    RooGaussStepBernstein *bern =new RooGaussStepBernstein(prefix.c_str(),prefix.c_str(),*obs_var,*mean,*sigma,*step, *coeffList);
+  	return bern;
+  } 
+   else {
+	return NULL;
+  }
+}
+
+RooAbsPdf* PdfModelBuilder::getPowerLawStepxGau(string prefix, int order, int cat){
+  if(order%2==0) return NULL;
+  RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),0.);
+  double sigma_pow,sigma_lpow,sigma_hpow;
+  // double turnon_pow = 107.;
+  double turnon_pow,turnon_lpow,turnon_hpow;
+  double par1_pow1, par1_pow3, par3_pow3, par1_pow5, par3_pow5, par5_pow5;
+  double par1_hpow1, par1_hpow3, par3_hpow3, par1_hpow5, par3_hpow5, par5_hpow5;
+  double par1_lpow1, par1_lpow3, par3_lpow3, par1_lpow5, par3_lpow5, par5_lpow5;
+  double coeff1_pow1, coeff1_pow3, coeff3_pow3, coeff1_pow5, coeff3_pow5, coeff5_pow5;
+  double coeff1_hpow1, coeff1_hpow3, coeff3_hpow3, coeff1_hpow5, coeff3_hpow5, coeff5_hpow5;
+  double coeff1_lpow1, coeff1_lpow3, coeff3_lpow3, coeff1_lpow5, coeff3_lpow5, coeff5_lpow5;
+
+  if(cat==1)
+  {
+    if(order==1){
+    turnon_pow = 115.;      turnon_lpow = 110.;   turnon_hpow = 120.;
+    sigma_pow = 6.7;          sigma_lpow = 5.;      sigma_hpow = 8.;
+    par1_pow1 = -6.;          par1_lpow1 = -15.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 3.6576e-04; coeff1_lpow1 = 0.;    coeff1_hpow1 = 0.5;
+    }
+    else if(order==3){
+    turnon_pow = 115.;      turnon_lpow = 110.;   turnon_hpow = 120.;
+    sigma_pow = 6.6;          sigma_lpow = 3.;      sigma_hpow = 8.;
+    par1_pow3 = -6.0519;      par1_lpow3 = -10.;    par1_hpow3 = -2.;
+    coeff1_pow3 = 4.3299e-05; coeff1_lpow3 = 0.;    coeff1_hpow3 = 0.5;
+    par3_pow3 = -4.5113;      par3_lpow3 = -8;      par3_hpow3 = 2.;
+    coeff3_pow3 = 4.0951e-13; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    turnon_pow = 115.;      turnon_lpow = 110.;   turnon_hpow = 120.;
+    sigma_pow = 6.;           sigma_lpow = 3.;      sigma_hpow = 8.;
+    par1_pow5 = -9.;          par1_lpow5 = -15.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 0.04;       coeff1_lpow5 = 0.;    coeff1_hpow5 = 1.;
+    par3_pow5 = -7.;          par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 4.0951e-13; coeff3_lpow5 = 0.;    coeff3_hpow5 = 1.;
+    par5_pow5 = -4.5113;      par5_lpow5 = -8;      par5_hpow5 = 2.;
+    coeff5_pow5 = 4.0951e-13; coeff5_lpow5 = 0.;    coeff5_hpow5 = 1.;
+    }
+  }
+  else if(cat==2)
+  {
+    if(order==1){
+    //sigma_pow = 4.8;          sigma_lpow = 3.;      sigma_hpow = 10.;//M5,M6,M16
+    sigma_pow = 2;          sigma_lpow = 1.;      sigma_hpow = 5.;
+    turnon_pow = 102.;        turnon_lpow = 100.;   turnon_hpow = 110.;
+    //turnon_pow = 115.;        turnon_lpow = 110.;   turnon_hpow = 125.;//1geV
+    par1_pow1 = -5.6;         par1_lpow1 = -15.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 0.002;      coeff1_lpow1 = 0.;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    //sigma_pow = 5.;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    sigma_pow = 2;          sigma_lpow = 1.;      sigma_hpow = 5.;
+    turnon_pow = 108.5;       turnon_lpow = 100.;   turnon_hpow = 115.;
+    //turnon_pow = 118.5;       turnon_lpow = 110.;   turnon_hpow = 125.;//1Gev
+    par1_pow3 = -7;           par1_lpow3 = -10.;    par1_hpow3 = -5.;
+    coeff1_pow3 = 7.7276e-01; coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -5.9269;      par3_lpow3 = -8;      par3_hpow3 = 2.;
+    coeff3_pow3 = 6.3834e-05; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    //sigma_pow = 5.;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    sigma_pow = 2;          sigma_lpow = 1.;      sigma_hpow = 5.;
+    turnon_pow = 108.64;      turnon_lpow = 95.;   turnon_hpow = 110.;
+    par1_pow5 = -10.4;        par1_lpow5 = -15.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 7.4192e-01; coeff1_lpow5 = 0.;    coeff1_hpow5 = 1.;
+    par3_pow5 = -7.0937;      par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 9.0955e-01; coeff3_lpow5 = 0.;    coeff3_hpow5 = 1.;
+    par5_pow5 = -6.2482;      par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 =2.1590e-03;  coeff5_lpow5 = 0.001; coeff5_hpow5 = 1.;
+    }
+  }
+  else if(cat==3)
+  {
+    if(order==1){
+    sigma_pow = 3.5;          sigma_lpow = 3.;      sigma_hpow = 8.;
+    turnon_pow = 106.;        turnon_lpow = 105.;   turnon_hpow = 108.;
+    par1_pow1 = -6.5;         par1_lpow1 = -15.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 0.02;       coeff1_lpow1 = 0.;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 3.5;          sigma_lpow = 3.;      sigma_hpow = 5.;
+    turnon_pow = 107.57;      turnon_lpow = 106.;   turnon_hpow = 108.;
+    par1_pow3 = -8.8928;      par1_lpow3 = -10.;    par1_hpow3 = -5.;
+    coeff1_pow3 = 0.89;       coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -6.5;         par3_lpow3 = -10;     par3_hpow3 = -2.;
+    coeff3_pow3 = 0.001;      coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 3.8618;       sigma_lpow = 2.;      sigma_hpow = 5.;
+    turnon_pow = 107.34;      turnon_lpow = 105.;   turnon_hpow = 108.;
+    par1_pow5 = -7.0724;      par1_lpow5 = -10.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 9.1185e-01; par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -7.4414;      par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 5.7468e-06; par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -8.4821;      par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 = 2.8846e-03; par5_lpow5 = 0.;      par5_hpow5 = 1.;
+    }
+  }
+  else if(cat==4)
+  {
+    if(order==1){
+    sigma_pow = 3.3;          sigma_lpow = 2.5;      sigma_hpow = 8.;
+    turnon_pow = 106.9;       turnon_lpow = 105.;   turnon_hpow = 108.;
+    par1_pow1 = -6.3453;      par1_lpow1 = -10.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 3.3018e-02; coeff1_lpow1 = 0.;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 3.5;          sigma_lpow = 3.;      sigma_hpow = 8.;
+    turnon_pow = 107;         turnon_lpow = 105.;   turnon_hpow = 108.;
+    par1_pow3 = -6.3671;      par1_lpow3 = -10.;    par1_hpow3 = -5.;
+    coeff1_pow3 = 9.6543e-01; coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -4.267;       par3_lpow3 = -8;      par3_hpow3 = -2.;
+    coeff3_pow3 = 1.1001e-06; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 3.5546;       sigma_lpow = 2.;      sigma_hpow = 5.;
+    turnon_pow = 106.91;      turnon_lpow = 106.;   turnon_hpow = 109.;
+    par1_pow5 = -8.8;         par1_lpow5 = -11.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 1.e-05;     par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -6.5;         par3_lpow5 = -8.;     par3_hpow5 = -3.;
+    coeff3_pow5 = 1.9518e-02; par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -6.3;         par5_lpow5 = -8;      par5_hpow5 = -3.;
+    coeff5_pow5 = 2.0522e-02; par5_lpow5 = 0.;      par5_hpow5 = 1.;
+    }
+  }
+  else if(cat==501)
+  {
+    if(order==1){
+    sigma_pow = 6.;           sigma_lpow = 0.1;     sigma_hpow = 10.;
+    turnon_pow = 108.;        turnon_lpow = 106.;   turnon_hpow = 109.;
+    par1_pow1 = -5.6;         par1_lpow1 = -10.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 0.0002;     coeff1_lpow1 = 0.;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 8.5;          sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 108;         turnon_lpow = 100.;   turnon_hpow = 109.;
+    par1_pow3 = -6.4708;      par1_lpow3 = -10.;    par1_hpow3 = -2.;
+    coeff1_pow3 = 8.4306e-01; coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -6.1246;      par3_lpow3 = -8;      par3_hpow3 = -2.;
+    coeff3_pow3 = 1.4141e-06; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 6.;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 108;         turnon_lpow = 100.;   turnon_hpow = 109.;
+    par1_pow5 = -9;           par1_lpow5 = -15.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 0.04;       par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -7.;          par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 0.1;        par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -5.6;         par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 = 0.001;      par5_lpow5 = 0.001;   par5_hpow5 = 1.;
+    }
+  }
+  else if(cat==502)
+  {
+    if(order==1){
+    sigma_pow = 6.;           sigma_lpow = 0.1;     sigma_hpow = 10.;
+    turnon_pow = 104.6;        turnon_lpow = 104.;   turnon_hpow = 105.;
+    par1_pow1 = -5.6;         par1_lpow1 = -8.;    par1_hpow1 = -5.;
+    coeff1_pow1 = 0.0006;     coeff1_lpow1 = 0.;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 5.;          sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;      turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow3 = -6.1;         par1_lpow3 = -10.;   par1_hpow3 = -5.;
+    coeff1_pow3 = 0.72;       coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -5.1;      par3_lpow3 = -6;      par3_hpow3 = -1.;
+    coeff3_pow3 = 0.0003; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 6.;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;         turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow5 = -9;           par1_lpow5 = -15.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 0.04;       par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -7.;          par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 0.1;        par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -5.6;         par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 = 0.002;      par5_lpow5 = 0.001;   par5_hpow5 = 1.;
+    }
+  }
+  else if(cat==503)
+  {
+    if(order==1){
+    sigma_pow = 4.;           sigma_lpow = 0.1;     sigma_hpow = 5.;
+    turnon_pow = 104.6;        turnon_lpow = 104.;   turnon_hpow = 105.;
+    par1_pow1 = -5.2;         par1_lpow1 = -8.;    par1_hpow1 = -1.;
+    coeff1_pow1 = 0.001;     coeff1_lpow1 = 0.000001;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 5.;          sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;      turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow3 = -5;         par1_lpow3 = -8.;   par1_hpow3 = -3.;
+    coeff1_pow3 = 0.3;       coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -4;      par3_lpow3 = -5;      par3_hpow3 = -1.;
+    coeff3_pow3 = 0.01; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 4.8;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;         turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow5 = -6;           par1_lpow5 = -12.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 0.07;       par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -5.;          par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 0.03;        par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -4;         par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 = 0.0001;      par5_lpow5 = 0.00001;   par5_hpow5 = 1.;
+    }
+  }
+  else if(cat==6789)
+  {
+    if(order==1){
+    sigma_pow = 4.95;           sigma_lpow = 1.;     sigma_hpow = 8.;
+    turnon_pow = 104.6;        turnon_lpow = 104.;   turnon_hpow = 105.;
+    par1_pow1 = -5.2;         par1_lpow1 = -8.;    par1_hpow1 = -1.;
+    coeff1_pow1 = 0.001;     coeff1_lpow1 = 0.000001;    coeff1_hpow1 = 1.;
+    }
+    else if(order==3){
+    sigma_pow = 5.;          sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;      turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow3 = -5;         par1_lpow3 = -8.;   par1_hpow3 = -3.;
+    coeff1_pow3 = 0.3;       coeff1_lpow3 = 0.;    coeff1_hpow3 = 1.;
+    par3_pow3 = -4;      par3_lpow3 = -5;      par3_hpow3 = -1.;
+    coeff3_pow3 = 0.01; coeff3_lpow3 = 0.;    coeff3_hpow3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_pow = 4.8;           sigma_lpow = 3.;      sigma_hpow = 10.;
+    turnon_pow = 104.6;         turnon_lpow = 100.;   turnon_hpow = 110.;
+    par1_pow5 = -6;           par1_lpow5 = -12.;    par1_hpow5 = -5.;
+    coeff1_pow5 = 0.07;       par1_lpow5 = 0.;      par1_hpow5 = 1.;
+    par3_pow5 = -5.;          par3_lpow5 = -10.;    par3_hpow5 = -2.;
+    coeff3_pow5 = 0.03;        par3_lpow5 = 0.;      par3_hpow5 = 1.;
+    par5_pow5 = -4;         par5_lpow5 = -10;     par5_hpow5 = -1.;
+    coeff5_pow5 = 0.0001;      par5_lpow5 = 0.00001;   par5_hpow5 = 1.;
+    }
+  }
+  
+  RooRealVar *sigma = new RooRealVar(Form("%s_sigma_p%d",prefix.c_str(),order),Form("%s_sigma_p%d",prefix.c_str(),order),sigma_pow,sigma_lpow,sigma_hpow);
+  RooRealVar *turnon = new RooRealVar(Form("%s_turnon_p%d",prefix.c_str(),order),Form("%s_turnon_p%d",prefix.c_str(),order),turnon_pow,turnon_lpow,turnon_hpow);
+  //coeffList->add(RooConst(1.0)); // no need for cnstant in this interface
+  
+    if (order==1) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_pow1",prefix.c_str()),Form("%s_p1_pow1",prefix.c_str()),par1_pow1,par1_lpow1,par1_hpow1);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_pow1",prefix.c_str()),Form("%s_cp1_pow1",prefix.c_str()),coeff1_pow1,coeff1_lpow1,coeff1_hpow1);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_pow1",prefix.c_str()),Form("%s_step_pow1",prefix.c_str()), "1e-20+(@0 > @1)*(@3*(@0)^(@2))", RooArgList(*obs_var,*turnon,*p1,*cp1));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_pow1",prefix.c_str()),Form("%s_gau_pow1",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxpow = new RooFFTConvPdf(Form("%s_gauxpow1",prefix.c_str()),Form("%s_gauxpow1",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxpow;
+  } else if (order==3) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_pow3",prefix.c_str()),Form("%s_p1_pow3",prefix.c_str()),par1_pow3,par1_lpow3,par1_hpow3);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_pow3",prefix.c_str()),Form("%s_cp1_pow3",prefix.c_str()),coeff1_pow3,coeff1_lpow3,coeff1_hpow3);
+      RooRealVar *p3 = new RooRealVar(Form("%s_p3_pow3",prefix.c_str()),Form("%s_p3_pow3",prefix.c_str()),par3_pow3,par3_lpow3,par3_hpow3);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_pow3",prefix.c_str()),Form("%s_cp3_pow3",prefix.c_str()),coeff3_pow3,coeff3_lpow3,coeff3_hpow3);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_pow3",prefix.c_str()),Form("%s_step_pow3",prefix.c_str()), "1e-20+(@0 > @1)*(@3*(@0)^(@2)+@5*(@0)^(@4))", RooArgList(*obs_var,*turnon,*p1,*cp1,*p3,*cp3));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_pow3",prefix.c_str()),Form("%s_gau_pow3",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxpow = new RooFFTConvPdf(Form("%s_gauxpow3",prefix.c_str()),Form("%s_gauxpow3",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxpow;
+  } else if (order==5) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_pow5",prefix.c_str()),Form("%s_p1_pow5",prefix.c_str()),par1_pow5,par1_lpow5,par1_hpow5);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_pow5",prefix.c_str()),Form("%s_cp1_pow5",prefix.c_str()),coeff1_pow5,coeff1_lpow5,coeff1_hpow5);
+      RooRealVar *p3 = new RooRealVar(Form("%s_p3_pow5",prefix.c_str()),Form("%s_p3_pow5",prefix.c_str()),par3_pow5,par3_lpow5,par3_hpow5);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_pow5",prefix.c_str()),Form("%s_cp3_pow5",prefix.c_str()),coeff3_pow5,coeff3_lpow5,coeff3_hpow5);
+      RooRealVar *p5 = new RooRealVar(Form("%s_p5_pow5",prefix.c_str()),Form("%s_p5_pow5",prefix.c_str()),par5_pow5,par5_lpow5,par5_hpow5);
+      RooRealVar *cp5 = new RooRealVar(Form("%s_cp5_pow5",prefix.c_str()),Form("%s_cp5_pow5",prefix.c_str()),coeff5_pow5,coeff5_lpow5,coeff5_hpow5);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_pow5",prefix.c_str()),Form("%s_step_pow5",prefix.c_str()), "1e-20+(@0 > @1)*(@3*(@0)^(@2)+@5*(@0)^(@4)+@7*(@0)^(@6))", RooArgList(*obs_var,*turnon,*p1,*cp1,*p3,*cp3,*p5,*cp5));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_pow5",prefix.c_str()),Form("%s_gau_pow5",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxpow = new RooFFTConvPdf(Form("%s_gauxpow5",prefix.c_str()),Form("%s_gauxpow5",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxpow;
+  } 
+   else {
+	return NULL;
+  }
 }
 
 RooAbsPdf* PdfModelBuilder::getPowerLawGeneric(string prefix, int order){
@@ -286,6 +621,279 @@ RooAbsPdf* PdfModelBuilder::getExponential(string prefix, int order){
   return exp;
   //bkgPdfs.insert(pair<string,RooAbsPdf*>(exp->GetName(),exp));
 
+}
+
+RooAbsPdf* PdfModelBuilder::getExponentialStepxGau(string prefix, int order, int cat){
+  if(order%2==0) return NULL;
+  RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),0.);
+  double sigma_exp,sigma_lexp,sigma_hexp;
+  double turnon_exp,turnon_lexp,turnon_hexp;
+  double par1_exp1, par1_exp3, par3_exp3, par1_exp5, par3_exp5, par5_exp5;
+  double par1_hexp1, par1_hexp3, par3_hexp3, par1_hexp5, par3_hexp5, par5_hexp5;
+  double par1_lexp1, par1_lexp3, par3_lexp3, par1_lexp5, par3_lexp5, par5_lexp5;
+  double coeff1_exp1, coeff1_exp3, coeff3_exp3, coeff1_exp5, coeff3_exp5, coeff5_exp5;
+  double coeff1_hexp1, coeff1_hexp3, coeff3_hexp3, coeff1_hexp5, coeff3_hexp5, coeff5_hexp5;
+  double coeff1_lexp1, coeff1_lexp3, coeff3_lexp3, coeff1_lexp5, coeff3_lexp5, coeff5_lexp5;
+  if(cat==1)
+  {
+    if(order==1){
+    turnon_exp = 115.;      turnon_lexp = 100.;   turnon_hexp = 120.;
+    sigma_exp = 2;          sigma_lexp = 3.;      sigma_hexp = 10.;
+    par1_exp1 = -0.03;          par1_lexp1 = -0.7;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5; coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    turnon_exp = 115.;      turnon_lexp = 110.;   turnon_hexp = 120.;
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 10.;
+    par1_exp3 = -0.04;      par1_lexp3 = -0.2;    par1_hexp3 = 0.;
+    coeff1_exp3 = 0.3; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -0.03;      par3_lexp3 = -0.2;      par3_hexp3 = 0.;
+    coeff3_exp3 = 0.1; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    turnon_exp = 115.;      turnon_lexp = 110.;   turnon_hexp = 120.;
+    sigma_exp = 5.5;           sigma_lexp = 3.;      sigma_hexp = 8.;
+    par1_exp5 = -0.07;          par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.5;       coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;          par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;      par5_hexp5 = 0.;
+    coeff5_exp5 = 0.002; coeff5_lexp5 = 0.;    coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==2)
+  {
+    if(order==1){
+    sigma_exp = 1;          sigma_lexp = 1;      sigma_hexp = 4.;
+    turnon_exp = 105.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    //turnon_exp = 115.;        turnon_lexp = 110.;   turnon_hexp = 125.;// 1GeV
+    par1_exp1 = -0.03;         par1_lexp1 = -0.7;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 1.;           sigma_lexp = 1.;      sigma_hexp = 4.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    //turnon_exp = 108.5;       turnon_lexp = 95.;   turnon_hexp = 120.;//1 GeV
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==3)
+  {
+    if(order==1){
+    sigma_exp = 3.85;          sigma_lexp = 2.;      sigma_hexp = 8.;
+    turnon_exp = 107.;        turnon_lexp = 105.;   turnon_hexp = 110.;
+    par1_exp1 = -0.05;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.05;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 3.85;           sigma_lexp = 2.;      sigma_hexp = 8.;
+    turnon_exp = 107;       turnon_lexp = 105.;   turnon_hexp = 110.;
+    par1_exp3 = -5.4503e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 9.6120e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.8149e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 1.8388e-07; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 3.85;           sigma_lexp = 2.;      sigma_hexp = 8.;
+    turnon_exp = 107;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.175;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.8; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.05;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.2; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.00001;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.000001;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==4)
+  {
+    if(order==1){
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 8.;
+    turnon_exp = 108.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp1 = -0.03;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==501)
+  {
+    if(order==1){
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 8.;
+    turnon_exp = 108.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp1 = -0.03;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==502)
+  {
+    if(order==1){
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 8.;
+    turnon_exp = 108.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp1 = -0.03;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==503)
+  {
+    if(order==1){
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 8.;
+    turnon_exp = 108.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp1 = -0.03;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  else if(cat==6789)
+  {
+    if(order==1){
+    sigma_exp = 5;          sigma_lexp = 3.;      sigma_hexp = 8.;
+    turnon_exp = 108.;        turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp1 = -0.03;         par1_lexp1 = -0.5;    par1_hexp1 = 0.;
+    coeff1_exp1 = 0.5;      coeff1_lexp1 = 0.;    coeff1_hexp1 = 1.;
+    }
+    else if(order==3){
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.5;       turnon_lexp = 100.;   turnon_hexp = 110.;
+    par1_exp3 = -7.0678e-02;  par1_lexp3 = -0.5;    par1_hexp3 = 0.;
+    coeff1_exp3 = 8.0177e-01; coeff1_lexp3 = 0.;    coeff1_hexp3 = 1.;
+    par3_exp3 = -4.1603e-02;      par3_lexp3 = -0.5;      par3_hexp3 = 0.;
+    coeff3_exp3 = 2.6703e-02; coeff3_lexp3 = 0.;    coeff3_hexp3 = 1.;
+    } 
+    else if(order==5)
+    {
+    sigma_exp = 5.;           sigma_lexp = 3.;      sigma_hexp = 10.;
+    turnon_exp = 108.64;      turnon_lexp = 105.;   turnon_hexp = 109.;
+    par1_exp5 = -0.07;        par1_lexp5 = -0.5;    par1_hexp5 = 0.;
+    coeff1_exp5 = 0.05; coeff1_lexp5 = 0.;    coeff1_hexp5 = 1.;
+    par3_exp5 = -0.04;      par3_lexp5 = -0.5;    par3_hexp5 = 0.;
+    coeff3_exp5 = 0.0002; coeff3_lexp5 = 0.;    coeff3_hexp5 = 1.;
+    par5_exp5 = -0.02;      par5_lexp5 = -0.5;     par5_hexp5 = 0.;
+    coeff5_exp5 =0.002;  coeff5_lexp5 = 0.; coeff5_hexp5 = 1.;
+    }
+  }
+  RooRealVar *sigma = new RooRealVar(Form("%s_sigma_p%d",prefix.c_str(),order),Form("%s_sigma_p%d",prefix.c_str(),order),sigma_exp,sigma_lexp,sigma_hexp);
+  RooRealVar *turnon = new RooRealVar(Form("%s_turnon_p%d",prefix.c_str(),order),Form("%s_turnon_p%d",prefix.c_str(),order),turnon_exp,turnon_lexp,turnon_hexp);
+  
+    if (order==1) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_exp1",prefix.c_str()),Form("%s_p1_exp1",prefix.c_str()),par1_exp1,par1_lexp1,par1_hexp1);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_exp1",prefix.c_str()),Form("%s_cp1_exp1",prefix.c_str()),coeff1_exp1,coeff1_lexp1,coeff1_hexp1);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_exp1",prefix.c_str()),Form("%s_step_exp1",prefix.c_str()), "1e-20+(@0 > @1)*(@3*TMath::Exp(@0*@2))", RooArgList(*obs_var,*turnon,*p1,*cp1));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_exp1",prefix.c_str()),Form("%s_gau_exp1",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxexp = new RooFFTConvPdf(Form("%s_gauxexp1",prefix.c_str()),Form("%s_gauxexp1",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxexp;
+  } else if (order==3) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_exp3",prefix.c_str()),Form("%s_p1_exp3",prefix.c_str()),par1_exp3,par1_lexp3, par1_hexp3);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_exp3",prefix.c_str()),Form("%s_cp1_exp3",prefix.c_str()),coeff1_exp3,coeff1_lexp3,coeff1_hexp3);
+      RooRealVar *p3 = new RooRealVar(Form("%s_p3_exp3",prefix.c_str()),Form("%s_p3_exp3",prefix.c_str()),par3_exp3,par3_lexp3, par3_hexp3);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_exp3",prefix.c_str()),Form("%s_cp3_exp3",prefix.c_str()),coeff3_exp3,coeff3_lexp3,coeff3_hexp3);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_exp3",prefix.c_str()),Form("%s_step_exp3",prefix.c_str()), "1e-20+(@0 > @1)*(@3*TMath::Exp(@0*@2)+@5*TMath::Exp(@0*@4))", RooArgList(*obs_var,*turnon,*p1,*cp1,*p3,*cp3));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_exp3",prefix.c_str()),Form("%s_gau_exp3",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxexp = new RooFFTConvPdf(Form("%s_gauxexp3",prefix.c_str()),Form("%s_gauxexp3",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxexp;
+  } else if (order==5) {
+      RooRealVar *p1 = new RooRealVar(Form("%s_p1_exp5",prefix.c_str()),Form("%s_p1_exp5",prefix.c_str()),par1_exp5,par1_lexp5, par1_hexp5);
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_exp5",prefix.c_str()),Form("%s_cp1_exp5",prefix.c_str()),coeff1_exp5,coeff1_lexp5,coeff1_hexp5);
+      RooRealVar *p3 = new RooRealVar(Form("%s_p3_exp5",prefix.c_str()),Form("%s_p3_exp5",prefix.c_str()),par3_exp5,par3_lexp5, par3_hexp5);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_exp5",prefix.c_str()),Form("%s_cp3_exp5",prefix.c_str()),coeff3_exp5,coeff3_lexp5,coeff3_hexp5);
+      RooRealVar *p5 = new RooRealVar(Form("%s_p5_exp5",prefix.c_str()),Form("%s_p5_exp5",prefix.c_str()),par5_exp5,par5_lexp5, par5_hexp5);
+      RooRealVar *cp5 = new RooRealVar(Form("%s_cp5_exp5",prefix.c_str()),Form("%s_cp5_exp5",prefix.c_str()),coeff5_exp5,coeff5_lexp5,coeff5_hexp5);
+    	RooGenericPdf *step = new RooGenericPdf(Form("%s_step_exp5",prefix.c_str()),Form("%s_step_exp5",prefix.c_str()), "1e-20+(@0 > @1)*(@3*TMath::Exp(@0*@2)+@5*TMath::Exp(@0*@4)+@7*TMath::Exp(@0*@6))", RooArgList(*obs_var,*turnon,*p1,*cp1,*p3,*cp3,*p5,*cp5));
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_exp5",prefix.c_str()),Form("%s_gau_exp5",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxexp = new RooFFTConvPdf(Form("%s_gauxexp5",prefix.c_str()),Form("%s_gauxexp5",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxexp;
+  } 
+   else {
+	return NULL;
+  }
 }
 
 RooAbsPdf* PdfModelBuilder::getPowerLawSingle(string prefix, int order){
@@ -385,6 +993,253 @@ RooAbsPdf* PdfModelBuilder::getLaurentSeries(string prefix, int order){
   //return pdf_gaus;
 }
 
+RooAbsPdf* PdfModelBuilder::getLaurentStepxGau(string prefix, int order, int cat){
+  if(order>2) return NULL;
+  
+  RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),0.);
+  double sigma_lau,sigma_llau,sigma_hlau;
+  double turnon_lau,turnon_llau,turnon_hlau;
+  double coeff1_lau1, coeff2_lau1, coeff1_lau2, coeff2_lau2, coeff3_lau2, coeff1_lau3, coeff2_lau3, coeff3_lau3, coeff4_lau3; 
+  double coeff1_hlau1, coeff2_hlau1, coeff1_hlau2, coeff2_hlau2, coeff3_hlau2, coeff1_hlau3, coeff2_hlau3, coeff3_hlau3, coeff4_hlau3; 
+  double coeff1_llau1, coeff2_llau1, coeff1_llau2, coeff2_llau2, coeff3_llau2, coeff1_llau3, coeff2_llau3, coeff3_llau3, coeff4_llau3; 
+
+ if(cat==1)
+  {
+    if(order==1){
+    turnon_lau = 115;      turnon_llau = 110.;   turnon_hlau = 120.;
+    sigma_lau = 6.;          sigma_llau = 2.5;      sigma_hlau = 8.;
+    coeff1_lau1 = 0.000000001; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.1;
+    coeff2_lau1 = 0.99999; coeff2_llau1 = 0.1;    coeff2_hlau1 = 1.;
+    }
+    else if(order==2){
+    turnon_lau = 115;      turnon_llau = 110.;   turnon_hlau = 120.;
+    sigma_lau = 6.;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 1e-15; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 1-1e-8; coeff2_llau2 = 0.1;    coeff2_hlau2 = 1.;
+    coeff3_lau2 = 0.; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 115;      turnon_llau = 110.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 1.e-09; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.001;
+    coeff2_lau3 = 1.e-07; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.1;
+    coeff3_lau3 = 0.; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.0001;
+    coeff4_lau3 = 0.9999; coeff4_llau3 = 0.;    coeff4_hlau3 =1.;
+    }
+  }
+  else if(cat==2)
+  {
+    if(order==1){
+    turnon_lau = 100.;      turnon_llau = 95.;   turnon_hlau = 110.;
+    //turnon_lau = 115;      turnon_llau = 110.;   turnon_hlau = 125.;//1Gev
+    //sigma_lau = 5.;          sigma_llau = 2.;      sigma_hlau = 8.;//M5,M6,M16
+    sigma_lau = 1.;          sigma_llau = 1.;      sigma_hlau = 4.;
+    coeff1_lau1 = 5.8468e-08; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 0.25; coeff2_llau1 = 0.;    coeff2_hlau1 = 1.;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 100.;   turnon_hlau = 115.;
+    //turnon_lau = 108.2;       turnon_llau = 100.;   turnon_hlau = 125.;//1gev
+    sigma_lau = 1.;          sigma_llau = 1.;      sigma_hlau = 4.;
+    coeff1_lau2 = 1.2503e-06; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 9.7549e-01; coeff2_llau2 = 0.1;    coeff2_hlau2 = 1.;
+    coeff3_lau2 = 0.; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 100;         turnon_llau = 95;   turnon_hlau = 110.;
+    sigma_lau = 1.;           sigma_llau = 1.;      sigma_hlau = 4.;
+    coeff1_lau3 = 5.e-09; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.001;
+    coeff2_lau3 = 4.e-08; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.1;
+    coeff3_lau3 = 7e-11; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.0001;
+    coeff4_lau3 = 0.5; coeff4_llau3 = 0.;    coeff4_hlau3 = 1.;
+    }
+  }
+  else if(cat==3)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 106.5;         turnon_llau = 104.;   turnon_hlau = 120.;
+    sigma_lau = 3.;           sigma_llau = 1.;      sigma_hlau = 8.;
+    coeff1_lau3 = 1.8872e-15; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.01;
+    coeff2_lau3 = 3.2066e-13; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.1;
+    coeff3_lau3 = 9.5240e-17; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.0001;
+    coeff4_lau3 = 9.9935e-01; coeff4_llau3 = 0.9;    coeff4_hlau3 = 1.;
+    }
+  }
+  else if(cat==4)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 108;         turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 3.6576e-04; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.5;
+    coeff2_lau3 = 3.6576e-04; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.5;
+    coeff3_lau3 = 3.6576e-04; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.5;
+    coeff4_lau3 = 3.6576e-04; coeff4_llau3 = 0.;    coeff4_hlau3 = 0.5;
+    }
+  }
+  else if(cat==501)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 108;         turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 3.6576e-04; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.5;
+    coeff2_lau3 = 3.6576e-04; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.5;
+    coeff3_lau3 = 3.6576e-04; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.5;
+    coeff4_lau3 = 3.6576e-04; coeff4_llau3 = 0.;    coeff4_hlau3 = 0.5;
+    }
+  }
+  else if(cat==502)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 108;         turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 3.6576e-04; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.5;
+    coeff2_lau3 = 3.6576e-04; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.5;
+    coeff3_lau3 = 3.6576e-04; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.5;
+    coeff4_lau3 = 3.6576e-04; coeff4_llau3 = 0.;    coeff4_hlau3 = 0.5;
+    }
+  }
+  else if(cat==503)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 108;         turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 3.6576e-04; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.5;
+    coeff2_lau3 = 3.6576e-04; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.5;
+    coeff3_lau3 = 3.6576e-04; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.5;
+    coeff4_lau3 = 3.6576e-04; coeff4_llau3 = 0.;    coeff4_hlau3 = 0.5;
+    }
+  }
+  else if(cat==6789)
+  {
+    if(order==1){
+    turnon_lau = 108.32;      turnon_llau = 100.;   turnon_hlau = 120.;
+    sigma_lau = 6.7;          sigma_llau = 5.;      sigma_hlau = 8.;
+    coeff1_lau1 = 3.6576e-04; coeff1_llau1 = 0.;    coeff1_hlau1 = 0.5;
+    coeff2_lau1 = 3.6576e-04; coeff2_llau1 = 0.;    coeff2_hlau1 = 0.5;
+    }
+    else if(order==2){
+    turnon_lau = 108.2;       turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.6;          sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau2 = 3.6576e-04; coeff1_llau2 = 0.;    coeff1_hlau2 = 0.5;
+    coeff2_lau2 = 3.6576e-04; coeff2_llau2 = 0.;    coeff2_hlau2 = 0.5;
+    coeff3_lau2 = 3.6576e-04; coeff3_llau2 = 0.;    coeff3_hlau2 = 0.5;
+    } 
+    else if(order==3)
+    {
+    turnon_lau = 108;         turnon_llau = 107.;   turnon_hlau = 120.;
+    sigma_lau = 6.;           sigma_llau = 3.;      sigma_hlau = 8.;
+    coeff1_lau3 = 3.6576e-04; coeff1_llau3 = 0.;    coeff1_hlau3 = 0.5;
+    coeff2_lau3 = 3.6576e-04; coeff2_llau3 = 0.;    coeff2_hlau3 = 0.5;
+    coeff3_lau3 = 3.6576e-04; coeff3_llau3 = 0.;    coeff3_hlau3 = 0.5;
+    coeff4_lau3 = 3.6576e-04; coeff4_llau3 = 0.;    coeff4_hlau3 = 0.5;
+    }
+  }
+  RooRealVar *sigma = new RooRealVar(Form("%s_sigma_p%d",prefix.c_str(),order),Form("%s_sigma_p%d",prefix.c_str(),order),sigma_lau,sigma_llau,sigma_hlau);
+  RooRealVar *turnon = new RooRealVar(Form("%s_turnon_p%d",prefix.c_str(),order),Form("%s_turnon_p%d",prefix.c_str(),order),turnon_lau,turnon_llau,turnon_hlau);
+  //coeffList->add(RooConst(1.0)); // no need for cnstant in this interface
+  
+    if (order==1) {
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_lau1",prefix.c_str()),Form("%s_cp1_lau1",prefix.c_str()),coeff1_lau1,coeff1_llau1,coeff1_hlau1);
+      RooRealVar *cp2 = new RooRealVar(Form("%s_cp2_lau1",prefix.c_str()),Form("%s_cp2_lau1",prefix.c_str()),coeff2_lau1,coeff2_llau1,coeff2_hlau1);
+      RooGenericPdf *step= new RooGenericPdf(Form("%s_step_lau1",prefix.c_str()),Form("%s_step_lau1",prefix.c_str()), "1e-20+(@0 > @1)*(@2*(@0)^(-4)+@3*(@0)^(-5))", RooArgList(*obs_var,*turnon,*cp1,*cp2));//step*(ax^b)
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_lau1",prefix.c_str()),Form("%s_gau_lau1",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxlau = new RooFFTConvPdf(Form("%s_gauxlau1",prefix.c_str()),Form("%s_gauxlau1",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxlau;
+  } else if (order==2) {
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_lau2",prefix.c_str()),Form("%s_cp1_lau2",prefix.c_str()),coeff1_lau2,coeff1_llau2,coeff1_hlau2);
+      RooRealVar *cp2 = new RooRealVar(Form("%s_cp1_lau2",prefix.c_str()),Form("%s_cp1_lau2",prefix.c_str()),coeff2_lau2,coeff2_llau2,coeff2_hlau2);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_lau2",prefix.c_str()),Form("%s_cp3_lau2",prefix.c_str()),coeff3_lau2,coeff3_llau2,coeff3_hlau2);
+      RooGenericPdf *step = new RooGenericPdf("step_lau2", "step_lau2", "1e-20+(@0 > @1)*(@2*(@0)^(-4)+@3*(@0)^(-5)+@4*(@0)^(-3))", RooArgList(*obs_var,*turnon,*cp1,*cp2,*cp3));//step*(ax^b+cx^d+fx^g) 
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_lau2",prefix.c_str()),Form("%s_gau_lau2",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxlau = new RooFFTConvPdf(Form("%s_gauxlau2",prefix.c_str()),Form("%s_gauxlau2",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxlau;
+  } else if (order==3) {
+      RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_lau3",prefix.c_str()),Form("%s_cp1_lau3",prefix.c_str()),coeff1_lau3,coeff1_llau3,coeff1_hlau3);
+      RooRealVar *cp2 = new RooRealVar(Form("%s_cp2_lau3",prefix.c_str()),Form("%s_cp2_lau3",prefix.c_str()),coeff2_lau3,coeff2_llau3,coeff2_hlau3);
+      RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_lau3",prefix.c_str()),Form("%s_cp3_lau3",prefix.c_str()),coeff3_lau3,coeff3_llau3,coeff3_hlau3);
+      RooRealVar *cp4 = new RooRealVar(Form("%s_cp4_lau3",prefix.c_str()),Form("%s_cp4_lau3",prefix.c_str()),coeff4_lau3,coeff4_llau3,coeff4_hlau3);
+      RooGenericPdf *step = new RooGenericPdf(Form("%s_step_lau3",prefix.c_str()),Form("%s_step_lau3",prefix.c_str()), "1e-20+(@0 > @1)*(@2*(@0)^(-4)+@3*(@0)^(-5)+@4*(@0)^(-3)+@5*(@0)^(-6))", RooArgList(*obs_var,*turnon,*cp1,*cp2,*cp3,*cp4));//step*(ax^b+cx^d)
+      RooGaussModel *gau = new RooGaussModel(Form("%s_gau_lau3",prefix.c_str()),Form("%s_gau_lau3",prefix.c_str()),*obs_var,*mean,*sigma);
+      RooFFTConvPdf *gauxlau = new RooFFTConvPdf(Form("%s_gauxlau3",prefix.c_str()),Form("%s_gauxlau3",prefix.c_str()),*obs_var,*step,*gau);
+      return gauxlau;
+  } 
+   else {
+	return NULL;
+  }
+}
+
 RooAbsPdf* PdfModelBuilder::getKeysPdf(string prefix){
   if (!keysPdfAttributesSet){
     cerr << "ERROR -- keysPdf attributes not set" << endl;
@@ -455,7 +1310,7 @@ RooAbsPdf* PdfModelBuilder::getExponentialSingle(string prefix, int order){
     RooRealVar *mean = new RooRealVar("mean","mean",0.0) ;
     RooRealVar *sigma = new RooRealVar("sigma","sigma",5,-10.,20.) ;
     RooGaussian *gaus = new RooGaussian("gaus","gaus",*obs_var,*mean,*sigma) ;
-    RooRealVar *step_value = new RooRealVar("step_value", "step value",115.,110.,130.) ;
+    RooRealVar *step_value = new RooRealVar("step_value", "step value",115.,100.,130.) ;
     // RooGenericPdf *step_func = new RooGenericPdf("step_func","step_func","(abs(step_value-obs_var)/(step_value-obs_var)+1.0)/2.0",RooArgSet(*obs_var,*step_value));
     RooGenericPdf *step_func = new RooGenericPdf("step_func","step_func","(1e-20+( @0 > @1)) * @2",RooArgSet(*obs_var,*step_value,*exp));
     //RooAddPdf *exp_gaus = new RooAddPdf("exp_gaus","exp_gaus",RooArgList(*exp,*gaus),*fgaus) ;

@@ -69,6 +69,7 @@ float mgg_low =2.0;//FIXME
 float mgg_high =40;//FIXME
 float mgg_blind_low =12;//FIXME
 float mgg_blind_high =17;//FIXME
+float nbin = 85;
 
 RooRealVar *intLumi_ = new RooRealVar("IntLumi","hacked int lumi", 1000.);
 
@@ -642,7 +643,7 @@ void profileExtendTerm(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, Roo
 	}
 }
 
-void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCategory *mcat, string name, int cat, bool unblind, int isFlashgg, std::vector<string> flashggCats){
+void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCategory *mcat, string name, int cat, bool unblind, int isFlashgg, std::vector<string> flashggCats, double ma){
 	string catname;
 	if (isFlashgg){
 		catname = Form("%s",flashggCats[cat].c_str());
@@ -653,36 +654,122 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	RooPlot *plot = mgg->frame();
 	plot->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
 	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
-	plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
+	plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+	plot->GetYaxis()->SetTitle("Events / GeV");//bing
 	if (!unblind) {
 		//mgg->setRange("unblind_up",135,180);
 		//mgg->setRange("unblind_down",100,115);
 		mgg->setRange("unblind_up",mgg_blind_high,mgg_high);//bing
 		mgg->setRange("unblind_down",mgg_low,mgg_blind_low);//bing
-		data->plotOn(plot,Binning(80),CutRange("unblind_down,unblind_up"));
+		data->plotOn(plot,Binning(nbin),CutRange("unblind_down,unblind_up"));
 	}
 	else {
-		data->plotOn(plot,Binning(80));
+		data->plotOn(plot,Binning(nbin));
 	}
 
-	TLegend *leg = new TLegend(0.6,0.4,0.92,0.92);
+	//TLegend *leg = new TLegend(0.6,0.4,0.92,0.92);
+	TLegend *leg = new TLegend(0.55,0.6,0.88,0.88);//bing
 	leg->SetFillColor(0);
 	leg->SetLineColor(0);
+	leg->SetBorderSize(0);//bing
+	leg->SetTextFont(42);//bing
+	leg->SetTextSize(0.04);//bing
 
-	int color[10] = {kBlue,kOrange,kGreen,kRed,kMagenta,kPink,kViolet,kCyan,kYellow,kBlack};
+	TObject *dataLeg = (TObject*)plot->getObject(plot->numItems()-1);//bing
+	leg->AddEntry(dataLeg,"Data","LEP");//bing
+
+
+	int color[10] = {kBlue,kBlue+3,kGreen+3,kTeal+9,kRed,kRed+2,kYellow+2,kOrange-3,kPink+7,kCyan+2};
 	for (int pInd=0; pInd<mpdf->getNumPdfs(); pInd++){
 		mcat->setIndex(pInd);
 		// Always refit since we cannot be sure the best fit pdf is being fitted
 		mpdf->getCurrentPdf()->fitTo(*data);
-		mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[pInd]),LineWidth(2));
+		string name_temp,name_temp1,name,order;//bing
+		int color_id;
+		name_temp=mpdf->getCurrentPdf()->GetName();//bing
+		if(name_temp.substr(16).c_str()[0]=='b'){
+			name_temp1 = name_temp.substr(16);
+			order = name_temp.substr(20);
+			color_id = stoi(order)-1;
+			if(order == '1'){
+				name = "1st order Bernstein";
+			}
+			else if(order == '2'){
+				name = "2nd order Bernstein";
+			}
+			else if(order == '3'){
+				name = "3rd order Bernstein";
+			}
+			else{
+				name = order+"th order Bernstein";
+			}
+		}
+		else{
+			name_temp1 = name_temp.substr(16).substr(0,name_temp.find('_')+1);
+			order = name_temp1.substr(3);
+			if(name_temp1.substr(0, name_temp1.length() - 1) == "exp"){
+				name = "Exponential";
+				color_id = stoi(order)+4-1;
+			}
+			else if(name_temp1.substr(0, name_temp1.length() - 1) == "pow"){
+				name = "Power Law";
+				color_id = stoi(order)+6-1;
+			}
+			else{
+				name = "Laurent";
+				color_id = stoi(order)+8-1;
+			}
+
+			
+			if(order == '1'){
+				name = "1st order "+name;
+			}
+			else if(order == '2'){
+				name = "2nd order "+name;
+			}
+			else if(order == '3'){
+				name = "3rd order "+name;
+				color_id = color_id -1;
+			}
+			else{
+				name = order+"th order "+name;
+			}
+		}//bing
+		//mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[pInd]),LineWidth(2));
+		mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[color_id]),LineWidth(2));//bing
 		TObject *legObj = plot->getObject(plot->numItems()-1);
-		leg->AddEntry(legObj,mpdf->getCurrentPdf()->GetName(),"L");
+		//leg->AddEntry(legObj,mpdf->getCurrentPdf()->GetName(),"L");
+		
+		cout<<"[[DEBUG]]: "<< name_temp1 << name << order <<"color"<<color_id <<endl;
+		leg->AddEntry(legObj,name.c_str(),"L");//bing
 	}
 
 	TCanvas *canv = new TCanvas();
+	plot->SetMaximum(int(plot->GetMaximum())+5);//bing
+	plot->GetXaxis()->SetTitleFont(42);
+	plot->GetXaxis()->SetTitleSize(0.05);
+	plot->GetXaxis()->SetTitleOffset(0.95);
+	plot->GetXaxis()->SetLabelFont(42);
+	plot->GetXaxis()->SetLabelOffset(0.007);
+	plot->GetXaxis()->SetLabelSize(0.04);
+
+	plot->GetYaxis()->SetTitleFont(42);
+	plot->GetYaxis()->SetTitleSize(0.05);
+	plot->GetYaxis()->SetTitleOffset(1.15);
+	plot->GetYaxis()->SetLabelFont(42);
+	plot->GetYaxis()->SetLabelOffset(0.007);
+	plot->GetYaxis()->SetLabelSize(0.04);
+
 	plot->Draw();
 	if (!unblind) plot->SetMinimum(0.0001);
 	leg->Draw();
+
+	TLatex *latex = new TLatex();
+	latex->SetTextSize(0.06);
+	latex->SetNDC();
+	latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(ma))+" GeV").c_str());
+	CMS_lumi( canv, 4, 0);
+
 	canv->Modified();
 	canv->Update();
 	canv->Print(Form("%s.pdf",name.c_str()));
@@ -693,10 +780,13 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 
 int main(int argc, char* argv[]){
   gSystem->Load("$CMSSW_BASE/lib/$SCRAM_ARCH/libHiggsAnalysisGBRLikelihood.so");
+  //gStyle->SetPadTickX(1);//bing
+  //gStyle->SetPadTickY(1);//bing
 
   setTDRStyle();
   writeExtraText = true;       // if extra text
-  extraText  = "Preliminary";  // default extra text is "Preliminary"
+  //extraText  = "Preliminary";  // default extra text is "Preliminary"
+  extraText  = "Supplementary";  // default extra text is "Preliminary"
   lumi_13TeV ="2.6 fb^{-1}";
   lumi_8TeV  = "19.1 fb^{-1}"; // default is "19.7 fb^{-1}"
   lumi_7TeV  = "4.9 fb^{-1}";  // default is "5.1 fb^{-1}"
@@ -723,6 +813,7 @@ int main(int argc, char* argv[]){
 	int sqrts;
 	float intLumi;
 	double mhvalue_;
+	double mavalue_;
 	int isFlashgg_ =1;
 	string flashggCatsStr_;
 	vector<string> flashggCats_;
@@ -752,6 +843,7 @@ int main(int argc, char* argv[]){
 		("mhLowBlind,LB", po::value<float>(&mggblindlow_)->default_value(12),                                  			"Low ALP blind mass point")//bing
     ("mhHighBlind,HB", po::value<float>(&mggblindhigh_)->default_value(17),                                			"High ALP blind mass point")//bing
 		("mhVal", po::value<double>(&mhvalue_)->default_value(125.),														"Choose the MH for the plots")
+		("maVal", po::value<double>(&mavalue_)->default_value(1),														"Choose the Ma for the plots")
 		("higgsResolution", po::value<double>(&higgsResolution_)->default_value(1.),															"Starting point for scan")
 		("intLumi", po::value<float>(&intLumi)->default_value(0.),																"What intLumi in fb^{-1}")
 		("sqrts,S", po::value<int>(&sqrts)->default_value(8),																"Which centre of mass is this data from?")
@@ -780,7 +872,7 @@ int main(int argc, char* argv[]){
 	RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);
 	RooMsgService::instance().setSilentMode(true);
 	split(flashggCats_,flashggCatsStr_,boost::is_any_of(","));
-  lumi_13TeV =Form("%.1f fb^{-1}",intLumi);
+  lumi_13TeV =Form("%.0f fb^{-1}",intLumi);
 	system(Form("mkdir -p %s",outDir.c_str()));
 	if (makeCrossCheckProfPlots) system(Form("mkdir -p %s/normProfs",outDir.c_str()));
 
@@ -838,7 +930,7 @@ int main(int argc, char* argv[]){
 	cout << "[INFO] "<< "\t"; data->Print();
 
 	// plot all the pdfs for reference
-	if (isMultiPdf || verbose_) plotAllPdfs(mgg,data,mpdf,mcat,Form("%s/allPdfs_%s",outDir.c_str(),catname.c_str()),cat,unblind, isFlashgg_, flashggCats_);
+	if (isMultiPdf || verbose_) plotAllPdfs(mgg,data,mpdf,mcat,Form("%s/allPdfs_%s",outDir.c_str(),catname.c_str()),cat,unblind, isFlashgg_, flashggCats_, mavalue_);
 
 	// include normalization hack RooBernsteinFast;
 	/*
@@ -870,9 +962,13 @@ int main(int argc, char* argv[]){
 	RooPlot *plot = mgg->frame();
 	RooPlot *plotLC = mgg->frame();
 	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
-	plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
+	//plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
+	plot->GetXaxis()->SetLabelOffset(999);//bing
+	plot->GetXaxis()->SetLabelSize(0);//bing
+	plot->GetXaxis()->SetTitleSize(0);//bing
 	plot->SetTitle("");
-	data->plotOn(plot,Binning(80),Invisible());
+	data->plotOn(plot,Binning(nbin),Invisible());
+	//data->plotOn(plot,Binning(nbin));//bing
   ///start extra bit for ratio plot///
   RooHist *plotdata = (RooHist*)plot->getObject(plot->numItems()-1);
   // enf extra bit for ratio plot///
@@ -898,8 +994,36 @@ int main(int argc, char* argv[]){
 		int p=0;
 		for (double mass=double(mhLow); mass<double(mhHigh)+massStep; mass+=massStep) {
 			//for (int i=1; i<(plot->GetXaxis()->GetNbins()+1); i++){
+			
+			//1GeV
+			if (mass>=115) {
+				massStep = 2.5;
+			}
+
+			if (mass>=130) {
+				massStep = 5;
+			}
+			if (mass>=175) {
+				massStep = 5;
+			}
+			//30GeV
+			//if (mass>=135) {
+			//	massStep = 10;
+			//}
+
+			//if (mass>=120 && mass<=130) {
+			//	massStep = 3.5;
+			//}
+
+
+			if ((180-mass)<massStep) {
+				massStep = (180-mass);
+			}//bing
+
 			double lowedge = mass-0.5;
 			double upedge = mass+0.5;
+			//double lowedge = mass-double(massStep)/2.0;//bing
+			//double upedge = mass+double(massStep)/2.0;//bing
 			double center = mass;
 			/*
 				 double lowedge = plot->GetXaxis()->GetBinLowEdge(i);
@@ -958,7 +1082,7 @@ int main(int argc, char* argv[]){
 			if (makeCrossCheckProfPlots) {
 				// literal profile
 				TCanvas *temp = new TCanvas();
-        temp->SetTickx(); temp->SetTicky();
+        		temp->SetTickx(); temp->SetTicky();
 				TGraph *profCurve = new TGraph();
 				int p2=0;
 				for (double scanVal=0.9*errLow2Value; scanVal<1.1*errHigh2Value; scanVal+=1){
@@ -1000,13 +1124,15 @@ int main(int argc, char* argv[]){
 		TCanvas *canv = new TCanvas("c","",800,800);
   ///start extra bit for ratio plot///
   bool doRatioPlot_=1;
-  TPad *pad1 = new TPad("pad1","pad1",0,0.25,1,1);
-  TPad *pad2 = new TPad("pad2","pad2",0,0,1,0.35);
-  pad1->SetBottomMargin(0.18);
-  pad2->SetTopMargin(0.00001);
-  pad2->SetBottomMargin(0.25);
-  pad1->Draw();
+  TPad *pad1 = new TPad("pad1","pad1",0,0.25,1,0.98);
+  TPad *pad2 = new TPad("pad2","pad2",0,0.02,1,0.25);
+  //pad1->SetBottomMargin(0.18);
+  pad1->SetBottomMargin(0.02);//bing
+  //pad2->SetTopMargin(0.00001);
+  pad2->SetTopMargin(0);//bing
+  pad2->SetBottomMargin(0.35);
   pad2->Draw();
+  pad1->Draw();
   pad1->cd();
   // enf extra bit for ratio plot///
     canv->SetTickx(); canv->SetTicky();
@@ -1019,10 +1145,10 @@ int main(int argc, char* argv[]){
 			//mgg->setRange("unblind_down",100,115);
 			mgg->setRange("unblind_up",mggblindhigh_,mhHigh);//bing
 			mgg->setRange("unblind_down",mhLow,mggblindlow_);//bing
-			data->plotOn(plot,Binning(80),CutRange("unblind_down,unblind_up"));
+			data->plotOn(plot,Binning(nbin),CutRange("unblind_down,unblind_up"));
 		}
 		else {
-			data->plotOn(plot,Binning(80));
+			data->plotOn(plot,Binning(nbin));
 		}
 
 		if (doBands) {
@@ -1107,7 +1233,7 @@ int main(int argc, char* argv[]){
 		leg->Draw("same");
 
 		TLatex *latex = new TLatex();
-		latex->SetTextSize(0.045);
+		latex->SetTextSize(0.06);
 		latex->SetNDC();
 		TLatex *cmslatex = new TLatex();
 		cmslatex->SetTextSize(0.03);
@@ -1121,11 +1247,20 @@ int main(int argc, char* argv[]){
     catLabel_humanReadable.ReplaceAll("VBFTag","VBF Tag");
     catLabel_humanReadable.ReplaceAll("TTHLeptonicTag","TTH Leptonic Tag");
     catLabel_humanReadable.ReplaceAll("TTHHadronicTag","TTH Hadronic Tag");
-		latex->DrawLatex(0.15,0.85,catLabel_humanReadable);
+		//latex->DrawLatex(0.15,0.85,catLabel_humanReadable);
+		latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(mavalue_))+" GeV").c_str());
 		outWS->import(*lumi,RecycleConflictNodes());
 
 		if (unblind) plot->SetMinimum(0.0001);
-		plot->GetYaxis()->SetTitleOffset(1.3);
+		//plot->GetYaxis()->SetTitleOffset(1.3);
+		plot->GetYaxis()->SetTitle("Events / GeV");//bing
+		plot->SetMaximum(int(plot->GetMaximum())+5);//bing
+		plot->GetYaxis()->SetTitleOffset(1.15);//bing
+		plot->GetYaxis()->SetTitleSize(0.05);//bing
+		plot->GetYaxis()->SetTitleFont(42);//bing
+		plot->GetYaxis()->SetLabelFont(42);//bing
+		plot->GetYaxis()->SetLabelOffset(0.007);//bing
+		plot->GetYaxis()->SetLabelSize(0.04);//bing
 		canv->Modified();
 		canv->Update();
   ///start extra bit for ratio plot///
@@ -1162,11 +1297,21 @@ int main(int argc, char* argv[]){
 	TH1 *hdummy = new TH1D("hdummyweight","",80,mhLow,mhHigh);//bing
   hdummy->SetMaximum(hdatasub->GetHistogram()->GetMaximum()+1);
   hdummy->SetMinimum(hdatasub->GetHistogram()->GetMinimum()-1);
-  hdummy->GetYaxis()->SetTitle("data - best fit PDF");
-  hdummy->GetYaxis()->SetTitleSize(0.12);
+  //hdummy->GetYaxis()->SetTitle("data - best fit PDF");
+  hdummy->GetYaxis()->SetTitle("Data - Bkg");//bing
+  hdummy->GetYaxis()->SetTitleSize(0.1);
+  hdummy->GetYaxis()->SetTitleOffset(0.5);//bing
   //hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
-  hdummy->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
-  hdummy->GetXaxis()->SetTitleSize(0.12);
+  hdummy->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+  hdummy->GetXaxis()->SetTitleSize(0.17);
+  hdummy->GetXaxis()->SetTitleFont(42);
+  hdummy->GetXaxis()->SetTitleOffset(0.85);//bing
+  hdummy->GetXaxis()->SetLabelSize(0.12);//bing
+  hdummy->GetYaxis()->SetLabelSize(0.1);//bing
+  
+  //hdummy->GetYaxis()->SetTitle("Data - Bkg");//bing
+  hdummy->GetXaxis()->SetTickLength(0.1);
+
   hdummy->Draw("HIST");
 	if (doBands) twoSigmaBand_r->Draw("L3 SAME");
 	if (doBands) oneSigmaBand_r->Draw("L3 SAME");

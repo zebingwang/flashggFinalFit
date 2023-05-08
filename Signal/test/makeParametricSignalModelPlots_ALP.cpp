@@ -530,7 +530,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //std::cout << " [RESOLUTION CHECK] Ta/Procg " << data->GetName() << ", Mass " << mass->getVal() << " sigmaEff=" << 0.5*(semax-semin) << " , FWMH=" << (fwmax-fwmin)/2.35 << "" << std::endl;
 
   //TLatex lat1(0.65,0.85,"#splitline{CMS Simulation}{}");
-  TLatex  lat1(.129+0.03+offset,0.85,"H#rightarrow Z+ALP#rightarrow 2l+2#gamma");
+  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Z+ALP #rightarrow ee+2#gamma");
   lat1.SetNDC(1);
   lat1.SetTextSize(0.047);
 
@@ -552,7 +552,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   canv->SetTickx(); canv->SetTicky();
   plot->SetTitle("");
   //plot->GetXaxis()->SetTitle("m_{a} (GeV)");
-  plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
+  plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
   plot->GetXaxis()->SetTitleSize(0.05);
   plot->GetYaxis()->SetTitleSize(0.05);
   //plot->GetYaxis()->SetTitleOffset(1.5);
@@ -561,7 +561,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   fwhmArrow->Draw("same <>");
   fwhmText->Draw("same");
   //lat1.Draw("same");
-  lat2.Draw("same");
+  //lat2.Draw("same");//bing
   lat1.Draw("same");
   leg->Draw("same");
   TLatex *chi2ndof_latex = new TLatex();
@@ -576,8 +576,8 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
     negBinsArrow->Draw("same <>");
 
   }
-  string sim="Simulation Preliminary";
-  //string sim="Simulation"; //for the paper
+  //string sim="Simulation Preliminary";
+  string sim="Simulation Supplementary"; //for the paper
   CMS_lumi( canv, 0,0,sim);
   canv->Print(Form("%s.pdf",savename.c_str()));
   canv->Print(Form("%s.png",savename.c_str()));

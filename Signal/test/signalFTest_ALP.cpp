@@ -105,8 +105,8 @@ RooAddPdf *buildSumOfGaussians(string name, RooRealVar *mass, RooRealVar *MH, in
 		RooRealVar *dm = new RooRealVar(Form("dm_g%d",g),Form("dm_g%d",g),0.1,-1.,1.);//bing
 		RooAbsReal *mean = new RooFormulaVar(Form("mean_g%d",g),Form("mean_g%d",g),"@0+@1",RooArgList(*MH,*dm));
 		//RooRealVar *sigma = new RooRealVar(Form("sigma_g%d",g),Form("sigma_g%d",g),2.,0.7,5.*(1.+0.5*g));
-		//RooRealVar *sigma = new RooRealVar(Form("sigma_g%d",g),Form("sigma_g%d",g),2.,0.4,20.); // make this identical to fit in signalfTest. FIXME maybe just use the identical function,ie create an InitialFit object here ?
-		RooRealVar *sigma = new RooRealVar(Form("sigma_g%d",g),Form("sigma_g%d",g),2.,0.01,20.);//bing
+		RooRealVar *sigma = new RooRealVar(Form("sigma_g%d",g),Form("sigma_g%d",g),2.,1,20.); // make this identical to fit in signalfTest. FIXME maybe just use the identical function,ie create an InitialFit object here ?
+		//RooRealVar *sigma = new RooRealVar(Form("sigma_g%d",g),Form("sigma_g%d",g),2.,0.01,20.);//bing
 
 		RooGaussian *gaus = new RooGaussian(Form("gaus_g%d",g),Form("gaus_g%d",g),*mass,*mean,*sigma);
 
@@ -445,20 +445,20 @@ int main(int argc, char *argv[]){
 			dataRV->plotOn(plotsRV[proc][cat]);
 			while (prob<rv_prob_limit && order <5){
 
-        // build sum of gaussians of correct order
-        RooAddPdf *pdf = buildSumOfGaussians(
-          Form("cat%d_g%d",cat,order),mass,MH,order);
+        		// build sum of gaussians of correct order
+        		RooAddPdf *pdf = buildSumOfGaussians(
+          		Form("cat%d_g%d",cat,order),mass,MH,order);
 
-        //do the fit
+        		//do the fit
 				RooFitResult *fitRes = pdf->fitTo(*dataRV,Save(true),
-          RooFit::Minimizer("Minuit","minimize"),
-          //SumW2Error(true),Verbose(false),Range(mass_-10,mass_+10));
-					SumW2Error(true),Verbose(false),Range(rangeLow,rangeHigh));//bing
+         		RooFit::Minimizer("Minuit","minimize"),
+          		//SumW2Error(true),Verbose(false),Range(mass_-10,mass_+10));
+				SumW2Error(true),Verbose(false),Range(rangeLow,rangeHigh));//bing
 
-        //get NLL
-        double myNll=0.;
+        		//get NLL
+        		double myNll=0.;
 				thisNll = fitRes->minNll();
-        // maybe better way to do it ?
+        		// maybe better way to do it ?
 				//double myNll = getMyNLL(mass,pdf,dataRV);
 				//thisNll = getMyNLL(mass,pdf,dataRV);
 				//RooAbsReal *nll = pdf->createNLL(*dataRV);
@@ -466,13 +466,13 @@ int main(int argc, char *argv[]){
 				//m.migrad();
 				//thisNll = nll->getVal();
 				//plot(Form("plots/fTest/%s_cat%d_g%d_rv",proc.c_str(),cat,order),
-        //  mass_,mass,dataRV,pdf);
+        		//  mass_,mass,dataRV,pdf);
 				chi2 = 2.*(prevNll-thisNll);
 
-        // alternative, simpler chi2... but assumed high stats?
-        float chi2_bis= (plotsRV[proc][cat])->chiSquare();
+        		// alternative, simpler chi2... but assumed high stats?
+        		float chi2_bis= (plotsRV[proc][cat])->chiSquare();
 
-        // plot this order
+        		// plot this order
 				pdf->plotOn(plotsRV[proc][cat],LineColor(colors[order-1]));
 
 				if (chi2<0. && order>1) chi2=0.;
@@ -484,11 +484,11 @@ int main(int argc, char *argv[]){
 
 				//Wilk's theorem
 				cout << "[INFO] \t RV: proc " << proc << " cat "
-          << flashggCats_[cat] << " order " << order << " diffinDof "
-          << diffInDof << " prevNll " << prevNll << " this Nll " << thisNll
-          << " myNll " << myNll << " chi2 " << chi2 << " chi2_bis "
-          << chi2_bis<<  " prob_old " << prob_old << ", prob_new "
-          <<  prob << endl;
+          		<< flashggCats_[cat] << " order " << order << " diffinDof "
+          		<< diffInDof << " prevNll " << prevNll << " this Nll " << thisNll
+          		<< " myNll " << myNll << " chi2 " << chi2 << " chi2_bis "
+          		<< chi2_bis<<  " prob_old " << prob_old << ", prob_new "
+          		<<  prob << endl;
 
 				rv_results.push_back(std::make_pair(order,prob));
 				prevNll=thisNll;

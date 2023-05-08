@@ -254,24 +254,33 @@ for year in years:
 ###############################################################################
 
 #lumiSyst = 0.025  # Correct for Moriond17
-lumiSyst = {'ggH_16_ele_hza':0.012, 'ggH_16APV_ele_hza':0.012, 'ggH_17_ele_hza':0.023, 'ggH_18_ele_hza':0.025, 'ggH_16_mu_hza':0.012, 'ggH_16APV_mu_hza':0.012, 'ggH_17_mu_hza':0.023, 'ggH_18_mu_hza':0.025}
+lumiSyst = {'ggH_16_ele_hza':0.010, 'ggH_16APV_ele_hza':0.010, 'ggH_17_ele_hza':0.020, 'ggH_18_ele_hza':0.015, 'ggH_16_mu_hza':0.010, 'ggH_16APV_mu_hza':0.010, 'ggH_17_mu_hza':0.020, 'ggH_18_mu_hza':0.015}
 # Printing Functions
 
 
 def printLumiSyst():
     print '[INFO] Lumi...'
-    outFile.write('%-35s   lnN   ' % ('lumi_%dTeV' % sqrts))
-    for c in options.cats:
-        for p in options.procs:
-            if '%s:%s' % (p, c) in options.toSkip:
-                continue
-            if p in bkgProcs:
-                outFile.write('- ')
-            else:
-                outFile.write('%5.3f ' % (1.+lumiSyst[p]))
+    for year in years[0:4]:
+        year = year.rstrip("_"+year.split("_")[-1])
+        #outFile.write('%-35s   lnN   ' % ('lumi_%dTeV' % sqrts))
+        outFile.write('%-35s   lnN   ' % ('lumi_%dTeV_Uncorrelated_%s' % (sqrts,year)))
+        for c in options.cats:
+            for p in options.procs:
+                if '%s:%s' % (p, c) in options.toSkip:
+                    continue
+                if p in bkgProcs:
+                    outFile.write('- ')
+                elif year+"_" in p:
+                    outFile.write('%5.3f ' % (1.+lumiSyst[p]))
+                else:
+                    outFile.write('- ')
+        outFile.write('\n')
+    
+    outFile.write('%-35s   lnN  1.006 1.006 1.009 1.020 1.006 1.006 1.009 1.020  -  ' % ('lumi_%dTeV_Correlated' % (sqrts)))
+    outFile.write('\n')
+    outFile.write('%-35s   lnN  - - 1.006 1.002 - - 1.006 1.002  -  ' % ('lumi_%dTeV_Correlated_1718' % (sqrts)))
     outFile.write('\n')
     outFile.write('\n')
-
 ###############################################################################
 
 ###############################################################################
@@ -400,20 +409,24 @@ else:
 def printSyst():
 
     NormSysFiles = options.NormSys.split(',')
-    BDTSysFiles = options.BDTSys.split(',')
+    if options.BDTSys is not None:
+        BDTSysFiles = options.BDTSys.split(',')
 
     File_NormSys = open(NormSysFiles[0], 'r')
 
-    NormSys = {}
+    NormSys_up = {}
+    NormSys_dn = {}
     for line in File_NormSys.readlines()[1:]:
         if line.split()[0] == 'sample': 
             NormSys_names = line.split()[2:]
             NormSys_name = []
             for i in range(len(NormSys_names)/2):
-                NormSys[NormSys_names[i*2].rstrip('_up')] = {}
-                NormSys_name.append(NormSys_names[i*2].rstrip('_up'))
+                NormSys_up[NormSys_names[i*2][0:-3]] = {}
+                NormSys_dn[NormSys_names[i*2][0:-3]] = {}
+                NormSys_name.append(NormSys_names[i*2][0:-3])
                 for year in years:
-                    NormSys[NormSys_names[i*2].rstrip('_up')]['ggH_'+year+'_hza'] = []
+                    NormSys_up[NormSys_names[i*2][0:-3]]['ggH_'+year+'_hza'] = []
+                    NormSys_dn[NormSys_names[i*2][0:-3]]['ggH_'+year+'_hza'] = []
                 
 
     for f_norm in NormSysFiles:
@@ -430,100 +443,124 @@ def printSyst():
                 continue
             else:
                 for j in range(len(NormSys_name)):
-                    NormSys_up = abs(float(line.split()[3:][1::2][j*2].split(":")[1].rstrip(")")))
-                    NormSys_dn = abs(float(line.split()[3:][1::2][j*2+1].split(":")[1].rstrip(")")))
+                    NormSysUp = abs(float(line.split()[3:][1::2][j*2].split(":")[1].rstrip(")")))
+                    NormSysDn = abs(float(line.split()[3:][1::2][j*2+1].split(":")[1].rstrip(")")))
 
-                    if NormSys_up >= NormSys_dn:
-                        NormSys_val = NormSys_up
-                    else:
-                        NormSys_val = NormSys_dn
-                    #print NormSys#[NormSys_name[j]]
-                    if NormSys_name[j] == "event_pdfweight":
-                        NormSys[NormSys_name[j]]['ggH_'+year+'_hza'].append(str(1+NormSys_up)+'/'+str(1-NormSys_dn))
-                    else:
-                        NormSys[NormSys_name[j]]['ggH_'+year+'_hza'].append(1+NormSys_val)
+                    NormSys_up[NormSys_name[j]]['ggH_'+year+'_hza'].append(1+NormSysUp)
+                    NormSys_dn[NormSys_name[j]]['ggH_'+year+'_hza'].append(1-NormSysDn)
 
 
     #for f_BDT in BDTSysFiles:
     #    File_BDTSys = open(f_BDT, 'r')
 
-    BDTSys = {}
-    File_BDTSys = open(BDTSysFiles[0], 'r')
-    for line in File_BDTSys.readlines()[1:]:
-        if line.split()[0] == 'sample': 
-            BDTSys_names = line.split()[2:]
-            BDTSys_name = []
-            for i in range(len(BDTSys_names)/2):
-                BDTSys[BDTSys_names[i*2].rstrip('_up')] = {}
-                BDTSys_name.append(BDTSys_names[i*2].rstrip('_up'))
-                for year in years:
-                    BDTSys[BDTSys_names[i*2].rstrip('_up')]['ggH_'+year+'_hza'] = []
-                
+    BDTSys_up = {}
+    BDTSys_dn = {}
+    if options.BDTSys is not None:
+        File_BDTSys = open(BDTSysFiles[0], 'r')
+        for line in File_BDTSys.readlines()[1:]:
+            if line.split()[0] == 'sample': 
+                BDTSys_names = line.split()[2:]
+                BDTSys_name = []
+                for i in range(len(BDTSys_names)/2):
+                    BDTSys_up[BDTSys_names[i*2][0:-3]] = {}
+                    BDTSys_dn[BDTSys_names[i*2][0:-3]] = {}
+                    BDTSys_name.append(BDTSys_names[i*2][0:-3])
+                    for year in years:
+                        BDTSys_up[BDTSys_names[i*2][0:-3]]['ggH_'+year+'_hza'] = []
+                        BDTSys_dn[BDTSys_names[i*2][0:-3]]['ggH_'+year+'_hza'] = []
+                    
 
-    for f_BDT in BDTSysFiles:
-        
-        File_BDTSys = open(f_BDT, 'r')
+        for f_BDT in BDTSysFiles:
+            
+            File_BDTSys = open(f_BDT, 'r')
 
-        for line in File_BDTSys.readlines():
-            if line.split(':')[0]=="year":
-                if line.split(':')[1].lstrip().rstrip('\n').split('_')[0] == "-2016":
-                    year = line.split(':')[1].lstrip().rstrip('\n').replace("-2016","16APV")
-                else:
-                    year = line.split(':')[1].lstrip().rstrip('\n').lstrip('20')
-            elif line.split()[0] == 'sample': 
-                continue
-            else:
-                for j in range(len(BDTSys_name)):
-                    BDTSys_up = abs(float(line.split()[2:][1::2][j*2].split(":")[1].rstrip(")")))
-                    BDTSys_dn = abs(float(line.split()[2:][1::2][j*2+1].split(":")[1].rstrip(")")))
-
-                    if BDTSys_up >= BDTSys_dn:
-                        BDTSys_val = BDTSys_up
+            for line in File_BDTSys.readlines():
+                if line.split(':')[0]=="year":
+                    if line.split(':')[1].lstrip().rstrip('\n').split('_')[0] == "-2016":
+                        year = line.split(':')[1].lstrip().rstrip('\n').replace("-2016","16APV")
                     else:
-                        BDTSys_val = BDTSys_dn
-                    #print BDTSys#[BDTSys_name[j]]
-                    BDTSys[BDTSys_name[j]]['ggH_'+year+'_hza'].append(1+BDTSys_val)
+                        year = line.split(':')[1].lstrip().rstrip('\n').lstrip('20')
+                elif line.split()[0] == 'sample': 
+                    continue
+                else:
+                    for j in range(len(BDTSys_name)):
+                        BDTSysUp = abs(float(line.split()[2:][1::2][j*2].split(":")[1].rstrip(")")))
+                        BDTSysDn = abs(float(line.split()[2:][1::2][j*2+1].split(":")[1].rstrip(")")))
+
+                        #print BDTSys#[BDTSys_name[j]]
+                        BDTSys_up[BDTSys_name[j]]['ggH_'+year+'_hza'].append(1+BDTSysUp)
+                        BDTSys_dn[BDTSys_name[j]]['ggH_'+year+'_hza'].append(1-BDTSysDn)
 
 
 
     print '[INFO] Normalization Sys...'
-    for sys in NormSys:
-        outFile.write('%-35s   lnN   ' % (sys))
-        for c in options.cats:
-            for p in options.procs:
-                if '%s:%s' % (p, c) in options.toSkip:
-                    continue
-                if p in bkgProcs:
-                    outFile.write('- ')
-                else:
-                    if sys == "event_pdfweight":
-                        outFile.write( NormSys[sys][p][m]+'  ')
+    
+    for sys in NormSys_up:
+        if 'lep' in sys:
+            for chan in ['ele','mu']:
+                outFile.write('%-35s   lnN   ' % (sys.replace("lep",chan)))
+                for c in options.cats:
+                    for p in options.procs:
+                        if '%s:%s' % (p, c) in options.toSkip:
+                            continue
+                        if p in bkgProcs:
+                            outFile.write('- ')
+                        elif chan in p:
+                            outFile.write('%5.4f/%5.4f ' % (NormSys_up[sys][p][m], NormSys_dn[sys][p][m]))
+                        else:
+                            outFile.write('- ')
+                outFile.write('\n')      
+            
+            #outFile.write('\n')
+        else:
+            outFile.write('%-35s   lnN   ' % (sys))
+            for c in options.cats:
+                for p in options.procs:
+                    if '%s:%s' % (p, c) in options.toSkip:
+                        continue
+                    if p in bkgProcs:
+                        outFile.write('- ')
                     else:
-                        outFile.write('%5.3f ' % (NormSys[sys][p][m]))
-        outFile.write('\n')
-        outFile.write('\n')
-
+                        outFile.write('%5.4f/%5.4f ' % (NormSys_up[sys][p][m], NormSys_dn[sys][p][m]))
+                outFile.write('\n')
+        
+    outFile.write('\n')
     print '[INFO] BDT Sys...'
-    for sys in BDTSys:
-        outFile.write('%-35s   lnN   ' % (sys))
-        for c in options.cats:
-            for p in options.procs:
-                if '%s:%s' % (p, c) in options.toSkip:
-                    continue
-                if p in bkgProcs:
-                    outFile.write('- ')
-                else:
-                    outFile.write('%5.3f ' % (BDTSys[sys][p][m]))
-        outFile.write('\n')
-        outFile.write('\n')
+    for sys in BDTSys_up:
+        if 'lep' in sys:
+            for chan in ['ele','mu']:
+                outFile.write('%-35s   lnN   ' % (sys.replace("lep",chan)))
+                for c in options.cats:
+                    for p in options.procs:
+                        if '%s:%s' % (p, c) in options.toSkip:
+                            continue
+                        if p in bkgProcs:
+                            outFile.write('- ')
+                        elif chan in p:
+                            outFile.write('%5.4f/%5.4f ' % (BDTSys_up[sys][p][m], BDTSys_dn[sys][p][m]))
+                        else:
+                            outFile.write('- ')
+                outFile.write('\n')
+        else:
+            outFile.write('%-35s   lnN   ' % (sys))
+            for c in options.cats:
+                for p in options.procs:
+                    if '%s:%s' % (p, c) in options.toSkip:
+                        continue
+                    if p in bkgProcs:
+                        outFile.write('- ')
+                    else:
+                        outFile.write('%5.4f/%5.4f ' % (BDTSys_up[sys][p][m], BDTSys_dn[sys][p][m]))
+            outFile.write('\n')
 
+    outFile.write('\n')
 
 def printShapeSys():
     print '[INFO] Shape Sys...'
     ShapeSysFiles = options.sysinfilename.split(',')
     #print ShapeSysFiles
 
-    for f in ShapeSysFiles:
+    for f in ShapeSysFiles[0:8:4]:
         file_sys = open(f, 'r')
         lines = file_sys.readlines()
         for l in range(-4, 0):
@@ -575,6 +612,7 @@ printSyst()
 
 printShapeSys()
 
-#printRate()
+if not options.interp is None:
+    printRate()
 
 

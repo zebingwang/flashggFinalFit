@@ -586,6 +586,7 @@ printSyst()
 
 printShapeSys()
 
-#printRate()
+if not options.interp is None:
+    printRate()
 
 
