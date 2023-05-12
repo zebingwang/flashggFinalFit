@@ -133,7 +133,7 @@ for ((iBin=0; iBin<$nMass; iBin++))
 
     #combine -M Significance datacard_ALPmass${massList[$iBin]}.txt -t -1 --expectSignal=0.0134811 --toysFreq -n _expected -m 125 --setParameters MH=125 --freezeParameters MH
 
-    combine -M Significance datacard_ALPmass${massList[$iBin]}.txt -n _observed -m 125 --setParameters MH=125 --freezeParameters MH
+    #combine -M Significance datacard_ALPmass${massList[$iBin]}.txt -n _observed -m 125 --setParameters MH=125 --freezeParameters MH
 
     cd ../../../
     

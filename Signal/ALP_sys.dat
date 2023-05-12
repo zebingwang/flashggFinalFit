@@ -1,0 +1,10 @@
+photonCatScales=photon_scale_dm0_M1_2016,lepton_scale_M1_2016
+photonCatSmears=photon_smear_M1_2017,lepton_smear_M1_2017
+
+# photonCat                   mean_change    sigma_change    rate_change
+diphotonCat=0
+proc=ggh
+photon_scale_M1_2016           0.001012     0.00     0.00
+lepton_scale_M1_2016           0.001012     0.00     0.00
+photon_smear_M1_2017           0.00     0.007389     0.00
+lepton_smear_M1_2017           0.00     0.007389     0.00

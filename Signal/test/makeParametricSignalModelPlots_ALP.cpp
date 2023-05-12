@@ -530,7 +530,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //std::cout << " [RESOLUTION CHECK] Ta/Procg " << data->GetName() << ", Mass " << mass->getVal() << " sigmaEff=" << 0.5*(semax-semin) << " , FWMH=" << (fwmax-fwmin)/2.35 << "" << std::endl;
 
   //TLatex lat1(0.65,0.85,"#splitline{CMS Simulation}{}");
-  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Z+ALP #rightarrow ee+2#gamma");
+  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Za #rightarrow ee + 2#gamma");
   lat1.SetNDC(1);
   lat1.SetTextSize(0.047);
 

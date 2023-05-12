@@ -1,0 +1,3 @@
+#paramters     	normal         	phoScale_up    	phoScale_dn    	phoSmear_up    	phoSmear_dn    	lepScale_up    	lepScale_dn    	lepSmear_up    	lepSmear_dn    	
+#sigma_float    	0.00000			0.00000			0.00000			0.06200			0.07000			0.00000			0.00000			0.06200			0.08100			
+#mean_float     	0.00000			-0.00100			-0.00100			0.00000			0.00000			-0.00100			-0.00100			0.00000			0.00000			
