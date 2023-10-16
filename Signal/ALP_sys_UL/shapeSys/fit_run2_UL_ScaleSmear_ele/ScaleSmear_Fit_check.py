@@ -15,8 +15,8 @@ sysList = ['normal', 'phoScale_up', 'phoScale_dn', 'phoSmear_up', 'phoSmear_dn',
 colors = [kBlue, kBlue, kGreen, kGreen, kYellow, kYellow, kMagenta, kMagenta]
 #a_masses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30]
 
-a_masses = [1]
-years = ['18']
+a_masses = [5]
+years = ['16']
 frac = {"coeff0":"frac_g0_ggh_cat0_rv_13TeV","coeff1":"hggpdfsmrel_13TeV_ggh_cat0_rv_13TeV_recursive_fraction_gaus_g1_ggh_cat0_rv_13TeV","coeff2":"hggpdfsmrel_13TeV_ggh_cat0_rv_13TeV_recursive_fraction_gaus_g2_ggh_cat0_rv_13TeV"}
 
 param = {}

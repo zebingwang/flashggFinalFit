@@ -11,12 +11,12 @@ lumi = {'16':16.81, '16APV':19.52, '17':41.48, '18':59.83}
 years = ['16','16APV','17','18']
 sysList = ['normal', 'phoScale_up', 'phoScale_dn', 'phoSmear_up', 'phoSmear_dn', 'lepScale_up', 'lepScale_dn', 'lepSmear_up', 'lepSmear_dn']
 #colors = [kRed, kBlue, kBlue, kGreen, kGreen, kYellow, kYellow, kMagenta, kMagenta]
-colors = [kBlue, kBlue, kGreen, kGreen, kYellow, kYellow, kMagenta, kMagenta]
+colors = [kBlue,kBlue+3,kGreen+3,kTeal+9,kRed,kRed+2,kYellow+2,kOrange-3,kPink+7,kCyan+2]
 a_masses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30]
 nBins = [180, 200, 50, 220, 220, 190, 200, 200, 200, 200, 150, 100, 200, 150, 200, 200, 300, 200, 200, 150, 160, 180, 50, 200, 100, 200, 150, 100, 180, 250, 250, 200, 200, 300, 250, 200, 200, 150, 250, 200, 100, 200, 200, 250, 150, 200, 130, 150, 220, 230, 110, 200, 200, 200, 200, 200]
-only_year = '18'
+only_year = ''
 #sysList = ['normal', 'lepSmear_up', 'lepSmear_dn']
-only_mass = 15
+only_mass = 0
 
 frac = {"coeff0":"frac_g0_ggh_cat0_rv_13TeV","coeff1":"hggpdfsmrel_13TeV_ggh_cat0_rv_13TeV_recursive_fraction_gaus_g1_ggh_cat0_rv_13TeV","coeff2":"hggpdfsmrel_13TeV_ggh_cat0_rv_13TeV_recursive_fraction_gaus_g2_ggh_cat0_rv_13TeV"}
 
@@ -174,7 +174,7 @@ def draw_ScaleSmear(mass, data, models, path_out):
     h={}
     for sys in data:
         print sys
-        #if sys == 'normal':
+        if sys == 'normal': continue
         #    data[sys].plotOn(frame)
         #else:
         models[sys].plotOn(frame, RooFit.LineColor(colors[sysList.index(sys)]))
@@ -260,7 +260,7 @@ def main():
     ws_name = 'CMS_hza_workspace'
 
     # 1 for only chi2 plots, 2 for chi2 and dataModel plots
-    verbose = 2
+    verbose = 0
 
     chi2 = {}
     for a_mass in a_masses:

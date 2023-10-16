@@ -514,7 +514,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   leg->SetFillStyle(0);
   leg->SetLineColor(0);
   leg->SetTextSize(0.037);
-  if (data) leg->AddEntry(dataLeg,"#bf{Simulation}","lep");
+  if (data) leg->AddEntry(dataLeg,"#bf{Simulation}","ep");
   leg->AddEntry(pdfLeg,"#splitline{#bf{Parametric}}{#bf{model}}","l");
   leg->AddEntry(seffLeg,Form("#bf{#sigma_{eff} = %1.2f GeV}",0.5*(semax-semin)),"fl");
   plot->GetXaxis()->SetNdivisions(509);
@@ -530,7 +530,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //std::cout << " [RESOLUTION CHECK] Ta/Procg " << data->GetName() << ", Mass " << mass->getVal() << " sigmaEff=" << 0.5*(semax-semin) << " , FWMH=" << (fwmax-fwmin)/2.35 << "" << std::endl;
 
   //TLatex lat1(0.65,0.85,"#splitline{CMS Simulation}{}");
-  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Za #rightarrow ee + 2#gamma");
+  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Za #rightarrow #mu#mu + 2#gamma");
   lat1.SetNDC(1);
   lat1.SetTextSize(0.047);
 
@@ -554,6 +554,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //plot->GetXaxis()->SetTitle("m_{a} (GeV)");
   plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
   plot->GetXaxis()->SetTitleSize(0.05);
+  plot->GetYaxis()->SetTitle("Events / 0.5 GeV");//bing
   plot->GetYaxis()->SetTitleSize(0.05);
   //plot->GetYaxis()->SetTitleOffset(1.5);
   plot->SetMinimum(0.0);
@@ -577,10 +578,12 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
 
   }
   //string sim="Simulation Preliminary";
-  string sim="Simulation Supplementary"; //for the paper
+  string sim="Simulation"; //for the paper
+  //string sim=""; //for the thesis
   CMS_lumi( canv, 0,0,sim);
   canv->Print(Form("%s.pdf",savename.c_str()));
   canv->Print(Form("%s.png",savename.c_str()));
+  canv->Print(Form("%s.eps",savename.c_str()));
   //string path = savename.substr(0,savename.find('/'));
   //canv->Print(Form("%s/animation.gif+100",path.c_str()));
 
@@ -599,6 +602,9 @@ int main(int argc, char *argv[]){
   setTDRStyle();
   writeExtraText = true;       // if extra text
   extraText  = "";  // default extra text is "Preliminary"
+  relPosX = 0.01;
+  //cmsText = ""; //for thesis
+  cmsText = "CMS"; //for paper
   lumi_13TeV  = "2.7 fb^{-1}"; // default is "19.7 fb^{-1}"
   lumi_8TeV  = "19.1 fb^{-1}"; // default is "19.7 fb^{-1}"
   lumi_7TeV  = "4.9 fb^{-1}";  // default is "5.1 fb^{-1}"

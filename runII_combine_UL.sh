@@ -7,7 +7,7 @@ nYear=${#year[@]}
 #massList=( 3 4 5 6 7 8 9 10 11 12 13 14 15 )
 #massList=( 1 8 10 12 13 14 15 18 19 20 21 22 23 24 25 26 28 29 30 )
 #massList=( 7 8 9 10 11 12 13 14 15 )
-massList=( 6 )
+massList=( 30 )
 # 3 4 5 6
 #massList=( 3 4 6 7 8 9 10 11 12 13 14 15 )
 nMass=${#massList[@]}
@@ -134,6 +134,19 @@ for ((iBin=0; iBin<$nMass; iBin++))
     #combine -M Significance datacard_ALPmass${massList[$iBin]}.txt -t -1 --expectSignal=0.0134811 --toysFreq -n _expected -m 125 --setParameters MH=125 --freezeParameters MH
 
     #combine -M Significance datacard_ALPmass${massList[$iBin]}.txt -n _observed -m 125 --setParameters MH=125 --freezeParameters MH
+
+
+    #combine -M MultiDimFit datacard_ALPmass${massList[$iBin]}.root -m 125 --rMin 0 --rMax 0.5 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125,r=0.01 --freezeParameters MH --saveWorkspace -n datacardMuScan
+    #combine -M MultiDimFit datacard_ALPmass${massList[$iBin]}.root -m 125 --rMin 0 --rMax 0.5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125,r=0.01 --freezeParameters MH
+    
+    #combine datacard_ALPmass${massList[$iBin]}.root -M MultiDimFit --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerAlgo migrad --algo=grid -P r --floatOtherPOIs=1 --points=1 --firstPoint=0 --lastPoint=0 -n MuScanMHProfJob0 --rMin 0 --rMax 0.5  -m 125 --squareDistPoi --snapshotName MultiDimFit
+    #combine --saveWorkspace --verbose 9 -M MultiDimFit datacard_ALPmass${massList[$iBin]}.root -m 125 --setParameters MH=125,r=0.01 --freezeParameters MH -n datacardMuScan --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.1 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --robustFit 1
+    
+    #mkdir s_sb_weighted
+    #cd s_sb_weighted
+    #cp ../higgsCombineTest.MultiDimFit.mH125.root inputfile.root
+    #/afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Plots/FinalResults/scripts/s_sb_errorbands.sh 1 $PWD 125 0.025 200
+    #cd ..
 
     cd ../../../
     

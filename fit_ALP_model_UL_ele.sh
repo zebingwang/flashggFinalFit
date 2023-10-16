@@ -8,6 +8,7 @@ channel='ele'
 Lumi_run2='138'
 
 years=( 16 16APV 17 18 )
+#years=( 16 16APV )
 nYear=${#years[@]}
 Lumis=( 16.81 19.52 41.48 59.83 )
 
@@ -15,7 +16,7 @@ massList=( 1 2 3 4 5 6 7 8 9 10 15 20 25 30 )
 
 #massList=( $1 )
 
-#massList=( 3 )
+#massList=( 1 )
 
 # nbins 5GeV 3.7 1GeV 3,5
 
@@ -102,6 +103,9 @@ for ((iBin=0; iBin<$nMass; iBin++))
         fi
       fi
 
+      #if [[ ${years[ $jBin ]} != $1 ]];then
+      #    continue
+      #fi
 
       mkdir "$dir_out_sig/fit_results_${lable}_${channel}/M${massList[$iBin]}/${years[$jBin]}"
 

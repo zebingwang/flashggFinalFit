@@ -99,8 +99,9 @@ for ((iBin=0; iBin<$nMass; iBin++))
 done
 
 cd ./ALP_SigModel_param_UL/fit_results_runII
-mkdir plot
+#mkdir plot
 cd plot
 cp ../../fit_results_runII_expect/plot/*.py ./
-#sed -i "33s/fit_results_run2_/fit_results_/" com_plot.py
+sed -i "33s/fit_results_run2_/fit_results_/" com_plot.py
 python com_plot.py -fb -y run2 -c runII --interp --observe
+gs -r600 -dEPSCrop -dTextAlphaBits=4 -sDEVICE=png16m -sOutputFile=Figure_006.png -dBATCH -dNOPAUSE ALP_xs_UpperLimit.eps

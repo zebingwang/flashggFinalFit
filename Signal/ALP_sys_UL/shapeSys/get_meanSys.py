@@ -23,7 +23,7 @@ for m in a_masses:
         val_pho_scale[m][y] = []
         val_lep_smear[m][y] = []
         val_lep_scale[m][y] = []
-        f = open(path+'fit_run2_UL_ScaleSmear_mu/ScaleSmear_plot/M{0}/ScaleSmear_m{0}_{1}.dat'.format(m,y))
+        f = open(path+'fit_run2_UL_ScaleSmear_ele/ScaleSmear_plot/M{0}/ScaleSmear_m{0}_{1}.dat'.format(m,y))
         lines = []
 
         for l in f.readlines()[-4:]:

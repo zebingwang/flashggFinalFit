@@ -36,6 +36,7 @@
 #include "RooGaussian.h"
 #include "TROOT.h"
 #include "TStyle.h"
+#include "TMathText.h"
 #include "RooFitResult.h"
 #include "RooStats/NumberCountingUtils.h"
 #include "RooStats/RooStatsUtils.h"
@@ -655,6 +656,7 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	plot->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
 	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
 	plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+	//plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
 	plot->GetYaxis()->SetTitle("Events / GeV");//bing
 	if (!unblind) {
 		//mgg->setRange("unblind_up",135,180);
@@ -774,6 +776,8 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	canv->Update();
 	canv->Print(Form("%s.pdf",name.c_str()));
 	canv->Print(Form("%s.png",name.c_str()));
+	canv->Print(Form("%s.eps",name.c_str()));
+	//canv->Print(Form("%s.svg",name.c_str()));
 	canv->Print(Form("%s.C",name.c_str()));
 	delete canv;
 }
@@ -786,7 +790,9 @@ int main(int argc, char* argv[]){
   setTDRStyle();
   writeExtraText = true;       // if extra text
   //extraText  = "Preliminary";  // default extra text is "Preliminary"
-  extraText  = "Supplementary";  // default extra text is "Preliminary"
+  //extraText  = "Supplementary";  // default extra text is "Preliminary"
+  extraText  = "";  // default extra text is "Preliminary"
+  cmsText = ""; //for thesis
   lumi_13TeV ="2.6 fb^{-1}";
   lumi_8TeV  = "19.1 fb^{-1}"; // default is "19.7 fb^{-1}"
   lumi_7TeV  = "4.9 fb^{-1}";  // default is "5.1 fb^{-1}"
@@ -977,7 +983,7 @@ int main(int argc, char* argv[]){
 	RooCurve *nomBkgCurve = (RooCurve*)plot->getObject(plot->numItems()-1);
 
 	leg->AddEntry(dataLeg,"Data","LEP");
-	leg->AddEntry(nomBkgCurve,"Bkg Fit","L");
+	leg->AddEntry(nomBkgCurve,"Bkg fit","L");
 
 	// Bands
 	TGraphAsymmErrors *oneSigmaBand = new TGraphAsymmErrors();
@@ -1328,6 +1334,7 @@ int main(int argc, char* argv[]){
     CMS_lumi( canv, 4, 0);
 		canv->Print(Form("%s/bkgplot_%s.pdf",outDir.c_str(),catname.c_str()));
 		canv->Print(Form("%s/bkgplot_%s.png",outDir.c_str(),catname.c_str()));
+		canv->Print(Form("%s/bkgplot_%s.eps",outDir.c_str(),catname.c_str()));
 		canv->Print(Form("%s/bkgplot_%s.C",outDir.c_str(),catname.c_str()));
 		canv->SetName(Form("bkgplot_%s",catname.c_str()));
 		outFile->cd();
