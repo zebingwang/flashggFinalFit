@@ -25,16 +25,19 @@ git clone git@github.com:jonathon-langford/HiggsAnalysis.git
 ```
 Install Combine as per the documentation here: cms-analysis.github.io/HiggsAnalysis-CombinedLimit/
 ```
-git clone git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+cd HiggsAnalysis/CombinedLimit
+git fetch origin
+git checkout v8.2.0
 ```
 Compile external libraries
 -----------------------
 ```
-cd HiggsAnalysis
+cd ../HiggsAnalysis
 
 cmsenv
 
-scram b -j
+scramv1 b clean; scramv1 b
 ```
 Install Flashgg Final Fit packages
 -----------------------
@@ -46,7 +49,8 @@ git clone https://github.com/zebingwang/flashggFinalFit.git
 cd flashggFinalFit/
 ```
 
-
+Compile Signal Model Pakage
+--------------
 
 ```
 cd Signal
@@ -59,7 +63,7 @@ make
 
 ```
 
-Background Model
+Compile Background Model Pakage
 --------------
 
 ```
@@ -72,6 +76,13 @@ make clean
 make
 
 ```
+
+Prepare dataset
+--------------
+
+
+
+
 Run
 -----
 

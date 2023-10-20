@@ -458,7 +458,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   plotchi2->SetMinimum(0.0);
   if (markNegativeBins_){
   //TH1F *rdh = (TH1F*) data->createHistogram("CMS_hgg_mass",*mass,Binning(binning_,105,140));
-  TH1F *rdh = (TH1F*) data->createHistogram("CMS_hza_mass",*mass,Binning(binning_,mgglow_,mgghigh_));//bing
+  TH1F *rdh = (TH1F*) data->createHistogram("CMS_hzg_mass",*mass,Binning(binning_,mgglow_,mgghigh_));//bing
     for(unsigned int iBin =0 ; iBin < rdh->GetNbinsX() ; iBin++){
       float content = rdh->GetBinContent(iBin);
       float center = rdh->GetBinCenter(iBin);
@@ -530,9 +530,9 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //std::cout << " [RESOLUTION CHECK] Ta/Procg " << data->GetName() << ", Mass " << mass->getVal() << " sigmaEff=" << 0.5*(semax-semin) << " , FWMH=" << (fwmax-fwmin)/2.35 << "" << std::endl;
 
   //TLatex lat1(0.65,0.85,"#splitline{CMS Simulation}{}");
-  TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Za #rightarrow #mu#mu + 2#gamma");
-  lat1.SetNDC(1);
-  lat1.SetTextSize(0.047);
+  //TLatex  lat1(.129+0.03+offset,0.85,"H #rightarrow Za #rightarrow #mu#mu + 2#gamma");
+  //lat1.SetNDC(1);
+  //lat1.SetTextSize(0.047);
 
   TString catLabel_humanReadable  = title;
   catLabel_humanReadable.ReplaceAll("_"," ");
@@ -552,9 +552,9 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   canv->SetTickx(); canv->SetTicky();
   plot->SetTitle("");
   //plot->GetXaxis()->SetTitle("m_{a} (GeV)");
-  plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+  plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");//bing
   plot->GetXaxis()->SetTitleSize(0.05);
-  plot->GetYaxis()->SetTitle("Events / 0.5 GeV");//bing
+  //plot->GetYaxis()->SetTitle("Events / 0.5 GeV");//bing
   plot->GetYaxis()->SetTitleSize(0.05);
   //plot->GetYaxis()->SetTitleOffset(1.5);
   plot->SetMinimum(0.0);
@@ -563,7 +563,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   fwhmText->Draw("same");
   //lat1.Draw("same");
   //lat2.Draw("same");//bing
-  lat1.Draw("same");
+  //lat1.Draw("same");
   leg->Draw("same");
   TLatex *chi2ndof_latex = new TLatex();
   chi2ndof_latex->SetTextSize(0.035);
@@ -577,8 +577,8 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
     negBinsArrow->Draw("same <>");
 
   }
-  //string sim="Simulation Preliminary";
-  string sim="Simulation"; //for the paper
+  string sim="Simulation Preliminary";
+  //string sim="Simulation"; //for the paper
   //string sim=""; //for the thesis
   CMS_lumi( canv, 0,0,sim);
   canv->Print(Form("%s.pdf",savename.c_str()));
@@ -632,7 +632,7 @@ int main(int argc, char *argv[]){
     exit(1);
   }
 
-  RooRealVar *mass= (RooRealVar*)hggWS->var("CMS_hza_mass");//FIXED
+  RooRealVar *mass= (RooRealVar*)hggWS->var("CMS_hzg_mass");//FIXED
 
   RooRealVar *mh = (RooRealVar*)hggWS->var("MH");
   mh->setVal(m_hyp_);

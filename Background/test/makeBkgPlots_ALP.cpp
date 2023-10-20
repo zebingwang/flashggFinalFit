@@ -70,7 +70,7 @@ float mgg_low =2.0;//FIXME
 float mgg_high =40;//FIXME
 float mgg_blind_low =12;//FIXME
 float mgg_blind_high =17;//FIXME
-float nbin = 85;
+float nbin = mgg_blind_high - mgg_blind_low;
 
 RooRealVar *intLumi_ = new RooRealVar("IntLumi","hacked int lumi", 1000.);
 
@@ -655,7 +655,7 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	RooPlot *plot = mgg->frame();
 	plot->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
 	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
-	plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+	plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");//bing
 	//plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
 	plot->GetYaxis()->SetTitle("Events / GeV");//bing
 	if (!unblind) {
@@ -766,10 +766,10 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	if (!unblind) plot->SetMinimum(0.0001);
 	leg->Draw();
 
-	TLatex *latex = new TLatex();
-	latex->SetTextSize(0.06);
-	latex->SetNDC();
-	latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(ma))+" GeV").c_str());
+	//TLatex *latex = new TLatex();
+	//latex->SetTextSize(0.06);
+	//latex->SetNDC();
+	//latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(ma))+" GeV").c_str());
 	CMS_lumi( canv, 4, 0);
 
 	canv->Modified();
@@ -789,10 +789,10 @@ int main(int argc, char* argv[]){
 
   setTDRStyle();
   writeExtraText = true;       // if extra text
-  //extraText  = "Preliminary";  // default extra text is "Preliminary"
+  extraText  = "Preliminary";  // default extra text is "Preliminary"
   //extraText  = "Supplementary";  // default extra text is "Preliminary"
-  extraText  = "";  // default extra text is "Preliminary"
-  cmsText = ""; //for thesis
+  //extraText  = "";  // default extra text is "Preliminary"
+  cmsText = "CMS"; 
   lumi_13TeV ="2.6 fb^{-1}";
   lumi_8TeV  = "19.1 fb^{-1}"; // default is "19.7 fb^{-1}"
   lumi_7TeV  = "4.9 fb^{-1}";  // default is "5.1 fb^{-1}"
@@ -874,6 +874,7 @@ int main(int argc, char* argv[]){
   mgg_high =mhHigh;//FIXME
   mgg_blind_low =mggblindlow_;//FIXME
   mgg_blind_high =mggblindhigh_;//FIXME
+  nbin = mhHigh - mhLow;
 
 	RooMsgService::instance().setGlobalKillBelow(RooFit::ERROR);
 	RooMsgService::instance().setSilentMode(true);
@@ -890,7 +891,7 @@ int main(int argc, char* argv[]){
 		cout << "[ERROR] "<< "Cant find the workspace" << endl;
 		exit(0);
 	}
-	RooRealVar *mgg = (RooRealVar*)inWS->var("CMS_hza_mass");//FIXED
+	RooRealVar *mgg = (RooRealVar*)inWS->var("CMS_hzg_mass");//FIXED
   string catname;
 	if (isFlashgg_){
 		catname = Form("%s",flashggCats_[cat].c_str());
@@ -1308,7 +1309,7 @@ int main(int argc, char* argv[]){
   hdummy->GetYaxis()->SetTitleSize(0.1);
   hdummy->GetYaxis()->SetTitleOffset(0.5);//bing
   //hdummy->GetXaxis()->SetTitle("m_{a} (GeV)");
-  hdummy->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma\\gamma} \\ \\mathrm{(GeV)}");//bing
+  hdummy->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");//bing
   hdummy->GetXaxis()->SetTitleSize(0.17);
   hdummy->GetXaxis()->SetTitleFont(42);
   hdummy->GetXaxis()->SetTitleOffset(0.85);//bing

@@ -306,7 +306,7 @@ RooDataSet * reduceDataset(RooDataSet *data0){
     //mass_->setVal(data0->get(i)->getRealValue("CMS_hgg_mass"));
     //weight0->setVal(data0->weight() ); // <--- is this correct?
     //dZ_->setVal(data0->get(i)->getRealValue("dZ"));
-		mass_->setVal(data0->get(i)->getRealValue("CMS_hza_mass"));//bing
+		mass_->setVal(data0->get(i)->getRealValue("CMS_hzg_mass"));//bing
 		weight0->setVal(data0->weight() ); //bing
     // if(mass_->getVal() != -99){ // Don't plot events that don't pass preselection + MVA selections
       //data->add( RooArgList(*mass_, *dZ_, *weight0), weight0->getVal() );
@@ -371,7 +371,7 @@ RooDataSet * rvwvDataset(RooDataSet *data0, string rvwv){
     //mass_->setVal(data0->get(i)->getRealValue("CMS_hgg_mass"));
     //weight0->setVal(data0->weight() );
 		//dZ_->setVal(data0->get(i)->getRealValue("dZ"));
-		mass_->setVal(data0->get(i)->getRealValue("CMS_hza_mass"));//bing
+		mass_->setVal(data0->get(i)->getRealValue("CMS_hzg_mass"));//bing
 		weight0->setVal(data0->weight() );//bing
     // if(mass_->getVal() != -99){ // Don't plot events that don't pass preselection + MVA selections
     //  if (fabs(dZ_->getVal() )<1.){
@@ -446,7 +446,7 @@ RooDataSet * intLumiReweigh(RooDataSet *data0 /*original dataset*/){
     //mass_->setVal(data0->get(i)->getRealValue("CMS_hgg_mass"));
     //dZ_->setVal(data0->get(i)->getRealValue("dZ"));
     //weight0->setVal(factor * data0->weight() ); // <--- is this correct?
-		mass_->setVal(data0->get(i)->getRealValue("CMS_hza_mass"));//bing
+		mass_->setVal(data0->get(i)->getRealValue("CMS_hzg_mass"));//bing
 		weight0->setVal(factor * data0->weight() );//bing
     data->add( RooArgList(*mass_, *weight0), weight0->getVal() );//bing
     // if(mass_->getVal() != -99){ // Don't plot events that don't pass preselection + MVA selections
@@ -520,7 +520,7 @@ int main(int argc, char *argv[]){
 	if (checkYields_){
 
     //WSTFileWrapper * inWS0 = new WSTFileWrapper(filenameStr_,"tagsDumper/cms_hgg_13TeV");
-		WSTFileWrapper * inWS0 = new WSTFileWrapper(filenameStr_,"CMS_hza_workspace");//bing
+		WSTFileWrapper * inWS0 = new WSTFileWrapper(filenameStr_,"CMS_hzg_workspace");//bing
     // WSTFileWrapper * inWS0 = new WSTFileWrapper(filenameStr_,"tagsDumper/cms_13TeV_All_HLT_Events");
     // WSTFileWrapper * inWS0 = new WSTFileWrapper(filenameStr_,"HHWWggCandidateDumper/cms_HHWWgg_13TeV");
 		std::list<RooAbsData*> data =  (inWS0->allData()) ;
@@ -539,7 +539,7 @@ int main(int argc, char *argv[]){
 	WSTFileWrapper *inWS;
 	if (isFlashgg_){
     //inWS = new WSTFileWrapper(filenameStr_,"tagsDumper/cms_hgg_13TeV");
-		inWS = new WSTFileWrapper(filenameStr_,"CMS_hza_workspace");//bing
+		inWS = new WSTFileWrapper(filenameStr_,"CMS_hzg_workspace");//bing
 		std::list<RooAbsData*> test =  (inWS->allData()) ;
 		if (verbose_) {
 			std::cout << " [INFO] WS contains " << std::endl;
@@ -562,8 +562,8 @@ int main(int argc, char *argv[]){
   // get the required variables from the WS
 	//mass_ = (RooRealVar*)inWS->var("CMS_hgg_mass");
   //mass_->SetTitle("m_{#gamma#gamma}");
-	mass_ = (RooRealVar*)inWS->var("CMS_hza_mass");//bing
-  mass_->SetTitle("m_{Za}");//bing
+	mass_ = (RooRealVar*)inWS->var("CMS_hzg_mass");//bing
+  mass_->SetTitle("m_{Zg}");//bing
 	mass_->setUnit("GeV");
 	//dZ_ = (RooRealVar*)inWS->var("dZ");
 	//dZ_->setMin(-25.0);
