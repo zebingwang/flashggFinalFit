@@ -80,12 +80,12 @@ make
 Prepare dataset
 --------------
 
-
+Copy all the input datasets into dir: ```InputData```
 
 
 Run
 -----
 
 ```
-./fit_ALP.sh
+./fit_HZGamma_model_UL.sh
 ```

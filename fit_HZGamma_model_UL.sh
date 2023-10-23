@@ -85,13 +85,22 @@ mkdir "$dir_out_sig/Combine_results"
 
 #    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
 #    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
-
 #done
 
 #cp /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/ALP_SigModel_param_UL/fit_results_runII/M1/datacard_ALPmass1.txt $dir_out_sig/Combine_results
 
 cd $dir_out_sig/Combine_results
+
+#for ((iCat=0; iCat<$ncats; iCat++))
+#    do
+
+#    text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
+
+#    combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
+#done
+
 combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
+#combine datacard_$cat.root -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 
 #combineCards.py cat0=datacard_cat0.txt cat1=datacard_cat1.txt cat2=datacard_cat2.txt cat3=datacard_cat3.txt &> datacard_allCats.txt
 #combine datacard_allCats.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n allCats
