@@ -22,6 +22,7 @@ cd ./InputData/
 
 #python makeWorkspace_data_cats.py -d ./two_jet/data.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 #python makeWorkspace_sig_cats.py -d ./two_jet/sig.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+#python makeWorkspace_bkg_cats.py -d ./two_jet/bkgmc.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 cd ../
 
 ###### background fit ######
@@ -99,7 +100,7 @@ cd $dir_out_sig/Combine_results
 #    combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
 #done
 
-combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
+#combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 #combine datacard_$cat.root -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 
 #combineCards.py cat0=datacard_cat0.txt cat1=datacard_cat1.txt cat2=datacard_cat2.txt cat3=datacard_cat3.txt &> datacard_allCats.txt
