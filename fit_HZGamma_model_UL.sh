@@ -20,8 +20,8 @@ nMass=${#massList[@]}
 # prepare signal and background workspace
 cd ./InputData/
 
-#python makeWorkspace_data_cats.py -d ./two_jet/data.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
-#python makeWorkspace_sig_cats.py -d ./two_jet/sig.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+#python makeWorkspace_data_cats.py -d ./outputs/two_jet/data.root -j ./outputs/significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+#python makeWorkspace_sig_cats.py -d ./outputs/two_jet/sig.root -j ./outputs/significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 #python makeWorkspace_bkg_cats.py -d ./two_jet/bkgmc.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 cd ../
 
@@ -45,7 +45,7 @@ mkdir $path_out_bkg
 
 
 #./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128
-#./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --massStep 2.5 --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 41.48 -c 0 --isFlashgg 0
+#./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 41.48 -c 0 --isFlashgg 0
 
 cd ../Signal/
 pwd
@@ -77,28 +77,36 @@ path_in_sig="../InputData/two_jet_data"
 
 
 cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
+#cats=( 'cat0' )
 ncats=${#cats[@]}
 
 mkdir "$dir_out_sig/Combine_results"
 
-#for ((iCat=0; iCat<$ncats; iCat++))
-#    do
+for ((iCat=0; iCat<$ncats; iCat++))
+    do
 
-#    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
-#    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
-#done
-
-#cp /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/ALP_SigModel_param_UL/fit_results_runII/M1/datacard_ALPmass1.txt $dir_out_sig/Combine_results
+    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
+    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
+done
 
 cd $dir_out_sig/Combine_results
 
-#for ((iCat=0; iCat<$ncats; iCat++))
-#    do
+for ((iCat=0; iCat<$ncats; iCat++))
+    do
 
-#    text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
+    text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
 
-#    combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
-#done
+    combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
+
+    ## start GoF
+    #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=saturated -m 125 --setParameters MH=125 -n _${cats[$iCat]}_saturated
+    #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=saturated -t 500 -s 12345 -m 125 --setParameters MH=125 -n _${cats[$iCat]}_saturated
+
+    #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=KS -m 125 --setParameters MH=125 -n _${cats[$iCat]}_KS
+    #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=KS -t 100 -s 12345 -m 125 --setParameters MH=125 -n _${cats[$iCat]}_KS
+
+    #python /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/runGoF.py > GoF.log
+done
 
 #combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 #combine datacard_$cat.root -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
@@ -107,3 +115,8 @@ cd $dir_out_sig/Combine_results
 #combine datacard_allCats.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n allCats
 
 #combine -M Significance datacard_allCats.txt -m 200 --rMin -1 --rMax 2
+
+
+### plot limits
+
+#python ../../python/com_plot.py -i /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/HZGamma_SigModel_UL/Combine_results -o /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/Signal/HZGamma_SigModel_UL/Combine_results

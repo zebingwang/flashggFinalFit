@@ -652,22 +652,28 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 		catname = Form("cat%d",cat);//FIXED
 		//catname = Form("%d",cat);
 	}
-	RooPlot *plot = mgg->frame();
-	plot->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
+	RooPlot *plot1 = mgg->frame();
+	plot1->SetTitle(Form("Background functions profiled for category %s",catname.c_str()));
 	//plot->GetXaxis()->SetTitle("m_{a} (GeV)");//FIXED
-	plot->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");//bing
+	plot1->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");//bing
 	//plot->GetXaxis()->SetTitle("m_{ll#gamma#gamma} (GeV)");//bing
-	plot->GetYaxis()->SetTitle("Events / GeV");//bing
+	plot1->GetYaxis()->SetTitle("Events / GeV");//bing
+	cout<<"[[DEBUG]]: "<< "unblind?: "<<!unblind<<"mgg_blind_high: "<<mgg_blind_high<<";"<<mgg_high<<endl;
+	
 	if (!unblind) {
 		//mgg->setRange("unblind_up",135,180);
 		//mgg->setRange("unblind_down",100,115);
 		mgg->setRange("unblind_up",mgg_blind_high,mgg_high);//bing
 		mgg->setRange("unblind_down",mgg_low,mgg_blind_low);//bing
-		data->plotOn(plot,Binning(nbin),CutRange("unblind_down,unblind_up"));
+		//data->plotOn(plot1,Binning(nbin),CutRange("unblind_down,unblind_up"));
+    	data->plotOn(plot1,Binning(nbin),CutRange("unblind_down"));
+		data->plotOn(plot1,Binning(nbin),CutRange("unblind_up"));
+		//data->plotOn(plot1,Binning(nbin),Invisible());
 	}
 	else {
-		data->plotOn(plot,Binning(nbin));
+		data->plotOn(plot1,Binning(nbin));
 	}
+	
 
 	//TLegend *leg = new TLegend(0.6,0.4,0.92,0.92);
 	TLegend *leg = new TLegend(0.55,0.6,0.88,0.88);//bing
@@ -677,11 +683,11 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	leg->SetTextFont(42);//bing
 	leg->SetTextSize(0.04);//bing
 
-	TObject *dataLeg = (TObject*)plot->getObject(plot->numItems()-1);//bing
+	TObject *dataLeg = (TObject*)plot1->getObject(plot1->numItems()-1);//bing
 	leg->AddEntry(dataLeg,"Data","LEP");//bing
 
 
-	int color[10] = {kBlue,kBlue+3,kGreen+3,kTeal+9,kRed,kRed+2,kYellow+2,kOrange-3,kPink+7,kCyan+2};
+	int color[12] = {kBlue,kBlue+3,kGreen+3,kTeal+9,kRed,kRed+2,kYellow+2,kOrange-3,kPink+7,kOrange,kSpring,kCyan+2};
 	for (int pInd=0; pInd<mpdf->getNumPdfs(); pInd++){
 		mcat->setIndex(pInd);
 		// Always refit since we cannot be sure the best fit pdf is being fitted
@@ -691,7 +697,7 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 		name_temp=mpdf->getCurrentPdf()->GetName();//bing
 		if(name_temp.substr(16).c_str()[0]=='b'){
 			name_temp1 = name_temp.substr(16);
-			order = name_temp.substr(20);
+			order = name_temp.substr(20,1);
 			color_id = stoi(order)-1;
 			if(order == '1'){
 				name = "1st order Bernstein";
@@ -738,48 +744,48 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 			}
 		}//bing
 		//mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[pInd]),LineWidth(2));
-		mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[color_id]),LineWidth(2));//bing
-		TObject *legObj = plot->getObject(plot->numItems()-1);
+		mpdf->getCurrentPdf()->plotOn(plot1,LineColor(color[color_id]),LineWidth(2));//bing
+		TObject *legObj = plot1->getObject(plot1->numItems()-1);
 		//leg->AddEntry(legObj,mpdf->getCurrentPdf()->GetName(),"L");
 		
-		cout<<"[[DEBUG]]: "<< name_temp1 << name << order <<"color"<<color_id <<endl;
+		cout<<"[[DEBUG]]: "<< "nametype: "<<name_temp1<<" name: " << name<<" order: " << order <<" color: "<<color_id <<endl;
 		leg->AddEntry(legObj,name.c_str(),"L");//bing
 	}
 
-	TCanvas *canv = new TCanvas();
-	plot->SetMaximum(int(plot->GetMaximum())+5);//bing
-	plot->GetXaxis()->SetTitleFont(42);
-	plot->GetXaxis()->SetTitleSize(0.05);
-	plot->GetXaxis()->SetTitleOffset(0.95);
-	plot->GetXaxis()->SetLabelFont(42);
-	plot->GetXaxis()->SetLabelOffset(0.007);
-	plot->GetXaxis()->SetLabelSize(0.04);
+	TCanvas *canv1 = new TCanvas();
+	plot1->SetMaximum(int(plot1->GetMaximum())+5);//bing
+	plot1->GetXaxis()->SetTitleFont(42);
+	plot1->GetXaxis()->SetTitleSize(0.05);
+	plot1->GetXaxis()->SetTitleOffset(0.95);
+	plot1->GetXaxis()->SetLabelFont(42);
+	plot1->GetXaxis()->SetLabelOffset(0.007);
+	plot1->GetXaxis()->SetLabelSize(0.04);
 
-	plot->GetYaxis()->SetTitleFont(42);
-	plot->GetYaxis()->SetTitleSize(0.05);
-	plot->GetYaxis()->SetTitleOffset(1.15);
-	plot->GetYaxis()->SetLabelFont(42);
-	plot->GetYaxis()->SetLabelOffset(0.007);
-	plot->GetYaxis()->SetLabelSize(0.04);
+	plot1->GetYaxis()->SetTitleFont(42);
+	plot1->GetYaxis()->SetTitleSize(0.05);
+	plot1->GetYaxis()->SetTitleOffset(1.15);
+	plot1->GetYaxis()->SetLabelFont(42);
+	plot1->GetYaxis()->SetLabelOffset(0.007);
+	plot1->GetYaxis()->SetLabelSize(0.04);
 
-	plot->Draw();
-	if (!unblind) plot->SetMinimum(0.0001);
+	plot1->Draw();
+	if (!unblind) plot1->SetMinimum(0.0001);
 	leg->Draw();
 
 	//TLatex *latex = new TLatex();
 	//latex->SetTextSize(0.06);
 	//latex->SetNDC();
 	//latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(ma))+" GeV").c_str());
-	CMS_lumi( canv, 4, 0);
+	CMS_lumi( canv1, 4, 0);
 
-	canv->Modified();
-	canv->Update();
-	canv->Print(Form("%s.pdf",name.c_str()));
-	canv->Print(Form("%s.png",name.c_str()));
-	canv->Print(Form("%s.eps",name.c_str()));
+	canv1->Modified();
+	canv1->Update();
+	canv1->Print(Form("%s.pdf",name.c_str()));
+	canv1->Print(Form("%s.png",name.c_str()));
+	canv1->Print(Form("%s.eps",name.c_str()));
 	//canv->Print(Form("%s.svg",name.c_str()));
-	canv->Print(Form("%s.C",name.c_str()));
-	delete canv;
+	canv1->Print(Form("%s.C",name.c_str()));
+	delete canv1;
 }
 
 int main(int argc, char* argv[]){
@@ -1153,6 +1159,7 @@ int main(int argc, char* argv[]){
 			mgg->setRange("unblind_up",mggblindhigh_,mhHigh);//bing
 			mgg->setRange("unblind_down",mhLow,mggblindlow_);//bing
 			data->plotOn(plot,Binning(nbin),CutRange("unblind_down,unblind_up"));
+			data->plotOn(plot,Binning(nbin),Invisible());
 		}
 		else {
 			data->plotOn(plot,Binning(nbin));

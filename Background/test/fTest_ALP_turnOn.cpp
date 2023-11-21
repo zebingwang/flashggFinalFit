@@ -73,12 +73,16 @@ TRandom3 *RandomGen = new TRandom3();
 RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char* ext=""){
 
   if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order+1),order+1);//bing
+  //if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order+2),order+2);//bing
   //if (type=="Bernstein") return pdfsModel.getBernstein(Form("%s_bern%d",ext,order),order);
   else if (type=="Chebychev") return pdfsModel.getChebychev(Form("%s_cheb%d",ext,order),order);
+  //else if (type=="Exponential") return pdfsModel.getExponentialZGMCShape(Form("%s_exp%d",ext,order+4),order+4);//bing
   else if (type=="Exponential") return pdfsModel.getExponentialStepxGau(Form("%s_exp%d",ext,order),order,4);//bing
     //return pdfsModel.getExponentialSingle(Form("%s_exp%d",ext,order),order);
+  //else if (type=="PowerLaw") return pdfsModel.getPowerLawZGMCShape(Form("%s_pow%d",ext,order+4),order+4);//bing
   else if (type=="PowerLaw") return pdfsModel.getPowerLawStepxGau(Form("%s_pow%d",ext,order),order,4);//bing
     //return pdfsModel.getPowerLawSingle(Form("%s_pow%d",ext,order),order);
+  //else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order+2),order+2);//bing
   else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order),order,4);//bing
     //return pdfsModel.getLaurentSeries(Form("%s_lau%d",ext,order),order);
   else {
@@ -357,7 +361,7 @@ void plot(RooRealVar *mass, RooAbsPdf *pdf, RooDataSet *data, string name,vector
 }
 void plot(RooRealVar *mass, RooMultiPdf *pdfs, RooCategory *catIndex, RooDataSet *data, string name, vector<string> flashggCats_, int cat, int bestFitPdf=-1){
 
-  int color[7] = {kBlue,kRed,kMagenta,kGreen+1,kOrange+7,kAzure+10,kBlack};
+  int color[10] = {kBlue,kRed,kMagenta,kGreen+1,kOrange+7,kAzure+10,kBlack,kOrange,kSpring,kBlue-7};
   TLegend *leg = new TLegend(0.5,0.55,0.92,0.88);
   leg->SetFillColor(0);
   leg->SetLineColor(1);
@@ -394,7 +398,7 @@ void plot(RooRealVar *mass, RooMultiPdf *pdfs, RooCategory *catIndex, RooDataSet
   int bestcol= -1;
   for (int icat=0;icat<catIndex->numTypes();icat++){
     int col;
-    if (icat<=6) col=color[icat];
+    if (icat<=10) col=color[icat];
     else {col=kBlack; style++;}
     catIndex->setIndex(icat);
     pdfs->getCurrentPdf()->fitTo(*data,RooFit::Minos(0),RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE));	 //FIXME
@@ -469,7 +473,7 @@ void plot(RooRealVar *mass, RooMultiPdf *pdfs, RooCategory *catIndex, RooDataSet
 
 void plot(RooRealVar *mass, map<string,RooAbsPdf*> pdfs, RooDataSet *data, string name, vector<string> flashggCats_, int cat, int bestFitPdf=-1){
 
-  int color[7] = {kBlue,kRed,kMagenta,kGreen+1,kOrange+7,kAzure+10,kBlack};
+  int color[10] = {kBlue,kRed,kMagenta,kGreen+1,kOrange+7,kAzure+10,kBlack,kOrange,kSpring,kBlue-7};
   TCanvas *canv = new TCanvas();
   TLegend *leg = new TLegend(0.6,0.65,0.88,0.88);
   leg->SetFillColor(0);
@@ -495,7 +499,7 @@ void plot(RooRealVar *mass, map<string,RooAbsPdf*> pdfs, RooDataSet *data, strin
   int style=1;
   for (map<string,RooAbsPdf*>::iterator it=pdfs.begin(); it!=pdfs.end(); it++){
     int col;
-    if (i<=6) col=color[i];
+    if (i<=10) col=color[i];
     else {col=kBlack; style++;}
     it->second->plotOn(plot,LineColor(col),LineStyle(style));//,RooFit::NormRange("fitdata_1,fitdata_2"));
     TObject *pdfLeg = plot->getObject(int(plot->numItems()-1));
@@ -735,7 +739,7 @@ vector<string> flashggCats_;
 
 	vector<string> functionClasses;
 	functionClasses.push_back("Bernstein");
-	functionClasses.push_back("Exponential");
+  functionClasses.push_back("Exponential");
 	functionClasses.push_back("PowerLaw");
 	functionClasses.push_back("Laurent");
 	map<string,string> namingMap;
