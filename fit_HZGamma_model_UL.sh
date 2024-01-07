@@ -1,7 +1,7 @@
 #!/bin/bash
 
 lable='run2'
-version='UL'
+version='UL_xingchen'
 #channel=( ele mu )
 channel='ele'
 Lumi_run2='138'
@@ -20,9 +20,13 @@ nMass=${#massList[@]}
 # prepare signal and background workspace
 cd ./InputData/
 
-#python makeWorkspace_data_cats.py -d ./outputs/two_jet/data.root -j ./outputs/significances/bin_binaries_two_jet.txt -o ./two_jet_data 
-#python makeWorkspace_sig_cats.py -d ./outputs/two_jet/sig.root -j ./outputs/significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+#python makeWorkspace_data_cats.py -d ./two_jet/data.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+#python makeWorkspace_sig_cats.py -d ./two_jet/sig.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 #python makeWorkspace_bkg_cats.py -d ./two_jet/bkgmc.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
+
+#python makeWorkspace_data_cats.py -d ./finalfit/zero_to_one_jet/data.root -j ./finalfit/significance/bin_binaries_zero_to_one_jet.txt -o ./two_jet_data_01jet
+#python makeWorkspace_sig_cats.py -d ./finalfit/zero_to_one_jet/sig.root -j ./finalfit/significance/bin_binaries_zero_to_one_jet.txt -o ./two_jet_data_01jet 
+
 cd ../
 
 ###### background fit ######
@@ -38,13 +42,15 @@ else
   echo "$dir_out_bkg already exist"
 fi
 
-cat='cat3'
-path_in_bkg="../InputData/two_jet_data/HZGamma_data_bkg_workspace_$cat.root"
+cat='cat0'
+#path_in_bkg="../InputData/two_jet_data_dijet/HZGamma_data_bkg_workspace_$cat.root"
+# sync
+path_in_bkg="../InputData/xingchen/output_file/HZGamma_data_bkg_workspace_$cat.root"
 path_out_bkg="$dir_out_bkg/fit_results_${lable}_$cat"
 mkdir $path_out_bkg
 
 
-#./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128
+./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 --runFtestCheckWithToys #--sidebandOnly
 #./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 41.48 -c 0 --isFlashgg 0
 
 cd ../Signal/
@@ -61,7 +67,7 @@ fi
 
 path_out_sig="$dir_out_sig/fit_results_${lable}_$cat"
 mkdir $path_out_sig
-path_in_sig="../InputData/two_jet_data"
+path_in_sig="../InputData/two_jet_data_01jet"
 
 #./bin/signalFTest_ALP -i $path_in_sig/ALP_data_sig_Am${massList[$iBin]}_${years[$jBin]}_workspace_${channel}.root -d $path_out_bkg/ALPmassInde_data_sig.dat -o $path_out_bkg/HZAmassInde_ftest -p data -f cat0 -m 125 --mhLowBlind 110 --mhHighBlind 140 # --verbose 1
 
@@ -85,8 +91,8 @@ mkdir "$dir_out_sig/Combine_results"
 for ((iCat=0; iCat<$ncats; iCat++))
     do
 
-    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
-    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
+    #cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
+    #cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
 done
 
 cd $dir_out_sig/Combine_results
@@ -94,9 +100,9 @@ cd $dir_out_sig/Combine_results
 for ((iCat=0; iCat<$ncats; iCat++))
     do
 
-    text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
+    #text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
 
-    combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
+    #combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
 
     ## start GoF
     #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=saturated -m 125 --setParameters MH=125 -n _${cats[$iCat]}_saturated
