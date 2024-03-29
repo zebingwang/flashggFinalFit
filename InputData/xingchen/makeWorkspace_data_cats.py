@@ -76,7 +76,7 @@ for c in range(nCat):
 
     for jentry in range(len(data[var[0]])):
         if data["mllg"][jentry]<105. or data["mllg"][jentry]>170.: continue
-        if data["photon_pT"][jentry]<10. or data["photon_pT"][jentry]>80.: continue
+        if data["photon_pT"][jentry]<15. or data["photon_pT"][jentry]>=80.: continue
         if data["Nlep"][jentry]>2: continue
         if data["Njet"][jentry]>1: continue
 

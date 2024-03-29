@@ -692,63 +692,51 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 		mcat->setIndex(pInd);
 		// Always refit since we cannot be sure the best fit pdf is being fitted
 		mpdf->getCurrentPdf()->fitTo(*data);
-		string name_temp,name_temp1,name,order;//bing
+		string name_temp,cat_name,name,order;//bing
 		int color_id;
 		name_temp=mpdf->getCurrentPdf()->GetName();//bing
-		if(name_temp.substr(16).c_str()[0]=='b'){
-			name_temp1 = name_temp.substr(16);
-			order = name_temp.substr(20,1);
+		cat_name = name_temp.substr(name_temp.find_last_of('_')+1);
+		order = cat_name.back();
+		cout<<"[[DEBUG]]: "<< "nametype: "<<name_temp<<", split:"<<name_temp.substr(name_temp.find_last_of('_')+1)<<endl;
+		if(cat_name.c_str()[0]=='b'){
 			color_id = stoi(order)-1;
-			if(order == '1'){
-				name = "1st order Bernstein";
-			}
-			else if(order == '2'){
-				name = "2nd order Bernstein";
-			}
-			else if(order == '3'){
-				name = "3rd order Bernstein";
-			}
-			else{
-				name = order+"th order Bernstein";
-			}
+			name = "Bernstein";
 		}
-		else{
-			name_temp1 = name_temp.substr(16).substr(0,name_temp.find('_')+1);
-			order = name_temp1.substr(3);
-			if(name_temp1.substr(0, name_temp1.length() - 1) == "exp"){
+		else if(cat_name.c_str()[0]=='g'){
+			cat_name = cat_name.substr(4);
+			if (cat_name.c_str()[0]=='e'){
 				name = "Exponential";
-				color_id = stoi(order)+4-1;
+				color_id = stoi(order)/2+4-1;
 			}
-			else if(name_temp1.substr(0, name_temp1.length() - 1) == "pow"){
+			else if(cat_name.c_str()[0]=='p'){
 				name = "Power Law";
-				color_id = stoi(order)+6-1;
+				color_id = stoi(order)/2+6;
 			}
 			else{
 				name = "Laurent";
-				color_id = stoi(order)+8-1;
+				color_id = stoi(order)+8;
 			}
-
+		}
 			
-			if(order == '1'){
-				name = "1st order "+name;
-			}
-			else if(order == '2'){
-				name = "2nd order "+name;
-			}
-			else if(order == '3'){
-				name = "3rd order "+name;
-				color_id = color_id -1;
-			}
-			else{
-				name = order+"th order "+name;
-			}
-		}//bing
+		if(order == '1'){
+			name = "1st order "+name;
+		}
+		else if(order == '2'){
+			name = "2nd order "+name;
+		}
+		else if(order == '3'){
+			name = "3rd order "+name;
+		}
+		else{
+			name = order+"th order "+name;
+		}
+		//bing
 		//mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[pInd]),LineWidth(2));
 		mpdf->getCurrentPdf()->plotOn(plot1,LineColor(color[color_id]),LineWidth(2));//bing
 		TObject *legObj = plot1->getObject(plot1->numItems()-1);
 		//leg->AddEntry(legObj,mpdf->getCurrentPdf()->GetName(),"L");
 		
-		cout<<"[[DEBUG]]: "<< "nametype: "<<name_temp1<<" name: " << name<<" order: " << order <<" color: "<<color_id <<endl;
+		cout<<"[[DEBUG]]: "<< "nametype: "<<cat_name<<" name: " << name<<" order: " << order <<" color: "<<color_id <<endl;
 		leg->AddEntry(legObj,name.c_str(),"L");//bing
 	}
 
@@ -915,12 +903,15 @@ int main(int argc, char* argv[]){
 	RooMultiPdf *mpdf = 0;
 	RooCategory *mcat = 0;
 	if (isMultiPdf) {
-		mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts));
+		//mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts));
 		//mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts));//FIXED
-		mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",to_string(cat).c_str(),sqrts));
+		//mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV",to_string(cat).c_str(),sqrts));
+
+		mpdf = (RooMultiPdf*)inWS->pdf(Form("CMS_hgg_%s_bkgshape",channelName.c_str()));//bing
+		mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s",channelName.c_str()));//bing
 		//mcat = (RooCategory*)inWS->cat(Form("pdfindex_%s_%dTeV_%s",to_string(cat).c_str(),sqrts,channelName.c_str()));//bing
 		if (!mpdf || !mcat){
-			cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts) << ") or multicat ("<< Form("pdfindex_%s_%dTeV",catname.c_str(),sqrts) <<")" << endl;
+			cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_bkgshape",channelName.c_str()) << ") or multicat ("<< Form("pdfindex_%s",channelName.c_str()) <<")" << endl;
 			//cout << "[ERROR] "<< "Can't find multipdfs (" << Form("CMS_hgg_%s_%dTeV_bkgshape",catname.c_str(),sqrts) << ") or multicat ("<< Form("pdfindex_%s_%dTeV_%s",catname.c_str(),sqrts,channelName.c_str()) <<")" << endl;//bing
 			exit(0);
 		}
@@ -1009,14 +1000,14 @@ int main(int argc, char* argv[]){
 			//for (int i=1; i<(plot->GetXaxis()->GetNbins()+1); i++){
 			
 			//1GeV
-			if (mass>=115) {
-				massStep = 2.5;
+			if (mass>=110) {
+				massStep = 2;
 			}
 
-			if (mass>=130) {
-				massStep = 5;
+			if (mass>=120) {
+				massStep = 15;
 			}
-			if (mass>=175) {
+			if (mass>=140) {
 				massStep = 5;
 			}
 			//30GeV
@@ -1262,7 +1253,7 @@ int main(int argc, char* argv[]){
     catLabel_humanReadable.ReplaceAll("TTHLeptonicTag","TTH Leptonic Tag");
     catLabel_humanReadable.ReplaceAll("TTHHadronicTag","TTH Hadronic Tag");
 		//latex->DrawLatex(0.15,0.85,catLabel_humanReadable);
-		latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(mavalue_))+" GeV").c_str());
+		//latex->DrawLatex(0.17,0.85,("m_{a} = "+to_string(int(mavalue_))+" GeV").c_str());
 		outWS->import(*lumi,RecycleConflictNodes());
 
 		if (unblind) plot->SetMinimum(0.0001);

@@ -22,7 +22,7 @@ observation  -1     -1     -1     -1
 bin          cat0      cat0      cat1      cat1      cat2      cat2      cat3      cat3    
 process      hza       bkg_mass  hza       bkg_mass  hza       bkg_mass  hza       bkg_mass
 process      -1         1         -1         1         -1         1         -1         1       
-rate         -1        1         -1        1         -1        1         -1        1       
+rate         3.539        1        2.477        1         1.088        1         1.27        1       
 ----------------------------------------------------------------------------------------------------------------------------------
 
 lumi_13TeV_Uncorrelated_17       lnN   1.020 - 1.020 - 1.020 - 1.020 -

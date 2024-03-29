@@ -26,13 +26,13 @@ if not os.path.exists(args.out):
 file_json = open(args.json, "r")
 json = file_json.readline().split(' ')
 nCat = int(json[0])
-boundaries = list(map(float, json[1:6]))
+boundaries = list(map(float, json[1:nCat+2]))
 
-
+cat_name = 'vbf'
 
 # Read the input dataset
 ############################
-lumi = {'16':16.81, '16APV':19.52, '17':41.48, '18':59.83}
+lumi = {'16':16.81, '16APV':19.52, '17':41.48, '18':59.83, 'run2': 138.}
 myfile = TFile(args.data)
 if myfile:
     print "open " + args.data + " success!"
@@ -45,11 +45,11 @@ print "Entries: ",entries
 
 for c in range(nCat):
     for mass_H in [125 - shift, 125, 125 + shift]:
-        print "[[ INFO ]] prepare Higgs mass: {0}".format(mass_H)
+        print "[[ INFO ]] prepare Higgs mass: {0}, cat{1}".format(mass_H, c)
         w = RooWorkspace("CMS_hzg_workspace")
 
         Sqrts = RooRealVar("Sqrts","Sqrts",13)
-        IntLumi = RooRealVar("IntLumi","IntLumi", lumi['17'])
+        IntLumi = RooRealVar("IntLumi","IntLumi", lumi['run2'])
         CMS_hzg_mass = RooRealVar("CMS_hzg_mass","CMS_hzg_mass",mass_H,105.,170.)
         CMS_hzg_weight = RooRealVar("CMS_hzg_weight","CMS_hzg_weight",-100000,1000000)
 
@@ -66,7 +66,7 @@ for c in range(nCat):
         ArgSet.Print("v")
         print "#"*51
 
-        data_mass_cats = RooDataSet("ggh_{0}_13TeV_cat0".format(mass_H),"ggh_{0}_13TeV_cat0".format(mass_H), ArgSet, "CMS_hzg_weight")
+        data_mass_cats = RooDataSet("ggh_{0}_13TeV_{1}_cat{2}".format(mass_H,cat_name,c),"ggh_{0}_13TeV_{1}_cat{2}".format(mass_H,cat_name,c), ArgSet, "CMS_hzg_weight")
 
         for jentry in range(entries):
             nb = mychain.GetEntry(jentry)
@@ -74,10 +74,10 @@ for c in range(nCat):
 
 
             CMS_hzg_mass.setVal(mychain.H_mass + mass_H - 125.0)
-            CMS_hzg_weight.setVal(mychain.weight)
+            CMS_hzg_weight.setVal(mychain.weight*mychain.reweight)
 
-            if mychain.bdt_score_t > boundaries[c] and mychain.bdt_score_t < boundaries[c+1]:
-                data_mass_cats.add(ArgSet,mychain.weight)
+            if mychain.BDT_score > boundaries[c] and mychain.BDT_score <= boundaries[c+1]:
+                data_mass_cats.add(ArgSet,mychain.weight*mychain.reweight)
 
         data_mass_cats.Print("v")
         #dataset_WithoutWeight.Print("v")

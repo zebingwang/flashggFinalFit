@@ -23,7 +23,7 @@ if not os.path.exists(args.out):
 file_json = open(args.json, "r")
 json = file_json.readline().split(' ')
 nCat = int(json[0])
-boundaries = list(map(float, json[1:6]))
+boundaries = list(map(float, json[1:nCat+2]))
 
 
 
@@ -31,10 +31,11 @@ boundaries = list(map(float, json[1:6]))
 ############################
 myfile = TFile(args.data)
 mychain = myfile.Get(args.tree)
-entries = mychain.GetEntriesFast()
+entries = mychain.GetEntries()
 print entries
 
 for c in range(nCat):
+    print 'Boundaries:',boundaries[c],boundaries[c+1]
     w = RooWorkspace("CMS_hzg_workspace")
 
     Sqrts = RooRealVar("Sqrts","Sqrts",13)
@@ -51,7 +52,9 @@ for c in range(nCat):
 
         CMS_hzg_mass.setVal(mychain.H_mass)
 
-        if mychain.bdt_score_t > boundaries[c] and mychain.bdt_score_t < boundaries[c+1]:
+        #if mychain.BDT_score > boundaries[c] and mychain.BDT_score <= boundaries[c+1]:
+        #    data_mass_cats.add(RooArgSet(CMS_hzg_mass))
+        if mychain.bdt_score_t > boundaries[c] and mychain.bdt_score_t <= boundaries[c+1]:
             data_mass_cats.add(RooArgSet(CMS_hzg_mass))
 
     #getattr(w,'import')(data_mass_cat0)
