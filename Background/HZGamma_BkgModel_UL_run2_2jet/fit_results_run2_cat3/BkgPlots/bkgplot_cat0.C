@@ -1,7 +1,7 @@
 void bkgplot_cat0()
 {
 //=========Macro generated from canvas: c/
-//=========  (Fri Mar 22 06:16:33 2024) by ROOT version 6.12/07
+//=========  (Tue Apr  9 11:03:10 2024) by ROOT version 6.12/07
    TCanvas *c = new TCanvas("c", "",0,0,800,800);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -24,7 +24,7 @@ void bkgplot_cat0()
    TPad *pad2 = new TPad("pad2", "pad2",0,0.02,1,0.25);
    pad2->Draw();
    pad2->cd();
-   pad2->Range(95.82353,-12.33053,172.2941,8.951197);
+   pad2->Range(95.82353,-12.37292,172.2941,9.036077);
    pad2->SetFillColor(0);
    pad2->SetBorderMode(0);
    pad2->SetBorderSize(2);
@@ -38,8 +38,8 @@ void bkgplot_cat0()
    pad2->SetFrameBorderMode(0);
    
    TH1D *hdummyweight__3 = new TH1D("hdummyweight__3","",80,105,170);
-   hdummyweight__3->SetMinimum(-4.881927);
-   hdummyweight__3->SetMaximum(8.951197);
+   hdummyweight__3->SetMinimum(-4.879772);
+   hdummyweight__3->SetMaximum(9.036077);
    hdummyweight__3->SetLineStyle(0);
    hdummyweight__3->SetMarkerStyle(20);
    hdummyweight__3->GetXaxis()->SetTitle("\\mathrm{m}_{\\ell\\ell\\gamma} \\ \\mathrm{(GeV)}");
@@ -63,7 +63,7 @@ void bkgplot_cat0()
    hdummyweight__3->GetZaxis()->SetTitleFont(42);
    hdummyweight__3->Draw("HIST");
    
-   Double_t twosigma_cat0_r_fx3003[15] = {
+   Double_t twosigma_cat0_r_fx3003[20] = {
    105,
    107,
    109,
@@ -73,29 +73,23 @@ void bkgplot_cat0()
    117,
    119,
    121,
+   126,
+   131,
    136,
+   141,
+   146,
    151,
    156,
    161,
    166,
-   171};
-   Double_t twosigma_cat0_r_fy3003[15] = {
+   168,
+   170};
+   Double_t twosigma_cat0_r_fy3003[20] = {
    0,
    0,
    0,
    0,
    0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0};
-   Double_t twosigma_cat0_r_felx3003[15] = {
    0,
    0,
    0,
@@ -111,23 +105,12 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t twosigma_cat0_r_fely3003[15] = {
-   0.04087207,
-   0.1709789,
-   0.4327605,
-   0.6566639,
-   0.9323376,
-   1.087595,
-   0.9961581,
-   0.8303899,
-   0.757399,
-   0.2880796,
-   0.1316408,
-   0.1076292,
-   0.1635667,
-   0.3758638,
-   0.5260381};
-   Double_t twosigma_cat0_r_fehx3003[15] = {
+   Double_t twosigma_cat0_r_felx3003[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
    0,
    0,
    0,
@@ -143,23 +126,70 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t twosigma_cat0_r_fehy3003[15] = {
-   0.4942356,
-   0.7147268,
-   0.8024129,
-   1.354992,
-   1.47925,
-   1.227151,
-   0.9974568,
-   0.9407554,
-   0.8984586,
-   0.3862057,
-   0.3743446,
-   0.2959203,
-   0.2906987,
-   0.5318615,
-   0.9421726};
-   TGraphAsymmErrors *grae = new TGraphAsymmErrors(15,twosigma_cat0_r_fx3003,twosigma_cat0_r_fy3003,twosigma_cat0_r_felx3003,twosigma_cat0_r_fehx3003,twosigma_cat0_r_fely3003,twosigma_cat0_r_fehy3003);
+   Double_t twosigma_cat0_r_fely3003[20] = {
+   0.05074185,
+   0.1564615,
+   0.327036,
+   0.7065106,
+   0.9498708,
+   1.016287,
+   0.9064542,
+   0.8597238,
+   0.7124699,
+   0.1661434,
+   0.6333354,
+   0.2404785,
+   0.2325403,
+   0.2095615,
+   0.1756045,
+   0.140276,
+   0.1108105,
+   0.08614965,
+   0.07489809,
+   0.06526211};
+   Double_t twosigma_cat0_r_fehx3003[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0};
+   Double_t twosigma_cat0_r_fehy3003[20] = {
+   0.2181066,
+   0.6784969,
+   0.6653758,
+   0.7354741,
+   1.221623,
+   1.158264,
+   0.9580109,
+   0.7386171,
+   1.140671,
+   0.8736254,
+   0.6726413,
+   0.3791088,
+   0.3016522,
+   0.2869,
+   0.2560255,
+   0.2620167,
+   0.2696653,
+   0.275885,
+   0.2844273,
+   0.1145869};
+   TGraphAsymmErrors *grae = new TGraphAsymmErrors(20,twosigma_cat0_r_fx3003,twosigma_cat0_r_fy3003,twosigma_cat0_r_felx3003,twosigma_cat0_r_fehx3003,twosigma_cat0_r_fely3003,twosigma_cat0_r_fehy3003);
    grae->SetName("twosigma_cat0_r");
    grae->SetTitle("");
 
@@ -176,9 +206,9 @@ void bkgplot_cat0()
    grae->SetMarkerColor(ci);
    grae->SetMarkerStyle(20);
    
-   TH1F *Graph_twosigma_cat0_r3003 = new TH1F("Graph_twosigma_cat0_r3003","",100,98.4,177.6);
-   Graph_twosigma_cat0_r3003->SetMinimum(-1.344279);
-   Graph_twosigma_cat0_r3003->SetMaximum(1.735934);
+   TH1F *Graph_twosigma_cat0_r3003 = new TH1F("Graph_twosigma_cat0_r3003","",100,98.5,176.5);
+   Graph_twosigma_cat0_r3003->SetMinimum(-1.240078);
+   Graph_twosigma_cat0_r3003->SetMaximum(1.445413);
    Graph_twosigma_cat0_r3003->SetDirectory(0);
    Graph_twosigma_cat0_r3003->SetStats(0);
    Graph_twosigma_cat0_r3003->SetLineStyle(0);
@@ -198,7 +228,7 @@ void bkgplot_cat0()
    
    grae->Draw("l3 ");
    
-   Double_t onesigma_cat0_r_fx3004[15] = {
+   Double_t onesigma_cat0_r_fx3004[20] = {
    105,
    107,
    109,
@@ -208,29 +238,23 @@ void bkgplot_cat0()
    117,
    119,
    121,
+   126,
+   131,
    136,
+   141,
+   146,
    151,
    156,
    161,
    166,
-   171};
-   Double_t onesigma_cat0_r_fy3004[15] = {
+   168,
+   170};
+   Double_t onesigma_cat0_r_fy3004[20] = {
    0,
    0,
    0,
    0,
    0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0};
-   Double_t onesigma_cat0_r_felx3004[15] = {
    0,
    0,
    0,
@@ -246,23 +270,12 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t onesigma_cat0_r_fely3004[15] = {
-   0.03854341,
-   0.1345408,
-   0.2596563,
-   0.3766161,
-   0.5465428,
-   0.6274584,
-   0.520719,
-   0.4151949,
-   0.4185626,
-   0.1571343,
-   0.09059158,
-   0.0691902,
-   0.09600652,
-   0.1879319,
-   0.263019};
-   Double_t onesigma_cat0_r_fehx3004[15] = {
+   Double_t onesigma_cat0_r_felx3004[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
    0,
    0,
    0,
@@ -278,23 +291,70 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t onesigma_cat0_r_fehy3004[15] = {
-   0.161577,
-   0.2779493,
-   0.3488752,
-   0.5732659,
-   0.8068636,
-   0.6519241,
-   0.4787792,
-   0.4311796,
-   0.4492293,
-   0.177011,
-   0.1700902,
-   0.1561802,
-   0.1285783,
-   0.2346448,
-   0.4710863};
-   grae = new TGraphAsymmErrors(15,onesigma_cat0_r_fx3004,onesigma_cat0_r_fy3004,onesigma_cat0_r_felx3004,onesigma_cat0_r_fehx3004,onesigma_cat0_r_fely3004,onesigma_cat0_r_fehy3004);
+   Double_t onesigma_cat0_r_fely3004[20] = {
+   0.03382789,
+   0.1359304,
+   0.2441869,
+   0.4716203,
+   0.393051,
+   0.7181576,
+   0.3625831,
+   0.4298619,
+   0.4332587,
+   8.450492e-07,
+   0.2770845,
+   0.1131664,
+   0.1263806,
+   0.1336858,
+   0.111044,
+   0.09413258,
+   0.07783116,
+   0.06273942,
+   0.05577518,
+   0.05492356};
+   Double_t onesigma_cat0_r_fehx3004[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0};
+   Double_t onesigma_cat0_r_fehy3004[20] = {
+   0.06543199,
+   0.2993369,
+   0.3852176,
+   0.4399711,
+   0.814415,
+   0.3088705,
+   2.436348e-06,
+   0.330434,
+   0.6071313,
+   1.904352e-06,
+   0.5275618,
+   0.2118549,
+   0.1413995,
+   0.1195417,
+   0.1617003,
+   0.1367044,
+   0.1444635,
+   0.1622853,
+   0.1646685,
+   0.05055306};
+   grae = new TGraphAsymmErrors(20,onesigma_cat0_r_fx3004,onesigma_cat0_r_fy3004,onesigma_cat0_r_felx3004,onesigma_cat0_r_fehx3004,onesigma_cat0_r_fely3004,onesigma_cat0_r_fehy3004);
    grae->SetName("onesigma_cat0_r");
    grae->SetTitle("");
 
@@ -309,9 +369,9 @@ void bkgplot_cat0()
    grae->SetMarkerColor(ci);
    grae->SetMarkerStyle(20);
    
-   TH1F *Graph_onesigma_cat0_r3004 = new TH1F("Graph_onesigma_cat0_r3004","",100,98.4,177.6);
-   Graph_onesigma_cat0_r3004->SetMinimum(-0.7708906);
-   Graph_onesigma_cat0_r3004->SetMaximum(0.9502958);
+   TH1F *Graph_onesigma_cat0_r3004 = new TH1F("Graph_onesigma_cat0_r3004","",100,98.5,176.5);
+   Graph_onesigma_cat0_r3004->SetMinimum(-0.8714148);
+   Graph_onesigma_cat0_r3004->SetMaximum(0.9676723);
    Graph_onesigma_cat0_r3004->SetDirectory(0);
    Graph_onesigma_cat0_r3004->SetStats(0);
    Graph_onesigma_cat0_r3004->SetLineStyle(0);
@@ -404,65 +464,65 @@ void bkgplot_cat0()
    0,
    0};
    Double_t Graph0_fy3005[65] = {
-   -0.0614293,
-   -0.1282895,
-   0.754532,
-   -0.4312097,
-   -0.6972466,
-   -0.0410399,
-   -0.4409005,
-   2.142307,
-   -0.2439512,
-   -0.5570742,
-   1.229288,
-   -0.8794608,
-   -2.895833,
-   -0.8423606,
-   0.2567849,
-   3.381462,
-   -0.4823353,
-   1.426319,
-   -0.4608645,
-   -1.352581,
-   -0.2488297,
-   0.8503879,
-   -0.05492776,
-   -0.9647766,
-   0.1208412,
-   0.2019259,
-   2.278477,
-   0.3504954,
-   -0.5820196,
-   0.4809321,
-   -0.4606495,
-   -0.4067643,
-   0.6425877,
-   -0.3125936,
-   -0.2723081,
-   -0.2365559,
-   -0.2053369,
-   -0.1786511,
-   -0.1564986,
-   -0.1388793,
-   -0.1257932,
-   -0.1172404,
-   -0.1132208,
-   0.8862655,
-   -0.1187814,
-   -0.1283615,
-   -0.1424749,
-   -0.1611215,
-   -0.1843014,
-   0.7879855,
-   0.7557392,
-   0.7189596,
-   -0.3223532,
-   -0.3681993,
-   -0.4185786,
-   0.5265089,
-   -0.5329369,
-   -0.5969159,
-   -0.6654281,
+   -0.06888813,
+   -0.1314093,
+   0.7532751,
+   -0.4335757,
+   -0.704203,
+   -0.05601734,
+   -0.466097,
+   2.107299,
+   -0.2849422,
+   -0.5971503,
+   1.198552,
+   -0.8930226,
+   -2.886785,
+   -0.8085504,
+   0.3143574,
+   3.459448,
+   -0.3886359,
+   1.501722,
+   -0.4009454,
+   -1.309935,
+   -0.2248376,
+   0.854732,
+   -0.07086753,
+   -1.0013,
+   0.06374749,
+   0.1245696,
+   2.181441,
+   0.2346169,
+   -0.7156612,
+   0.3308306,
+   -0.6256979,
+   -0.5850505,
+   0.4529564,
+   -0.5115058,
+   -0.4782767,
+   -0.4472062,
+   -0.4181542,
+   -0.3909895,
+   -0.3655895,
+   -0.3418396,
+   -0.3196325,
+   -0.2988681,
+   -0.2794526,
+   0.7387016,
+   -0.2443236,
+   -0.2284515,
+   -0.2136105,
+   -0.1997335,
+   -0.1867577,
+   0.8253764,
+   0.8367267,
+   0.847353,
+   -0.1426749,
+   -0.1332619,
+   -0.1242658,
+   0.8845279,
+   -0.1065819,
+   -0.09723608,
+   -0.08709805,
    0,
    0,
    0,
@@ -740,8 +800,8 @@ void bkgplot_cat0()
    grae->SetMarkerStyle(20);
    
    TH1F *Graph_Graph3005 = new TH1F("Graph_Graph3005","Graph",100,0,186.45);
-   Graph_Graph3005->SetMinimum(-3.881927);
-   Graph_Graph3005->SetMaximum(7.951197);
+   Graph_Graph3005->SetMinimum(-3.879772);
+   Graph_Graph3005->SetMaximum(8.036077);
    Graph_Graph3005->SetDirectory(0);
    Graph_Graph3005->SetStats(0);
    Graph_Graph3005->SetLineStyle(0);
@@ -780,33 +840,33 @@ void bkgplot_cat0()
    pad1->SetFrameFillStyle(0);
    pad1->SetFrameBorderMode(0);
    
-   TH1D *frame_8026890__4 = new TH1D("frame_8026890__4","",260,105,170);
-   frame_8026890__4->SetBinContent(1,10.06282);
-   frame_8026890__4->SetMaximum(15);
-   frame_8026890__4->SetEntries(1);
-   frame_8026890__4->SetDirectory(0);
-   frame_8026890__4->SetStats(0);
-   frame_8026890__4->SetLineStyle(0);
-   frame_8026890__4->SetMarkerStyle(20);
-   frame_8026890__4->GetXaxis()->SetTitle("CMS_hzg_mass");
-   frame_8026890__4->GetXaxis()->SetLabelFont(42);
-   frame_8026890__4->GetXaxis()->SetLabelOffset(999);
-   frame_8026890__4->GetXaxis()->SetLabelSize(0);
-   frame_8026890__4->GetXaxis()->SetTitleSize(0);
-   frame_8026890__4->GetXaxis()->SetTitleOffset(1.1);
-   frame_8026890__4->GetXaxis()->SetTitleFont(42);
-   frame_8026890__4->GetYaxis()->SetTitle("Events / GeV");
-   frame_8026890__4->GetYaxis()->SetLabelFont(42);
-   frame_8026890__4->GetYaxis()->SetLabelOffset(0.007);
-   frame_8026890__4->GetYaxis()->SetTitleSize(0.05);
-   frame_8026890__4->GetYaxis()->SetTitleOffset(1.15);
-   frame_8026890__4->GetYaxis()->SetTitleFont(42);
-   frame_8026890__4->GetZaxis()->SetLabelFont(42);
-   frame_8026890__4->GetZaxis()->SetLabelOffset(0.01);
-   frame_8026890__4->GetZaxis()->SetTitleFont(42);
-   frame_8026890__4->Draw("FUNC");
+   TH1D *frame_7eb21d0__4 = new TH1D("frame_7eb21d0__4","",260,105,170);
+   frame_7eb21d0__4->SetBinContent(1,10.06282);
+   frame_7eb21d0__4->SetMaximum(15);
+   frame_7eb21d0__4->SetEntries(1);
+   frame_7eb21d0__4->SetDirectory(0);
+   frame_7eb21d0__4->SetStats(0);
+   frame_7eb21d0__4->SetLineStyle(0);
+   frame_7eb21d0__4->SetMarkerStyle(20);
+   frame_7eb21d0__4->GetXaxis()->SetTitle("CMS_hzg_mass");
+   frame_7eb21d0__4->GetXaxis()->SetLabelFont(42);
+   frame_7eb21d0__4->GetXaxis()->SetLabelOffset(999);
+   frame_7eb21d0__4->GetXaxis()->SetLabelSize(0);
+   frame_7eb21d0__4->GetXaxis()->SetTitleSize(0);
+   frame_7eb21d0__4->GetXaxis()->SetTitleOffset(1.1);
+   frame_7eb21d0__4->GetXaxis()->SetTitleFont(42);
+   frame_7eb21d0__4->GetYaxis()->SetTitle("Events / GeV");
+   frame_7eb21d0__4->GetYaxis()->SetLabelFont(42);
+   frame_7eb21d0__4->GetYaxis()->SetLabelOffset(0.007);
+   frame_7eb21d0__4->GetYaxis()->SetTitleSize(0.05);
+   frame_7eb21d0__4->GetYaxis()->SetTitleOffset(1.15);
+   frame_7eb21d0__4->GetYaxis()->SetTitleFont(42);
+   frame_7eb21d0__4->GetZaxis()->SetLabelFont(42);
+   frame_7eb21d0__4->GetZaxis()->SetLabelOffset(0.01);
+   frame_7eb21d0__4->GetZaxis()->SetTitleFont(42);
+   frame_7eb21d0__4->Draw("FUNC");
    
-   Double_t env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fx6[266] = {
+   Double_t env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fx6[266] = {
    104.75,
    104.75,
    105,
@@ -1073,276 +1133,276 @@ void bkgplot_cat0()
    170,
    170.25,
    170.25};
-   Double_t env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fy6[266] = {
+   Double_t env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fy6[266] = {
    0,
-   0.04111297,
-   0.04111297,
-   0.05039568,
-   0.0614293,
-   0.07446217,
-   0.08976028,
-   0.1076049,
-   0.1282895,
-   0.1521156,
-   0.1793877,
-   0.2104077,
-   0.245468,
-   0.2848445,
-   0.3287883,
-   0.3775177,
-   0.4312097,
-   0.4899916,
-   0.5539335,
-   0.6230403,
-   0.6972466,
-   0.7764106,
-   0.8603118,
-   0.9486488,
-   1.04104,
-   1.137026,
-   1.236073,
-   1.337584,
-   1.440901,
-   1.545319,
-   1.6501,
-   1.754481,
-   1.857693,
-   1.958971,
-   2.057573,
-   2.152787,
-   2.243951,
-   2.33046,
-   2.411777,
-   2.487442,
-   2.557074,
-   2.620381,
-   2.677156,
-   2.727278,
-   2.770712,
-   2.807499,
-   2.837756,
-   2.861663,
-   2.879461,
-   2.891436,
-   2.897915,
-   2.899254,
-   2.895833,
-   2.88804,
-   2.876271,
-   2.860916,
-   2.842361,
-   2.820972,
-   2.797103,
-   2.771082,
-   2.743215,
-   2.713785,
-   2.683046,
-   2.651229,
-   2.618538,
-   2.585155,
-   2.551239,
-   2.516926,
-   2.482335,
-   2.447567,
-   2.412708,
-   2.377827,
-   2.342987,
-   2.308234,
-   2.273611,
-   2.239149,
-   2.204875,
-   2.17081,
-   2.136972,
-   2.103373,
-   2.070024,
-   2.036933,
-   2.004107,
-   1.971549,
-   1.939265,
-   1.907256,
-   1.875524,
-   1.844072,
-   1.8129,
-   1.782009,
-   1.7514,
-   1.721073,
-   1.691029,
-   1.661267,
-   1.631789,
-   1.602594,
-   1.573681,
-   1.545052,
-   1.516706,
-   1.488644,
-   1.460864,
-   1.433369,
-   1.406156,
-   1.379227,
-   1.352581,
-   1.326218,
-   1.300138,
-   1.274342,
-   1.24883,
-   1.2236,
-   1.198654,
-   1.173992,
-   1.149612,
-   1.125516,
-   1.101703,
-   1.078174,
-   1.054928,
-   1.031965,
-   1.009286,
-   0.9868894,
-   0.9647766,
-   0.9429472,
-   0.921401,
-   0.9001382,
-   0.8791588,
-   0.8584626,
-   0.8380498,
-   0.8179203,
-   0.7980741,
-   0.7785113,
-   0.7592318,
-   0.7402356,
-   0.7215227,
-   0.7030932,
-   0.684947,
-   0.6670841,
-   0.6495046,
-   0.6322083,
-   0.6151954,
-   0.5984659,
-   0.5820196,
-   0.5658567,
-   0.5499771,
-   0.5343809,
-   0.5190679,
-   0.5040383,
-   0.4892921,
-   0.4748291,
-   0.4606495,
-   0.4467532,
-   0.4331402,
-   0.4198106,
-   0.4067643,
-   0.3940013,
-   0.3815217,
-   0.3693253,
-   0.3574123,
-   0.3457827,
-   0.3344363,
-   0.3233733,
-   0.3125936,
-   0.3020972,
-   0.2918842,
-   0.2819545,
-   0.2723081,
-   0.2629451,
-   0.2538653,
-   0.2450689,
-   0.2365559,
-   0.2283261,
-   0.2203797,
-   0.2127166,
-   0.2053369,
-   0.1982404,
-   0.1914273,
-   0.1848975,
-   0.1786511,
-   0.172688,
-   0.1670082,
-   0.1616117,
-   0.1564986,
-   0.1516687,
-   0.1471222,
-   0.1428591,
-   0.1388793,
-   0.1351828,
-   0.1317696,
-   0.1286397,
-   0.1257932,
-   0.12323,
-   0.1209501,
-   0.1189536,
-   0.1172404,
-   0.1158105,
-   0.1146639,
-   0.1138007,
-   0.1132208,
-   0.1129242,
-   0.112911,
-   0.1131811,
-   0.1137345,
-   0.1145712,
-   0.1156913,
-   0.1170947,
-   0.1187814,
-   0.1207514,
-   0.1230048,
-   0.1255415,
-   0.1283615,
-   0.1314649,
-   0.1348516,
-   0.1385216,
-   0.1424749,
-   0.1467116,
-   0.1512316,
-   0.1560349,
-   0.1611215,
-   0.1664915,
-   0.1721448,
-   0.1780814,
-   0.1843014,
-   0.1908047,
-   0.1975913,
-   0.2046612,
-   0.2120145,
-   0.2196511,
-   0.227571,
-   0.2357743,
-   0.2442608,
-   0.2530307,
-   0.262084,
-   0.2714205,
-   0.2810404,
-   0.2909436,
-   0.3011302,
-   0.3116,
-   0.3223532,
-   0.3333897,
-   0.3447096,
-   0.3563128,
-   0.3681993,
-   0.3803691,
-   0.3928223,
-   0.4055588,
-   0.4185786,
-   0.4318817,
-   0.4454682,
-   0.459338,
-   0.4734911,
-   0.4879276,
-   0.5026473,
-   0.5176504,
-   0.5329369,
-   0.5485066,
-   0.5643597,
-   0.5804961,
-   0.5969159,
-   0.613619,
-   0.6306053,
-   0.6478751,
-   0.6654281,
-   0.6832645,
-   0.7013841,
-   0.7013841,
-   0.7013841,
+   0.05412466,
+   0.05412466,
+   0.05843533,
+   0.06888813,
+   0.08062194,
+   0.09476155,
+   0.1115915,
+   0.1314093,
+   0.154522,
+   0.1812405,
+   0.2118745,
+   0.2467249,
+   0.2860769,
+   0.3301913,
+   0.3792957,
+   0.4335757,
+   0.4931659,
+   0.5581414,
+   0.6285095,
+   0.704203,
+   0.7850749,
+   0.8708938,
+   0.9613424,
+   1.056017,
+   1.154432,
+   1.256019,
+   1.360141,
+   1.466097,
+   1.573134,
+   1.680459,
+   1.787257,
+   1.892701,
+   1.99597,
+   2.096267,
+   2.192828,
+   2.284942,
+   2.371963,
+   2.453316,
+   2.528512,
+   2.59715,
+   2.658926,
+   2.713629,
+   2.761144,
+   2.801448,
+   2.834608,
+   2.860768,
+   2.880146,
+   2.893023,
+   2.899733,
+   2.900653,
+   2.896194,
+   2.886785,
+   2.872871,
+   2.8549,
+   2.833316,
+   2.80855,
+   2.781019,
+   2.751116,
+   2.71921,
+   2.685643,
+   2.650725,
+   2.614741,
+   2.577942,
+   2.540552,
+   2.502768,
+   2.464761,
+   2.426675,
+   2.388636,
+   2.350747,
+   2.313096,
+   2.275752,
+   2.238774,
+   2.202206,
+   2.166084,
+   2.130436,
+   2.095282,
+   2.060634,
+   2.026504,
+   1.992895,
+   1.959811,
+   1.927251,
+   1.895213,
+   1.863694,
+   1.832689,
+   1.802192,
+   1.772197,
+   1.742696,
+   1.713684,
+   1.685153,
+   1.657095,
+   1.629504,
+   1.602371,
+   1.575689,
+   1.549451,
+   1.52365,
+   1.498278,
+   1.473329,
+   1.448795,
+   1.424669,
+   1.400945,
+   1.377617,
+   1.354676,
+   1.332118,
+   1.309935,
+   1.288122,
+   1.266672,
+   1.245579,
+   1.224838,
+   1.204441,
+   1.184385,
+   1.164662,
+   1.145268,
+   1.126197,
+   1.107443,
+   1.089002,
+   1.070868,
+   1.053035,
+   1.0355,
+   1.018257,
+   1.0013,
+   0.9846265,
+   0.9682303,
+   0.9521072,
+   0.9362525,
+   0.9206619,
+   0.9053308,
+   0.8902551,
+   0.8754304,
+   0.8608526,
+   0.8465175,
+   0.8324211,
+   0.8185595,
+   0.8049287,
+   0.7915248,
+   0.7783442,
+   0.7653831,
+   0.7526378,
+   0.7401047,
+   0.7277804,
+   0.7156612,
+   0.7037439,
+   0.692025,
+   0.6805013,
+   0.6691694,
+   0.6580263,
+   0.6470687,
+   0.6362936,
+   0.6256979,
+   0.6152787,
+   0.605033,
+   0.5949578,
+   0.5850505,
+   0.5753081,
+   0.565728,
+   0.5563074,
+   0.5470436,
+   0.5379342,
+   0.5289764,
+   0.5201678,
+   0.5115058,
+   0.5029881,
+   0.4946123,
+   0.4863759,
+   0.4782767,
+   0.4703123,
+   0.4624806,
+   0.4547793,
+   0.4472062,
+   0.4397593,
+   0.4324363,
+   0.4252353,
+   0.4181542,
+   0.411191,
+   0.4043438,
+   0.3976106,
+   0.3909895,
+   0.3844787,
+   0.3780762,
+   0.3717805,
+   0.3655895,
+   0.3595016,
+   0.3535151,
+   0.3476283,
+   0.3418396,
+   0.3361472,
+   0.3305496,
+   0.3250452,
+   0.3196325,
+   0.3143099,
+   0.309076,
+   0.3039292,
+   0.2988681,
+   0.2938913,
+   0.2889974,
+   0.2841849,
+   0.2794526,
+   0.2747991,
+   0.2702231,
+   0.2657233,
+   0.2612984,
+   0.2569472,
+   0.2526685,
+   0.248461,
+   0.2443236,
+   0.2402551,
+   0.2362543,
+   0.2323202,
+   0.2284515,
+   0.2246473,
+   0.2209064,
+   0.2172278,
+   0.2136105,
+   0.2100534,
+   0.2065555,
+   0.2031159,
+   0.1997335,
+   0.1964075,
+   0.1931368,
+   0.1899205,
+   0.1867577,
+   0.1836475,
+   0.1805891,
+   0.1775814,
+   0.1746236,
+   0.1717147,
+   0.168854,
+   0.1660405,
+   0.1632733,
+   0.1605513,
+   0.1578736,
+   0.1552393,
+   0.152647,
+   0.1500958,
+   0.1475843,
+   0.1451112,
+   0.1426749,
+   0.1402738,
+   0.137906,
+   0.1355695,
+   0.1332619,
+   0.1309808,
+   0.1287232,
+   0.1264861,
+   0.1242658,
+   0.1220586,
+   0.1198604,
+   0.1176665,
+   0.1154721,
+   0.113272,
+   0.1110607,
+   0.1088326,
+   0.1065819,
+   0.1043026,
+   0.1019889,
+   0.09963519,
+   0.09723608,
+   0.09478667,
+   0.09228269,
+   0.08972066,
+   0.08709805,
+   0.0844135,
+   0.08270842,
+   0.08270842,
+   0.08270842,
    0};
-   TGraph *graph = new TGraph(266,env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fx6,env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fy6);
-   graph->SetName("env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]");
-   graph->SetTitle("Projection of env_pdf_vbf_cat3_bern2");
+   TGraph *graph = new TGraph(266,env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fx6,env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fy6);
+   graph->SetName("env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]");
+   graph->SetTitle("Projection of env_pdf_vbf_cat3_exp1_gauxexp1");
    graph->SetFillStyle(1000);
 
    ci = TColor::GetColor("#ff0000");
@@ -1350,55 +1410,55 @@ void bkgplot_cat0()
    graph->SetLineWidth(2);
    graph->SetMarkerStyle(20);
    
-   TH1F *Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6 = new TH1F("Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6","Projection of env_pdf_vbf_cat3_bern2",266,98.2,176.8);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetMinimum(0);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetMaximum(3.18918);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetDirectory(0);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetStats(0);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetLineStyle(0);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->SetMarkerStyle(20);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetXaxis()->SetLabelFont(42);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetXaxis()->SetLabelOffset(0.01);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetXaxis()->SetTitleOffset(1.1);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetXaxis()->SetTitleFont(42);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetYaxis()->SetLabelFont(42);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetYaxis()->SetLabelOffset(0.01);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetYaxis()->SetTitleOffset(1.4);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetYaxis()->SetTitleFont(42);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetZaxis()->SetLabelFont(42);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetZaxis()->SetLabelOffset(0.01);
-   Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB6->GetZaxis()->SetTitleFont(42);
-   graph->SetHistogram(Graph_env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]6);
+   TH1F *Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6 = new TH1F("Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6","Projection of env_pdf_vbf_cat3_exp1_gauxexp1",266,98.2,176.8);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetMinimum(0);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetMaximum(3.190719);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetDirectory(0);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetStats(0);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetLineStyle(0);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->SetMarkerStyle(20);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetXaxis()->SetLabelFont(42);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetXaxis()->SetLabelOffset(0.01);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetXaxis()->SetTitleOffset(1.1);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetXaxis()->SetTitleFont(42);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetYaxis()->SetLabelFont(42);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetYaxis()->SetLabelOffset(0.01);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetYaxis()->SetTitleOffset(1.4);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetYaxis()->SetTitleFont(42);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetZaxis()->SetLabelFont(42);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetZaxis()->SetLabelOffset(0.01);
+   Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB6->GetZaxis()->SetTitleFont(42);
+   graph->SetHistogram(Graph_env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]6);
    
    graph->Draw("l");
    
-   TH1D *frame_8026890__5 = new TH1D("frame_8026890__5","",260,105,170);
-   frame_8026890__5->SetBinContent(1,10.06282);
-   frame_8026890__5->SetMaximum(15);
-   frame_8026890__5->SetEntries(1);
-   frame_8026890__5->SetDirectory(0);
-   frame_8026890__5->SetStats(0);
-   frame_8026890__5->SetLineStyle(0);
-   frame_8026890__5->SetMarkerStyle(20);
-   frame_8026890__5->GetXaxis()->SetTitle("CMS_hzg_mass");
-   frame_8026890__5->GetXaxis()->SetLabelFont(42);
-   frame_8026890__5->GetXaxis()->SetLabelOffset(999);
-   frame_8026890__5->GetXaxis()->SetLabelSize(0);
-   frame_8026890__5->GetXaxis()->SetTitleSize(0);
-   frame_8026890__5->GetXaxis()->SetTitleOffset(1.1);
-   frame_8026890__5->GetXaxis()->SetTitleFont(42);
-   frame_8026890__5->GetYaxis()->SetTitle("Events / GeV");
-   frame_8026890__5->GetYaxis()->SetLabelFont(42);
-   frame_8026890__5->GetYaxis()->SetLabelOffset(0.007);
-   frame_8026890__5->GetYaxis()->SetTitleSize(0.05);
-   frame_8026890__5->GetYaxis()->SetTitleOffset(1.15);
-   frame_8026890__5->GetYaxis()->SetTitleFont(42);
-   frame_8026890__5->GetZaxis()->SetLabelFont(42);
-   frame_8026890__5->GetZaxis()->SetLabelOffset(0.01);
-   frame_8026890__5->GetZaxis()->SetTitleFont(42);
-   frame_8026890__5->Draw("AXISSAME");
+   TH1D *frame_7eb21d0__5 = new TH1D("frame_7eb21d0__5","",260,105,170);
+   frame_7eb21d0__5->SetBinContent(1,10.06282);
+   frame_7eb21d0__5->SetMaximum(15);
+   frame_7eb21d0__5->SetEntries(1);
+   frame_7eb21d0__5->SetDirectory(0);
+   frame_7eb21d0__5->SetStats(0);
+   frame_7eb21d0__5->SetLineStyle(0);
+   frame_7eb21d0__5->SetMarkerStyle(20);
+   frame_7eb21d0__5->GetXaxis()->SetTitle("CMS_hzg_mass");
+   frame_7eb21d0__5->GetXaxis()->SetLabelFont(42);
+   frame_7eb21d0__5->GetXaxis()->SetLabelOffset(999);
+   frame_7eb21d0__5->GetXaxis()->SetLabelSize(0);
+   frame_7eb21d0__5->GetXaxis()->SetTitleSize(0);
+   frame_7eb21d0__5->GetXaxis()->SetTitleOffset(1.1);
+   frame_7eb21d0__5->GetXaxis()->SetTitleFont(42);
+   frame_7eb21d0__5->GetYaxis()->SetTitle("Events / GeV");
+   frame_7eb21d0__5->GetYaxis()->SetLabelFont(42);
+   frame_7eb21d0__5->GetYaxis()->SetLabelOffset(0.007);
+   frame_7eb21d0__5->GetYaxis()->SetTitleSize(0.05);
+   frame_7eb21d0__5->GetYaxis()->SetTitleOffset(1.15);
+   frame_7eb21d0__5->GetYaxis()->SetTitleFont(42);
+   frame_7eb21d0__5->GetZaxis()->SetLabelFont(42);
+   frame_7eb21d0__5->GetZaxis()->SetLabelOffset(0.01);
+   frame_7eb21d0__5->GetZaxis()->SetTitleFont(42);
+   frame_7eb21d0__5->Draw("AXISSAME");
    
-   Double_t twosigma_cat0_fx3006[15] = {
+   Double_t twosigma_cat0_fx3006[20] = {
    105,
    107,
    109,
@@ -1408,61 +1468,44 @@ void bkgplot_cat0()
    117,
    119,
    121,
+   126,
+   131,
    136,
+   141,
+   146,
    151,
    156,
    161,
    166,
-   171};
-   Double_t twosigma_cat0_fy3006[15] = {
-   0.04111297,
-   0.1793877,
-   0.5539335,
-   1.236073,
-   2.057573,
-   2.677156,
-   2.897915,
-   2.797103,
-   2.551239,
-   0.8380498,
-   0.1317696,
-   0.1230048,
-   0.227571,
-   0.4454682,
-   0.7013841};
-   Double_t twosigma_cat0_felx3006[15] = {
+   168,
+   170};
+   Double_t twosigma_cat0_fy3006[20] = {
+   0.05412466,
+   0.1812405,
+   0.5581414,
+   1.256019,
+   2.096267,
+   2.713629,
+   2.900653,
+   2.751116,
+   2.464761,
+   1.772197,
+   1.266672,
+   0.9053308,
+   0.6470687,
+   0.4624806,
+   0.3305496,
+   0.2362543,
+   0.168854,
+   0.1198604,
+   0.1019889,
+   0.08270842};
+   Double_t twosigma_cat0_felx3006[20] = {
    0,
    0,
    0,
    0,
    0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0};
-   Double_t twosigma_cat0_fely3006[15] = {
-   0.04087207,
-   0.1709789,
-   0.4327605,
-   0.6566639,
-   0.9323376,
-   1.087595,
-   0.9961581,
-   0.8303899,
-   0.757399,
-   0.2880796,
-   0.1316408,
-   0.1076292,
-   0.1635667,
-   0.3758638,
-   0.5260381};
-   Double_t twosigma_cat0_fehx3006[15] = {
    0,
    0,
    0,
@@ -1478,23 +1521,70 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t twosigma_cat0_fehy3006[15] = {
-   0.4942356,
-   0.7147268,
-   0.8024129,
-   1.354992,
-   1.47925,
-   1.227151,
-   0.9974568,
-   0.9407554,
-   0.8984586,
-   0.3862057,
-   0.3743446,
-   0.2959203,
-   0.2906987,
-   0.5318615,
-   0.9421726};
-   grae = new TGraphAsymmErrors(15,twosigma_cat0_fx3006,twosigma_cat0_fy3006,twosigma_cat0_felx3006,twosigma_cat0_fehx3006,twosigma_cat0_fely3006,twosigma_cat0_fehy3006);
+   Double_t twosigma_cat0_fely3006[20] = {
+   0.05074185,
+   0.1564615,
+   0.327036,
+   0.7065106,
+   0.9498708,
+   1.016287,
+   0.9064542,
+   0.8597238,
+   0.7124699,
+   0.1661434,
+   0.6333354,
+   0.2404785,
+   0.2325403,
+   0.2095615,
+   0.1756045,
+   0.140276,
+   0.1108105,
+   0.08614965,
+   0.07489809,
+   0.06526211};
+   Double_t twosigma_cat0_fehx3006[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0};
+   Double_t twosigma_cat0_fehy3006[20] = {
+   0.2181066,
+   0.6784969,
+   0.6653758,
+   0.7354741,
+   1.221623,
+   1.158264,
+   0.9580109,
+   0.7386171,
+   1.140671,
+   0.8736254,
+   0.6726413,
+   0.3791088,
+   0.3016522,
+   0.2869,
+   0.2560255,
+   0.2620167,
+   0.2696653,
+   0.275885,
+   0.2844273,
+   0.1145869};
+   grae = new TGraphAsymmErrors(20,twosigma_cat0_fx3006,twosigma_cat0_fy3006,twosigma_cat0_felx3006,twosigma_cat0_fehx3006,twosigma_cat0_fely3006,twosigma_cat0_fehy3006);
    grae->SetName("twosigma_cat0");
    grae->SetTitle("");
 
@@ -1509,9 +1599,9 @@ void bkgplot_cat0()
    grae->SetMarkerColor(ci);
    grae->SetMarkerStyle(20);
    
-   TH1F *Graph_twosigma_cat03006 = new TH1F("Graph_twosigma_cat03006","",100,98.4,177.6);
-   Graph_twosigma_cat03006->SetMinimum(0.0001158697);
-   Graph_twosigma_cat03006->SetMaximum(4.294725);
+   TH1F *Graph_twosigma_cat03006 = new TH1F("Graph_twosigma_cat03006","",100,98.5,176.5);
+   Graph_twosigma_cat03006->SetMinimum(0.003044536);
+   Graph_twosigma_cat03006->SetMaximum(4.258744);
    Graph_twosigma_cat03006->SetDirectory(0);
    Graph_twosigma_cat03006->SetStats(0);
    Graph_twosigma_cat03006->SetLineStyle(0);
@@ -1531,7 +1621,7 @@ void bkgplot_cat0()
    
    grae->Draw("l3 ");
    
-   Double_t onesigma_cat0_fx3007[15] = {
+   Double_t onesigma_cat0_fx3007[20] = {
    105,
    107,
    109,
@@ -1541,61 +1631,44 @@ void bkgplot_cat0()
    117,
    119,
    121,
+   126,
+   131,
    136,
+   141,
+   146,
    151,
    156,
    161,
    166,
-   171};
-   Double_t onesigma_cat0_fy3007[15] = {
-   0.04111297,
-   0.1793877,
-   0.5539335,
-   1.236073,
-   2.057573,
-   2.677156,
-   2.897915,
-   2.797103,
-   2.551239,
-   0.8380498,
-   0.1317696,
-   0.1230048,
-   0.227571,
-   0.4454682,
-   0.7013841};
-   Double_t onesigma_cat0_felx3007[15] = {
+   168,
+   170};
+   Double_t onesigma_cat0_fy3007[20] = {
+   0.05412466,
+   0.1812405,
+   0.5581414,
+   1.256019,
+   2.096267,
+   2.713629,
+   2.900653,
+   2.751116,
+   2.464761,
+   1.772197,
+   1.266672,
+   0.9053308,
+   0.6470687,
+   0.4624806,
+   0.3305496,
+   0.2362543,
+   0.168854,
+   0.1198604,
+   0.1019889,
+   0.08270842};
+   Double_t onesigma_cat0_felx3007[20] = {
    0,
    0,
    0,
    0,
    0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0,
-   0};
-   Double_t onesigma_cat0_fely3007[15] = {
-   0.03854341,
-   0.1345408,
-   0.2596563,
-   0.3766161,
-   0.5465428,
-   0.6274584,
-   0.520719,
-   0.4151949,
-   0.4185626,
-   0.1571343,
-   0.09059158,
-   0.0691902,
-   0.09600652,
-   0.1879319,
-   0.263019};
-   Double_t onesigma_cat0_fehx3007[15] = {
    0,
    0,
    0,
@@ -1611,23 +1684,70 @@ void bkgplot_cat0()
    0,
    0,
    0};
-   Double_t onesigma_cat0_fehy3007[15] = {
-   0.161577,
-   0.2779493,
-   0.3488752,
-   0.5732659,
-   0.8068636,
-   0.6519241,
-   0.4787792,
-   0.4311796,
-   0.4492293,
-   0.177011,
-   0.1700902,
-   0.1561802,
-   0.1285783,
-   0.2346448,
-   0.4710863};
-   grae = new TGraphAsymmErrors(15,onesigma_cat0_fx3007,onesigma_cat0_fy3007,onesigma_cat0_felx3007,onesigma_cat0_fehx3007,onesigma_cat0_fely3007,onesigma_cat0_fehy3007);
+   Double_t onesigma_cat0_fely3007[20] = {
+   0.03382789,
+   0.1359304,
+   0.2441869,
+   0.4716203,
+   0.393051,
+   0.7181576,
+   0.3625831,
+   0.4298619,
+   0.4332587,
+   8.450492e-07,
+   0.2770845,
+   0.1131664,
+   0.1263806,
+   0.1336858,
+   0.111044,
+   0.09413258,
+   0.07783116,
+   0.06273942,
+   0.05577518,
+   0.05492356};
+   Double_t onesigma_cat0_fehx3007[20] = {
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0};
+   Double_t onesigma_cat0_fehy3007[20] = {
+   0.06543199,
+   0.2993369,
+   0.3852176,
+   0.4399711,
+   0.814415,
+   0.3088705,
+   2.436348e-06,
+   0.330434,
+   0.6071313,
+   1.904352e-06,
+   0.5275618,
+   0.2118549,
+   0.1413995,
+   0.1195417,
+   0.1617003,
+   0.1367044,
+   0.1444635,
+   0.1622853,
+   0.1646685,
+   0.05055306};
+   grae = new TGraphAsymmErrors(20,onesigma_cat0_fx3007,onesigma_cat0_fy3007,onesigma_cat0_felx3007,onesigma_cat0_fehx3007,onesigma_cat0_fely3007,onesigma_cat0_fehy3007);
    grae->SetName("onesigma_cat0");
    grae->SetTitle("");
 
@@ -1642,9 +1762,9 @@ void bkgplot_cat0()
    grae->SetMarkerColor(ci);
    grae->SetMarkerStyle(20);
    
-   TH1F *Graph_onesigma_cat03007 = new TH1F("Graph_onesigma_cat03007","",100,98.4,177.6);
-   Graph_onesigma_cat03007->SetMinimum(0.002312604);
-   Graph_onesigma_cat03007->SetMaximum(3.714106);
+   TH1F *Graph_onesigma_cat03007 = new TH1F("Graph_onesigma_cat03007","",100,98.5,176.5);
+   Graph_onesigma_cat03007->SetMinimum(0.0182671);
+   Graph_onesigma_cat03007->SetMaximum(3.387676);
    Graph_onesigma_cat03007->SetDirectory(0);
    Graph_onesigma_cat03007->SetStats(0);
    Graph_onesigma_cat03007->SetLineStyle(0);
@@ -1664,33 +1784,33 @@ void bkgplot_cat0()
    
    grae->Draw("l3 ");
    
-   TH1D *frame_8026890__6 = new TH1D("frame_8026890__6","",260,105,170);
-   frame_8026890__6->SetBinContent(1,10.06282);
-   frame_8026890__6->SetMaximum(15);
-   frame_8026890__6->SetEntries(1);
-   frame_8026890__6->SetDirectory(0);
-   frame_8026890__6->SetStats(0);
-   frame_8026890__6->SetLineStyle(0);
-   frame_8026890__6->SetMarkerStyle(20);
-   frame_8026890__6->GetXaxis()->SetTitle("CMS_hzg_mass");
-   frame_8026890__6->GetXaxis()->SetLabelFont(42);
-   frame_8026890__6->GetXaxis()->SetLabelOffset(999);
-   frame_8026890__6->GetXaxis()->SetLabelSize(0);
-   frame_8026890__6->GetXaxis()->SetTitleSize(0);
-   frame_8026890__6->GetXaxis()->SetTitleOffset(1.1);
-   frame_8026890__6->GetXaxis()->SetTitleFont(42);
-   frame_8026890__6->GetYaxis()->SetTitle("Events / GeV");
-   frame_8026890__6->GetYaxis()->SetLabelFont(42);
-   frame_8026890__6->GetYaxis()->SetLabelOffset(0.007);
-   frame_8026890__6->GetYaxis()->SetTitleSize(0.05);
-   frame_8026890__6->GetYaxis()->SetTitleOffset(1.15);
-   frame_8026890__6->GetYaxis()->SetTitleFont(42);
-   frame_8026890__6->GetZaxis()->SetLabelFont(42);
-   frame_8026890__6->GetZaxis()->SetLabelOffset(0.01);
-   frame_8026890__6->GetZaxis()->SetTitleFont(42);
-   frame_8026890__6->Draw("FUNCSAME");
+   TH1D *frame_7eb21d0__6 = new TH1D("frame_7eb21d0__6","",260,105,170);
+   frame_7eb21d0__6->SetBinContent(1,10.06282);
+   frame_7eb21d0__6->SetMaximum(15);
+   frame_7eb21d0__6->SetEntries(1);
+   frame_7eb21d0__6->SetDirectory(0);
+   frame_7eb21d0__6->SetStats(0);
+   frame_7eb21d0__6->SetLineStyle(0);
+   frame_7eb21d0__6->SetMarkerStyle(20);
+   frame_7eb21d0__6->GetXaxis()->SetTitle("CMS_hzg_mass");
+   frame_7eb21d0__6->GetXaxis()->SetLabelFont(42);
+   frame_7eb21d0__6->GetXaxis()->SetLabelOffset(999);
+   frame_7eb21d0__6->GetXaxis()->SetLabelSize(0);
+   frame_7eb21d0__6->GetXaxis()->SetTitleSize(0);
+   frame_7eb21d0__6->GetXaxis()->SetTitleOffset(1.1);
+   frame_7eb21d0__6->GetXaxis()->SetTitleFont(42);
+   frame_7eb21d0__6->GetYaxis()->SetTitle("Events / GeV");
+   frame_7eb21d0__6->GetYaxis()->SetLabelFont(42);
+   frame_7eb21d0__6->GetYaxis()->SetLabelOffset(0.007);
+   frame_7eb21d0__6->GetYaxis()->SetTitleSize(0.05);
+   frame_7eb21d0__6->GetYaxis()->SetTitleOffset(1.15);
+   frame_7eb21d0__6->GetYaxis()->SetTitleFont(42);
+   frame_7eb21d0__6->GetZaxis()->SetLabelFont(42);
+   frame_7eb21d0__6->GetZaxis()->SetLabelOffset(0.01);
+   frame_7eb21d0__6->GetZaxis()->SetTitleFont(42);
+   frame_7eb21d0__6->Draw("FUNCSAME");
    
-   Double_t env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fx7[266] = {
+   Double_t env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fx7[266] = {
    104.75,
    104.75,
    105,
@@ -1957,276 +2077,276 @@ void bkgplot_cat0()
    170,
    170.25,
    170.25};
-   Double_t env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fy7[266] = {
+   Double_t env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fy7[266] = {
    0,
-   0.04111297,
-   0.04111297,
-   0.05039568,
-   0.0614293,
-   0.07446217,
-   0.08976028,
-   0.1076049,
-   0.1282895,
-   0.1521156,
-   0.1793877,
-   0.2104077,
-   0.245468,
-   0.2848445,
-   0.3287883,
-   0.3775177,
-   0.4312097,
-   0.4899916,
-   0.5539335,
-   0.6230403,
-   0.6972466,
-   0.7764106,
-   0.8603118,
-   0.9486488,
-   1.04104,
-   1.137026,
-   1.236073,
-   1.337584,
-   1.440901,
-   1.545319,
-   1.6501,
-   1.754481,
-   1.857693,
-   1.958971,
-   2.057573,
-   2.152787,
-   2.243951,
-   2.33046,
-   2.411777,
-   2.487442,
-   2.557074,
-   2.620381,
-   2.677156,
-   2.727278,
-   2.770712,
-   2.807499,
-   2.837756,
-   2.861663,
-   2.879461,
-   2.891436,
-   2.897915,
-   2.899254,
-   2.895833,
-   2.88804,
-   2.876271,
-   2.860916,
-   2.842361,
-   2.820972,
-   2.797103,
-   2.771082,
-   2.743215,
-   2.713785,
-   2.683046,
-   2.651229,
-   2.618538,
-   2.585155,
-   2.551239,
-   2.516926,
-   2.482335,
-   2.447567,
-   2.412708,
-   2.377827,
-   2.342987,
-   2.308234,
-   2.273611,
-   2.239149,
-   2.204875,
-   2.17081,
-   2.136972,
-   2.103373,
-   2.070024,
-   2.036933,
-   2.004107,
-   1.971549,
-   1.939265,
-   1.907256,
-   1.875524,
-   1.844072,
-   1.8129,
-   1.782009,
-   1.7514,
-   1.721073,
-   1.691029,
-   1.661267,
-   1.631789,
-   1.602594,
-   1.573681,
-   1.545052,
-   1.516706,
-   1.488644,
-   1.460864,
-   1.433369,
-   1.406156,
-   1.379227,
-   1.352581,
-   1.326218,
-   1.300138,
-   1.274342,
-   1.24883,
-   1.2236,
-   1.198654,
-   1.173992,
-   1.149612,
-   1.125516,
-   1.101703,
-   1.078174,
-   1.054928,
-   1.031965,
-   1.009286,
-   0.9868894,
-   0.9647766,
-   0.9429472,
-   0.921401,
-   0.9001382,
-   0.8791588,
-   0.8584626,
-   0.8380498,
-   0.8179203,
-   0.7980741,
-   0.7785113,
-   0.7592318,
-   0.7402356,
-   0.7215227,
-   0.7030932,
-   0.684947,
-   0.6670841,
-   0.6495046,
-   0.6322083,
-   0.6151954,
-   0.5984659,
-   0.5820196,
-   0.5658567,
-   0.5499771,
-   0.5343809,
-   0.5190679,
-   0.5040383,
-   0.4892921,
-   0.4748291,
-   0.4606495,
-   0.4467532,
-   0.4331402,
-   0.4198106,
-   0.4067643,
-   0.3940013,
-   0.3815217,
-   0.3693253,
-   0.3574123,
-   0.3457827,
-   0.3344363,
-   0.3233733,
-   0.3125936,
-   0.3020972,
-   0.2918842,
-   0.2819545,
-   0.2723081,
-   0.2629451,
-   0.2538653,
-   0.2450689,
-   0.2365559,
-   0.2283261,
-   0.2203797,
-   0.2127166,
-   0.2053369,
-   0.1982404,
-   0.1914273,
-   0.1848975,
-   0.1786511,
-   0.172688,
-   0.1670082,
-   0.1616117,
-   0.1564986,
-   0.1516687,
-   0.1471222,
-   0.1428591,
-   0.1388793,
-   0.1351828,
-   0.1317696,
-   0.1286397,
-   0.1257932,
-   0.12323,
-   0.1209501,
-   0.1189536,
-   0.1172404,
-   0.1158105,
-   0.1146639,
-   0.1138007,
-   0.1132208,
-   0.1129242,
-   0.112911,
-   0.1131811,
-   0.1137345,
-   0.1145712,
-   0.1156913,
-   0.1170947,
-   0.1187814,
-   0.1207514,
-   0.1230048,
-   0.1255415,
-   0.1283615,
-   0.1314649,
-   0.1348516,
-   0.1385216,
-   0.1424749,
-   0.1467116,
-   0.1512316,
-   0.1560349,
-   0.1611215,
-   0.1664915,
-   0.1721448,
-   0.1780814,
-   0.1843014,
-   0.1908047,
-   0.1975913,
-   0.2046612,
-   0.2120145,
-   0.2196511,
-   0.227571,
-   0.2357743,
-   0.2442608,
-   0.2530307,
-   0.262084,
-   0.2714205,
-   0.2810404,
-   0.2909436,
-   0.3011302,
-   0.3116,
-   0.3223532,
-   0.3333897,
-   0.3447096,
-   0.3563128,
-   0.3681993,
-   0.3803691,
-   0.3928223,
-   0.4055588,
-   0.4185786,
-   0.4318817,
-   0.4454682,
-   0.459338,
-   0.4734911,
-   0.4879276,
-   0.5026473,
-   0.5176504,
-   0.5329369,
-   0.5485066,
-   0.5643597,
-   0.5804961,
-   0.5969159,
-   0.613619,
-   0.6306053,
-   0.6478751,
-   0.6654281,
-   0.6832645,
-   0.7013841,
-   0.7013841,
-   0.7013841,
+   0.05412466,
+   0.05412466,
+   0.05843533,
+   0.06888813,
+   0.08062194,
+   0.09476155,
+   0.1115915,
+   0.1314093,
+   0.154522,
+   0.1812405,
+   0.2118745,
+   0.2467249,
+   0.2860769,
+   0.3301913,
+   0.3792957,
+   0.4335757,
+   0.4931659,
+   0.5581414,
+   0.6285095,
+   0.704203,
+   0.7850749,
+   0.8708938,
+   0.9613424,
+   1.056017,
+   1.154432,
+   1.256019,
+   1.360141,
+   1.466097,
+   1.573134,
+   1.680459,
+   1.787257,
+   1.892701,
+   1.99597,
+   2.096267,
+   2.192828,
+   2.284942,
+   2.371963,
+   2.453316,
+   2.528512,
+   2.59715,
+   2.658926,
+   2.713629,
+   2.761144,
+   2.801448,
+   2.834608,
+   2.860768,
+   2.880146,
+   2.893023,
+   2.899733,
+   2.900653,
+   2.896194,
+   2.886785,
+   2.872871,
+   2.8549,
+   2.833316,
+   2.80855,
+   2.781019,
+   2.751116,
+   2.71921,
+   2.685643,
+   2.650725,
+   2.614741,
+   2.577942,
+   2.540552,
+   2.502768,
+   2.464761,
+   2.426675,
+   2.388636,
+   2.350747,
+   2.313096,
+   2.275752,
+   2.238774,
+   2.202206,
+   2.166084,
+   2.130436,
+   2.095282,
+   2.060634,
+   2.026504,
+   1.992895,
+   1.959811,
+   1.927251,
+   1.895213,
+   1.863694,
+   1.832689,
+   1.802192,
+   1.772197,
+   1.742696,
+   1.713684,
+   1.685153,
+   1.657095,
+   1.629504,
+   1.602371,
+   1.575689,
+   1.549451,
+   1.52365,
+   1.498278,
+   1.473329,
+   1.448795,
+   1.424669,
+   1.400945,
+   1.377617,
+   1.354676,
+   1.332118,
+   1.309935,
+   1.288122,
+   1.266672,
+   1.245579,
+   1.224838,
+   1.204441,
+   1.184385,
+   1.164662,
+   1.145268,
+   1.126197,
+   1.107443,
+   1.089002,
+   1.070868,
+   1.053035,
+   1.0355,
+   1.018257,
+   1.0013,
+   0.9846265,
+   0.9682303,
+   0.9521072,
+   0.9362525,
+   0.9206619,
+   0.9053308,
+   0.8902551,
+   0.8754304,
+   0.8608526,
+   0.8465175,
+   0.8324211,
+   0.8185595,
+   0.8049287,
+   0.7915248,
+   0.7783442,
+   0.7653831,
+   0.7526378,
+   0.7401047,
+   0.7277804,
+   0.7156612,
+   0.7037439,
+   0.692025,
+   0.6805013,
+   0.6691694,
+   0.6580263,
+   0.6470687,
+   0.6362936,
+   0.6256979,
+   0.6152787,
+   0.605033,
+   0.5949578,
+   0.5850505,
+   0.5753081,
+   0.565728,
+   0.5563074,
+   0.5470436,
+   0.5379342,
+   0.5289764,
+   0.5201678,
+   0.5115058,
+   0.5029881,
+   0.4946123,
+   0.4863759,
+   0.4782767,
+   0.4703123,
+   0.4624806,
+   0.4547793,
+   0.4472062,
+   0.4397593,
+   0.4324363,
+   0.4252353,
+   0.4181542,
+   0.411191,
+   0.4043438,
+   0.3976106,
+   0.3909895,
+   0.3844787,
+   0.3780762,
+   0.3717805,
+   0.3655895,
+   0.3595016,
+   0.3535151,
+   0.3476283,
+   0.3418396,
+   0.3361472,
+   0.3305496,
+   0.3250452,
+   0.3196325,
+   0.3143099,
+   0.309076,
+   0.3039292,
+   0.2988681,
+   0.2938913,
+   0.2889974,
+   0.2841849,
+   0.2794526,
+   0.2747991,
+   0.2702231,
+   0.2657233,
+   0.2612984,
+   0.2569472,
+   0.2526685,
+   0.248461,
+   0.2443236,
+   0.2402551,
+   0.2362543,
+   0.2323202,
+   0.2284515,
+   0.2246473,
+   0.2209064,
+   0.2172278,
+   0.2136105,
+   0.2100534,
+   0.2065555,
+   0.2031159,
+   0.1997335,
+   0.1964075,
+   0.1931368,
+   0.1899205,
+   0.1867577,
+   0.1836475,
+   0.1805891,
+   0.1775814,
+   0.1746236,
+   0.1717147,
+   0.168854,
+   0.1660405,
+   0.1632733,
+   0.1605513,
+   0.1578736,
+   0.1552393,
+   0.152647,
+   0.1500958,
+   0.1475843,
+   0.1451112,
+   0.1426749,
+   0.1402738,
+   0.137906,
+   0.1355695,
+   0.1332619,
+   0.1309808,
+   0.1287232,
+   0.1264861,
+   0.1242658,
+   0.1220586,
+   0.1198604,
+   0.1176665,
+   0.1154721,
+   0.113272,
+   0.1110607,
+   0.1088326,
+   0.1065819,
+   0.1043026,
+   0.1019889,
+   0.09963519,
+   0.09723608,
+   0.09478667,
+   0.09228269,
+   0.08972066,
+   0.08709805,
+   0.0844135,
+   0.08270842,
+   0.08270842,
+   0.08270842,
    0};
-   graph = new TGraph(266,env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fx7,env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]_fy7);
-   graph->SetName("env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]");
-   graph->SetTitle("Projection of env_pdf_vbf_cat3_bern2");
+   graph = new TGraph(266,env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fx7,env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]_fy7);
+   graph->SetName("env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]");
+   graph->SetTitle("Projection of env_pdf_vbf_cat3_exp1_gauxexp1");
    graph->SetFillStyle(1000);
 
    ci = TColor::GetColor("#ff0000");
@@ -2234,25 +2354,25 @@ void bkgplot_cat0()
    graph->SetLineWidth(2);
    graph->SetMarkerStyle(20);
    
-   TH1F *Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67 = new TH1F("Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67","Projection of env_pdf_vbf_cat3_bern2",266,98.2,176.8);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetMinimum(0);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetMaximum(3.18918);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetDirectory(0);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetStats(0);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetLineStyle(0);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->SetMarkerStyle(20);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetXaxis()->SetLabelOffset(0.01);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetXaxis()->SetTitleOffset(1.1);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetYaxis()->SetLabelFont(42);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetYaxis()->SetLabelOffset(0.01);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetYaxis()->SetTitleOffset(1.4);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetZaxis()->SetLabelFont(42);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetZaxis()->SetLabelOffset(0.01);
-   Graph_Graph_env_pdf_vbf_cat3_bern2_NormoBCMS_hzg_masscB67->GetZaxis()->SetTitleFont(42);
-   graph->SetHistogram(Graph_Graph_env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]67);
+   TH1F *Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67 = new TH1F("Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67","Projection of env_pdf_vbf_cat3_exp1_gauxexp1",266,98.2,176.8);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetMinimum(0);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetMaximum(3.190719);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetDirectory(0);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetStats(0);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetLineStyle(0);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->SetMarkerStyle(20);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetXaxis()->SetLabelFont(42);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetXaxis()->SetLabelOffset(0.01);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetXaxis()->SetTitleOffset(1.1);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetXaxis()->SetTitleFont(42);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetYaxis()->SetLabelFont(42);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetYaxis()->SetLabelOffset(0.01);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetYaxis()->SetTitleOffset(1.4);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetYaxis()->SetTitleFont(42);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetZaxis()->SetLabelFont(42);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetZaxis()->SetLabelOffset(0.01);
+   Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_NormoBCMS_hzg_masscB67->GetZaxis()->SetTitleFont(42);
+   graph->SetHistogram(Graph_Graph_env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]67);
    
    graph->Draw("l");
    
@@ -2680,31 +2800,31 @@ void bkgplot_cat0()
    
    grae->Draw("p");
    
-   TH1D *frame_8026890__7 = new TH1D("frame_8026890__7","",260,105,170);
-   frame_8026890__7->SetBinContent(1,10.06282);
-   frame_8026890__7->SetMaximum(15);
-   frame_8026890__7->SetEntries(1);
-   frame_8026890__7->SetDirectory(0);
-   frame_8026890__7->SetStats(0);
-   frame_8026890__7->SetLineStyle(0);
-   frame_8026890__7->SetMarkerStyle(20);
-   frame_8026890__7->GetXaxis()->SetTitle("CMS_hzg_mass");
-   frame_8026890__7->GetXaxis()->SetLabelFont(42);
-   frame_8026890__7->GetXaxis()->SetLabelOffset(999);
-   frame_8026890__7->GetXaxis()->SetLabelSize(0);
-   frame_8026890__7->GetXaxis()->SetTitleSize(0);
-   frame_8026890__7->GetXaxis()->SetTitleOffset(1.1);
-   frame_8026890__7->GetXaxis()->SetTitleFont(42);
-   frame_8026890__7->GetYaxis()->SetTitle("Events / GeV");
-   frame_8026890__7->GetYaxis()->SetLabelFont(42);
-   frame_8026890__7->GetYaxis()->SetLabelOffset(0.007);
-   frame_8026890__7->GetYaxis()->SetTitleSize(0.05);
-   frame_8026890__7->GetYaxis()->SetTitleOffset(1.15);
-   frame_8026890__7->GetYaxis()->SetTitleFont(42);
-   frame_8026890__7->GetZaxis()->SetLabelFont(42);
-   frame_8026890__7->GetZaxis()->SetLabelOffset(0.01);
-   frame_8026890__7->GetZaxis()->SetTitleFont(42);
-   frame_8026890__7->Draw("AXISSAME");
+   TH1D *frame_7eb21d0__7 = new TH1D("frame_7eb21d0__7","",260,105,170);
+   frame_7eb21d0__7->SetBinContent(1,10.06282);
+   frame_7eb21d0__7->SetMaximum(15);
+   frame_7eb21d0__7->SetEntries(1);
+   frame_7eb21d0__7->SetDirectory(0);
+   frame_7eb21d0__7->SetStats(0);
+   frame_7eb21d0__7->SetLineStyle(0);
+   frame_7eb21d0__7->SetMarkerStyle(20);
+   frame_7eb21d0__7->GetXaxis()->SetTitle("CMS_hzg_mass");
+   frame_7eb21d0__7->GetXaxis()->SetLabelFont(42);
+   frame_7eb21d0__7->GetXaxis()->SetLabelOffset(999);
+   frame_7eb21d0__7->GetXaxis()->SetLabelSize(0);
+   frame_7eb21d0__7->GetXaxis()->SetTitleSize(0);
+   frame_7eb21d0__7->GetXaxis()->SetTitleOffset(1.1);
+   frame_7eb21d0__7->GetXaxis()->SetTitleFont(42);
+   frame_7eb21d0__7->GetYaxis()->SetTitle("Events / GeV");
+   frame_7eb21d0__7->GetYaxis()->SetLabelFont(42);
+   frame_7eb21d0__7->GetYaxis()->SetLabelOffset(0.007);
+   frame_7eb21d0__7->GetYaxis()->SetTitleSize(0.05);
+   frame_7eb21d0__7->GetYaxis()->SetTitleOffset(1.15);
+   frame_7eb21d0__7->GetYaxis()->SetTitleFont(42);
+   frame_7eb21d0__7->GetZaxis()->SetLabelFont(42);
+   frame_7eb21d0__7->GetZaxis()->SetLabelOffset(0.01);
+   frame_7eb21d0__7->GetZaxis()->SetTitleFont(42);
+   frame_7eb21d0__7->Draw("AXISSAME");
    
    TLegend *leg = new TLegend(0.6,0.6,0.89,0.89,NULL,"brNDC");
    leg->SetTextFont(62);
@@ -2721,7 +2841,7 @@ void bkgplot_cat0()
    entry->SetMarkerStyle(8);
    entry->SetMarkerSize(1);
    entry->SetTextFont(62);
-   entry=leg->AddEntry("env_pdf_vbf_cat3_bern2_Norm[CMS_hzg_mass]","Bkg fit","L");
+   entry=leg->AddEntry("env_pdf_vbf_cat3_exp1_gauxexp1_Norm[CMS_hzg_mass]","Bkg fit","L");
 
    ci = TColor::GetColor("#ff0000");
    entry->SetLineColor(ci);

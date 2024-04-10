@@ -3,6 +3,7 @@
 lable='run2'
 #version='UL_run2_01jet'
 version='UL_run2_2jet'
+#version='UL_xingchen_chi2'
 #channel=( ele mu )
 channel='ele'
 Lumi_run2='138'
@@ -14,6 +15,10 @@ Lumis=( 16.81 19.52 41.48 59.83 )
 
 # prepare signal and background workspace
 cd ./InputData/
+
+#sync xingchen
+#cd ./InputData/xingchen/
+#python makeWorkspace_data_cats.py 
 
 #python makeWorkspace_data_cats.py -d ./two_jet/data.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
 #python makeWorkspace_sig_cats.py -d ./two_jet/sig.root -j ./significances/bin_binaries_two_jet.txt -o ./two_jet_data 
@@ -61,6 +66,7 @@ path_in_bkg="../InputData/jet2_run2/HZGamma_data_bkg_workspace_$cat.root"
 path_out_bkg="$dir_out_bkg/fit_results_${lable}_$cat"
 mkdir $path_out_bkg
 
+#./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
 
 #./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
 #./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 138 -c 0 --channel ${cat_name}_${cat} --isFlashgg 0 --doBands --massStep 2 #--unblind
@@ -99,8 +105,8 @@ for ((iCat=0; iCat<$ncats; iCat++))
   ###sed -i "21,41d" $path_out_bkg/datacard_ALPmass${massList[$iBin]}.txt
 done
 
-cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
-#cats=( 'cat0' )
+#cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
+cats=( 'cat1' )
 ncats=${#cats[@]}
 
 mkdir "$dir_out_sig/Combine_results"
@@ -115,12 +121,15 @@ mkdir "$dir_out_sig/Combine_results"
 cd $dir_out_sig/Combine_results
 
 #for ((iCat=0; iCat<$ncats; iCat++))
-#    do
+    #do
 
     #text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
 
     #combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
-#    combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} --freezeParameters allConstrainedNuisances
+    #combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} #--freezeParameters allConstrainedNuisances
+
+    #combine -M MultiDimFit datacard_${cats[$iCat]}.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters MH -n ${cats[$iCat]}
+    #python /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombine${cats[$iCat]}.MultiDimFit.mH125.root -o single_scan_${cats[$iCat]} --main-label Expected
 
     ## start GoF
     #combine -M GoodnessOfFit datacard_${cats[$iCat]}.txt --algo=saturated -m 125 --setParameters MH=125 -n _${cats[$iCat]}_saturated
@@ -135,13 +144,13 @@ cd $dir_out_sig/Combine_results
 #combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 #combine datacard_$cat.root -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 
-#rm roostats*
-#combineCards.py cat0=datacard_cat3.txt cat1=datacard_cat0.txt cat2=datacard_cat1.txt cat3=datacard_cat2.txt &> datacard_allCats.txt
+#combineCards.py cat0=datacard_cat0.txt cat1=datacard_cat1.txt cat2=datacard_cat2.txt cat3=datacard_cat3.txt &> datacard_allCats.txt
 #combineCards.py cat0=datacard_cat2.txt cat1=datacard_cat3.txt cat2=datacard_cat0.txt cat3=datacard_cat1.txt &> datacard_allCats.txt
-text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
+#text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
 #combine datacard_allCats.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n allCats #--freezeParameters allConstrainedNuisances
-combine datacard_allCats.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n allCats --freezeParameters allConstrainedNuisances #-v 2
-#combine datacard_allCats.txt -M HybridNew --LHCmode LHC-significance -T 1000 --mass 125
+#combine datacard_allCats.root -M Significance -t -1 --expectSignal=1 -m 125.0 -n allCats #--freezeParameters allConstrainedNuisances #-v 2
+combine -M MultiDimFit datacard_allCats.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters allConstrainedNuisances -n allCats
+python /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombineallCats.MultiDimFit.mH125.root -o single_scan_allCats --main-label Expected
 
 #text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
 #combineCards.py cat0=datacard_cat1.txt cat1=datacard_cat2.txt cat2=datacard_cat3.txt cat3=datacard_cat0.txt  &> datacard_allCats_test.txt

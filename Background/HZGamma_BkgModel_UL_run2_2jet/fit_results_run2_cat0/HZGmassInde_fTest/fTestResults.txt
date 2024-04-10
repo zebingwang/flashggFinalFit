@@ -4,10 +4,10 @@ Truth Model & d.o.f & $\Delta NLL_{N+1}$ & $p(\chi^{2}>\chi^{2}_{(N\rightarrow N
 \hline
       Bernstein & 2 &  2.34 &  0.13 \\
       Bernstein & 2 &  2.34 &  0.13 \\
-    Exponential & 4 & 45.32 &  0.00 \\
-    Exponential & 4 & 45.51 &  0.00 \\
-       PowerLaw & 4 &  9.59 &  0.01 \\
-       PowerLaw & 4 &  9.59 &  0.01 \\
+    Exponential & 4 & 43.67 &  0.00 \\
+    Exponential & 4 & 47.10 &  0.00 \\
+       PowerLaw & 4 &  0.00 &  1.00 \\
+       PowerLaw & 4 &  0.00 &  1.00 \\
         Laurent & 2 &  1.27 &  0.26 \\
         Laurent & 2 &  1.27 &  0.26 \\
 \hline

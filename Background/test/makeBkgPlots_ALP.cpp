@@ -644,7 +644,7 @@ void profileExtendTerm(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, Roo
 	}
 }
 
-void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCategory *mcat, string name, int cat, bool unblind, int isFlashgg, std::vector<string> flashggCats, double ma){
+void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCategory *mcat, string name, int cat, bool unblind, int isFlashgg, std::vector<string> flashggCats, double ma, int bestIndex){
 	string catname;
 	if (isFlashgg){
 		catname = Form("%s",flashggCats[cat].c_str());
@@ -676,12 +676,12 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	
 
 	//TLegend *leg = new TLegend(0.6,0.4,0.92,0.92);
-	TLegend *leg = new TLegend(0.55,0.6,0.88,0.88);//bing
+	TLegend *leg = new TLegend(0.4,0.6,0.88,0.88);//bing
 	leg->SetFillColor(0);
 	leg->SetLineColor(0);
 	leg->SetBorderSize(0);//bing
 	leg->SetTextFont(42);//bing
-	leg->SetTextSize(0.04);//bing
+	leg->SetTextSize(0.03);//bing
 
 	TObject *dataLeg = (TObject*)plot1->getObject(plot1->numItems()-1);//bing
 	leg->AddEntry(dataLeg,"Data","LEP");//bing
@@ -730,6 +730,10 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 		else{
 			name = order+"th order "+name;
 		}
+
+		if (pInd == bestIndex){
+			name = name + " (Best Fit PDF)";
+		}
 		//bing
 		//mpdf->getCurrentPdf()->plotOn(plot,LineColor(color[pInd]),LineWidth(2));
 		mpdf->getCurrentPdf()->plotOn(plot1,LineColor(color[color_id]),LineWidth(2));//bing
@@ -741,7 +745,7 @@ void plotAllPdfs(RooRealVar *mgg, RooAbsData *data, RooMultiPdf *mpdf, RooCatego
 	}
 
 	TCanvas *canv1 = new TCanvas();
-	plot1->SetMaximum(int(plot1->GetMaximum())+5);//bing
+	plot1->SetMaximum(float(plot1->GetMaximum())*1.5);//bing
 	plot1->GetXaxis()->SetTitleFont(42);
 	plot1->GetXaxis()->SetTitleSize(0.05);
 	plot1->GetXaxis()->SetTitleOffset(0.95);
@@ -933,25 +937,12 @@ int main(int argc, char* argv[]){
 	cout<< "[INFO] " << "\t"; mpdf->getCurrentPdf()->Print();
 	cout << "[INFO] "<< "\t"; data->Print();
 
-	// plot all the pdfs for reference
-	if (isMultiPdf || verbose_) plotAllPdfs(mgg,data,mpdf,mcat,Form("%s/allPdfs_%s",outDir.c_str(),catname.c_str()),cat,unblind, isFlashgg_, flashggCats_, mavalue_);
-
-	// include normalization hack RooBernsteinFast;
-	/*
-		 for (int pInd=0; pInd<mpdf->getNumPdfs(); pInd++){
-		 mcat->setIndex(pInd);
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<1>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<2>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<3>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<4>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<5>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<6>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 if (mpdf->getCurrentPdf()->IsA()->InheritsFrom(RooBernsteinFast<7>::Class())) mpdf->getCurrentPdf()->forceNumInt();
-		 }
-		 */
-
 	// reset to best fit
 	int bf = getBestFitFunction(mpdf,data,mcat,!verbose_);
+
+	// plot all the pdfs for reference
+	if (isMultiPdf || verbose_) plotAllPdfs(mgg,data,mpdf,mcat,Form("%s/allPdfs_%s",outDir.c_str(),catname.c_str()),cat,unblind, isFlashgg_, flashggCats_, mavalue_, bf);
+
 	mcat->setIndex(bf);
 	cout<< "[INFO] " << "Best fit PDF and data:" << endl;
 	cout<< "[INFO] " << "\t"; mpdf->getCurrentPdf()->Print();
@@ -1000,24 +991,9 @@ int main(int argc, char* argv[]){
 			//for (int i=1; i<(plot->GetXaxis()->GetNbins()+1); i++){
 			
 			//1GeV
-			if (mass>=110) {
-				massStep = 2;
-			}
-
 			if (mass>=120) {
-				massStep = 15;
-			}
-			if (mass>=140) {
 				massStep = 5;
 			}
-			//30GeV
-			//if (mass>=135) {
-			//	massStep = 10;
-			//}
-
-			//if (mass>=120 && mass<=130) {
-			//	massStep = 3.5;
-			//}
 
 
 			if ((180-mass)<massStep) {

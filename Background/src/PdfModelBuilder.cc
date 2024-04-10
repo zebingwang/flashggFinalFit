@@ -225,10 +225,8 @@ RooAbsPdf* PdfModelBuilder::getBernsteinStepxGau(string prefix, int order){
   //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),10,1,20);//1GeV
   //RooRealVar *sigma = new RooRealVar(Form("%s_sigma_b%d",prefix.c_str(),order),Form("%s_sigma_b%d",prefix.c_str(),order),1.5,0.1,3);//16GeV
   //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),115,110,125);//1GeV
-  RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),108,105,115);
-  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,100,120);//6GeV
-  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,101,110);//16GeV
-  //RooRealVar *step = new RooRealVar(Form("step_b%d",order),Form("step_b%d",order),105,100,110);//5GeV
+  RooRealVar *step = new RooRealVar(Form("%s_step_b%d",prefix.c_str(),order),Form("%s_step_b%d",prefix.c_str(),order),105,100,110);
+
   RooArgList *coeffList = new RooArgList();
   //coeffList->add(RooConst(1.0)); // no need for cnstant in this interface
   
@@ -236,7 +234,7 @@ RooAbsPdf* PdfModelBuilder::getBernsteinStepxGau(string prefix, int order){
     string name = Form("%s_b%d",prefix.c_str(),i);
     //params.insert(pair<string,RooRealVar*>(name, new RooRealVar(name.c_str(),name.c_str(),1.0,0.,5.)));
     
-    RooRealVar *param = new RooRealVar(name.c_str(),name.c_str(),0.3,-14.,15.);
+    RooRealVar *param = new RooRealVar(name.c_str(),name.c_str(),0.03,-14.,15.);
     if (i==0){
       param->setVal(10.);
       param->setConstant(kTRUE);
@@ -1266,7 +1264,7 @@ RooAbsPdf* PdfModelBuilder::getLaurentStepxGau(string prefix, int order, int cat
       RooRealVar *cp1 = new RooRealVar(Form("%s_cp1_lau2",prefix.c_str()),Form("%s_cp1_lau2",prefix.c_str()),coeff1_lau2,coeff1_llau2,coeff1_hlau2);
       RooRealVar *cp2 = new RooRealVar(Form("%s_cp1_lau2",prefix.c_str()),Form("%s_cp1_lau2",prefix.c_str()),coeff2_lau2,coeff2_llau2,coeff2_hlau2);
       RooRealVar *cp3 = new RooRealVar(Form("%s_cp3_lau2",prefix.c_str()),Form("%s_cp3_lau2",prefix.c_str()),coeff3_lau2,coeff3_llau2,coeff3_hlau2);
-      RooGenericPdf *step = new RooGenericPdf("step_lau2", "step_lau2", "1e-20+(@0 > @1)*(@2*(@0)^(-4)+@3*(@0)^(-5)+@4*(@0)^(-3))", RooArgList(*obs_var,*turnon,*cp1,*cp2,*cp3));//step*(ax^b+cx^d+fx^g) 
+      RooGenericPdf *step = new RooGenericPdf(Form("%s_step_lau2",prefix.c_str()), Form("%s_step_lau2",prefix.c_str()), "1e-20+(@0 > @1)*(@2*(@0)^(-4)+@3*(@0)^(-5)+@4*(@0)^(-3))", RooArgList(*obs_var,*turnon,*cp1,*cp2,*cp3));//step*(ax^b+cx^d+fx^g) 
       RooGaussModel *gau = new RooGaussModel(Form("%s_gau_lau2",prefix.c_str()),Form("%s_gau_lau2",prefix.c_str()),*obs_var,*mean,*sigma);
       RooFFTConvPdf *gauxlau = new RooFFTConvPdf(Form("%s_gauxlau2",prefix.c_str()),Form("%s_gauxlau2",prefix.c_str()),*obs_var,*step,*gau);
       return gauxlau;

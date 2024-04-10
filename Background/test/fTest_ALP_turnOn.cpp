@@ -22,6 +22,7 @@
 #include "RooMinuit.h"
 #include "RooMinimizer.h"
 #include "RooNLLVar.h"
+#include "RooChi2Var.h"
 #include "RooMsgService.h"
 #include "RooDataHist.h"
 #include "RooExtendPdf.h"
@@ -113,8 +114,23 @@ void runFit(RooAbsPdf *pdf, RooDataSet *data, double *NLL, int *stat_t, int MaxT
     }
     else if (Chi2Fit){
       cout<<"run chi2 fit"<<endl;
-      fitTest = pdf->chi2FitTo(*data->binnedClone(),RooFit::DataError(RooAbsData::Poisson), RooFit::Strategy(0),RooFit::Save(1),RooFit::Minimizer("Minuit2","migrad"));
-      minnll = fitTest->minNll();
+      //fitTest = pdf->chi2FitTo(*data->binnedClone(),RooFit::DataError(RooAbsData::Poisson), RooFit::Strategy(0),RooFit::Save(1),RooFit::Minimizer("Minuit2","migrad"));
+      //minnll = fitTest->minNll();
+
+      RooChi2Var *chi2_test = new RooChi2Var("chi2_test", "chi2_test", *pdf, *data->binnedClone(), RooFit::DataError(RooAbsData::Poisson));
+      RooMinimizer minimizer(*chi2_test);
+      minimizer.setEps(100);
+      minimizer.setStrategy(0);
+      minimizer.minimize("Minuit2","migrad");
+
+      minimizer.setEps(1);
+      minimizer.setOffsetting(true);
+      minimizer.setStrategy(0);
+      minimizer.minimize("Minuit2","migrad");
+
+      minimizer.hesse();
+      fitTest = minimizer.save();
+      minnll = chi2_test->getVal();
     }
     else {
       //fitTest = pdf->fitTo(*data,RooFit::Save(1),RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE));
@@ -366,7 +382,23 @@ double getGoodnessOfFit(RooRealVar *mass, RooAbsPdf *mpdf, RooDataSet *data, std
       if (SIDEBAND) {
 	        pdf->fitTo(*binnedtoy,Range("left,right"),RooFit::Minimizer("Minuit2","migrad"),RooFit::Minos(0),RooFit::Hesse(0),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
       }else if (Chi2Fit){
-        pdf->chi2FitTo(*binnedtoy,RooFit::DataError(RooAbsData::Poisson),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
+        //pdf->chi2FitTo(*binnedtoy,RooFit::DataError(RooAbsData::Poisson),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
+
+        RooChi2Var *chi2_test = new RooChi2Var("chi2_test", "chi2_test", *pdf, *binnedtoy, RooFit::DataError(RooAbsData::Poisson));
+        RooMinimizer minimizer(*chi2_test);
+        minimizer.setEps(100);
+        minimizer.setStrategy(0);
+        minimizer.minimize("Minuit2","migrad");
+
+        minimizer.setEps(1);
+        minimizer.setOffsetting(true);
+        minimizer.setStrategy(0);
+        minimizer.minimize("Minuit2","migrad");
+
+        minimizer.hesse();
+        //fitTest = minimizer.save();
+        //minnll = chi2_test->getVal();
+
       }
       else {
           //pdf->fitTo(*binnedtoy,RooFit::Minimizer("Minuit2","minimize"),RooFit::Minos(0),RooFit::Hesse(0),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
