@@ -76,7 +76,7 @@ TRandom3 *RandomGen = new TRandom3();
 
 RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char* ext=""){
 
-  if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order+1),order+1);//bing
+  if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order+3),order+3);//bing
   //if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order+3),order+3);//bing
   //if (type=="Bernstein") return pdfsModel.getBernstein(Form("%s_bern%d",ext,order),order);
   //else if (type=="Chebychev") return pdfsModel.getChebychev(Form("%s_cheb%d",ext,order),order);
@@ -108,8 +108,9 @@ void runFit(RooAbsPdf *pdf, RooDataSet *data, double *NLL, int *stat_t, int MaxT
     RooFitResult *fitTest;
 	  if (SIDEBAND) {
 	    cout<<"run sideband"<<endl;
-	  //fitTest = pdf->fitTo(*data, RooFit::Save(1),  Range("left,right"), RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE)); //FIXME
-	    fitTest = pdf->fitTo(*data, RooFit::Save(1),  Range("left,right"), RooFit::Minimizer("Minuit2","migrad")/*,RooFit::SumW2Error(kTRUE)*/); //FIXME
+	    //fitTest = pdf->fitTo(*data, RooFit::Save(1),  Range("left,right"), RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE)); //FIXME
+	    //fitTest = pdf->fitTo(*data, RooFit::Save(1),  Range("left,right"), RooFit::Minimizer("Minuit2","migrad")/*,RooFit::SumW2Error(kTRUE)*/); //FIXME
+      fitTest = pdf->fitTo(*data, RooFit::Save(1), RooFit::Range("range"),RooFit::SplitRange(true), RooFit::Minimizer("Minuit2","migrad"),RooFit::SumW2Error(kTRUE), RooFit::EvalErrorWall(false)); //FIXME
       minnll = fitTest->minNll();
     }
     else if (Chi2Fit){
@@ -243,7 +244,8 @@ double getProbabilityFtest(double chi2, int ndof,RooAbsPdf *pdfNull, RooAbsPdf *
 
       RooFitResult *fitNull;
       if (SIDEBAND) {
-        fitNull = pdfNull->fitTo(*binnedtoy, Range("left,right"),RooFit::Save(1)/*,RooFit::Strategy(1),RooFit::SumW2Error(kTRUE)*/,RooFit::Minimizer("Minuit2","migrad")/*,RooFit::Minos(0),RooFit::Hesse(0)*/,RooFit::PrintLevel(-1));
+        //fitNull = pdfNull->fitTo(*binnedtoy, Range("left,right"),RooFit::Save(1)/*,RooFit::Strategy(1),RooFit::SumW2Error(kTRUE)*/,RooFit::Minimizer("Minuit2","migrad")/*,RooFit::Minos(0),RooFit::Hesse(0)*/,RooFit::PrintLevel(-1));
+        fitNull = pdfNull->fitTo(*binnedtoy, RooFit::Save(1), RooFit::Range("range"),RooFit::SplitRange(true), RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE), RooFit::EvalErrorWall(false)); //FIXME
         }
       else if (Chi2Fit){
           fitNull = pdfNull->chi2FitTo(*binnedtoy,RooFit::DataError(RooAbsData::Poisson),RooFit::Save(1),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"),RooFit::PrintLevel(-1));
@@ -268,7 +270,8 @@ double getProbabilityFtest(double chi2, int ndof,RooAbsPdf *pdfNull, RooAbsPdf *
 
       RooFitResult *fitTest;
       if (SIDEBAND) {
-            fitTest = pdfTest->fitTo(*binnedtoy, Range("left,right"),RooFit::Save(1),/*RooFit::Strategy(1),RooFit::SumW2Error(kTRUE),*/RooFit::Minimizer("Minuit2","migrad")/*,RooFit::Minos(0),RooFit::Hesse(0)*/,RooFit::PrintLevel(-1));
+            //fitTest = pdfTest->fitTo(*binnedtoy, Range("left,right"),RooFit::Save(1),/*RooFit::Strategy(1),RooFit::SumW2Error(kTRUE),*/RooFit::Minimizer("Minuit2","migrad")/*,RooFit::Minos(0),RooFit::Hesse(0)*/,RooFit::PrintLevel(-1));
+            fitTest = pdfNull->fitTo(*binnedtoy, RooFit::Save(1), RooFit::Range("range"),RooFit::SplitRange(true), RooFit::Minimizer("Minuit2","minimize"),RooFit::SumW2Error(kTRUE), RooFit::EvalErrorWall(false)); //FIXME
       }else if (Chi2Fit){
         fitTest = pdfTest->chi2FitTo(*binnedtoy,RooFit::DataError(RooAbsData::Poisson),RooFit::Save(1),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"),RooFit::PrintLevel(-1));
       }
@@ -348,7 +351,8 @@ double getGoodnessOfFit(RooRealVar *mass, RooAbsPdf *mpdf, RooDataSet *data, std
   data->plotOn(plot_chi2,Binning(nBinsForMass),Name("data"));
 
   if (SIDEBAND) {
-    pdf->plotOn(plot_chi2,Name("pdf"),RooFit::Range("left,right"), RooFit::NormRange("left,right"));
+    //pdf->plotOn(plot_chi2,Name("pdf"),RooFit::Range("left,right"), RooFit::NormRange("left,right"));
+    pdf->plotOn(plot_chi2,Name("pdf"),RooFit::Range("range"), RooFit::NormRange("range_low,range_high"));//bing
   }
   else {
     pdf->plotOn(plot_chi2,Name("pdf"));
@@ -380,7 +384,9 @@ double getGoodnessOfFit(RooRealVar *mass, RooAbsPdf *mpdf, RooDataSet *data, std
 
       //pdf->fitTo(*binnedtoy,RooFit::Minimizer("Minuit2","minimize"),RooFit::Minos(0),RooFit::Hesse(0),RooFit::PrintLevel(-1),RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)); //FIXME
       if (SIDEBAND) {
-	        pdf->fitTo(*binnedtoy,Range("left,right"),RooFit::Minimizer("Minuit2","migrad"),RooFit::Minos(0),RooFit::Hesse(0),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
+	        //pdf->fitTo(*binnedtoy,Range("left,right"),RooFit::Minimizer("Minuit2","migrad"),RooFit::Minos(0),RooFit::Hesse(0),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
+          pdf->fitTo(*binnedtoy,RooFit::Save(1), RooFit::Range("range"),RooFit::SplitRange(true), RooFit::Minimizer("Minuit2","migrad"),RooFit::SumW2Error(kTRUE), RooFit::EvalErrorWall(false)); //FIXME
+          
       }else if (Chi2Fit){
         //pdf->chi2FitTo(*binnedtoy,RooFit::DataError(RooAbsData::Poisson),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"),RooFit::PrintLevel(-1)/*,RooFit::Strategy(0),RooFit::SumW2Error(kTRUE)*/); //FIXME
 
@@ -420,7 +426,8 @@ double getGoodnessOfFit(RooRealVar *mass, RooAbsPdf *mpdf, RooDataSet *data, std
       RooPlot *plot_t = mass->frame();
       binnedtoy->plotOn(plot_t);
       if (SIDEBAND) {
-        pdf->plotOn(plot_t, RooFit::Range("left,right"), RooFit::NormRange("full"));
+        //pdf->plotOn(plot_t, RooFit::Range("left,right"), RooFit::NormRange("full"));
+        pdf->plotOn(plot_t, RooFit::Range("range"), RooFit::NormRange("range"));
       }
       else{
         pdf->plotOn(plot_t);//,RooFit::NormRange("fitdata_1,fitdata_2"));
@@ -466,7 +473,13 @@ void plot(RooRealVar *mass, RooAbsPdf *pdf, RooDataSet *data, string name,vector
   // Chi2 taken from full range fit
   RooPlot *plot_chi2 = mass->frame();
   data->plotOn(plot_chi2,Binning(nBinsForMass));
-  pdf->plotOn(plot_chi2);
+  if (SIDEBAND) {
+    pdf->plotOn(plot_chi2,RooFit::Range("range"), RooFit::NormRange("range_low,range_high"));//bing
+  }
+  else {
+    pdf->plotOn(plot_chi2);
+  }
+  //pdf->plotOn(plot_chi2);
 
   int np = pdf->getParameters(*data)->getSize()+1; //Because this pdf has no extend
   double chi2 = plot_chi2->chiSquare(np);
@@ -488,7 +501,7 @@ void plot(RooRealVar *mass, RooAbsPdf *pdf, RooDataSet *data, string name,vector
 
   if (SIDEBAND) {
     //pdf->plotOn(plot, RooFit::NormRange("left,right"), RooFit::Range("left,right"), RooFit::Normalization(1));
-    pdf->plotOn(plot, RooFit::NormRange("full"), RooFit::Range("full"));
+    pdf->plotOn(plot, RooFit::NormRange("range_low,range_high"), RooFit::Range("range"));
   }
   else {
       pdf->plotOn(plot);//,RooFit::NormRange("fitdata_1,fitdata_2"));
@@ -557,8 +570,8 @@ void plot(RooRealVar *mass, RooMultiPdf *pdfs, RooCategory *catIndex, RooDataSet
     //pdfs->getCurrentPdf()->plotOn(plot,LineColor(col),LineStyle(style));//,RooFit::NormRange("fitdata_1,fitdata_2"));
 
     if (SIDEBAND) {
-      pdfs->getCurrentPdf()->fitTo(*data,Range("left,right"),RooFit::Minimizer("Minuit2","migrad"),RooFit::SumW2Error(kTRUE));  //FIXME
-      //pdfs->getCurrentPdf()->plotOn(plot,LineColor(col),LineStyle(style),RooFit::Range("left,right"),RooFit::NormRange("left,right"));
+      //pdfs->getCurrentPdf()->fitTo(*data,Range("left,right"),RooFit::Minimizer("Minuit2","migrad"),RooFit::SumW2Error(kTRUE));  //FIXME
+      pdfs->getCurrentPdf()->fitTo(*data,RooFit::Range("range"),RooFit::SplitRange(true), RooFit::Minimizer("Minuit2","migrad"),RooFit::SumW2Error(kTRUE), RooFit::EvalErrorWall(false));  //FIXME
       pdfs->getCurrentPdf()->plotOn(plot,LineColor(col),LineStyle(style),RooFit::Range("full"),RooFit::NormRange("full"));
     } else if (Chi2Fit){
       pdfs->getCurrentPdf()->chi2FitTo(*data->binnedClone(), RooFit::DataError(RooAbsData::Poisson),RooFit::Strategy(0),RooFit::Minimizer("Minuit2","migrad"));  //FIXME
@@ -943,14 +956,14 @@ vector<string> flashggCats_;
 
 	vector<string> functionClasses;
 	functionClasses.push_back("Bernstein");
-  functionClasses.push_back("Exponential");
-	functionClasses.push_back("PowerLaw");
-	functionClasses.push_back("Laurent");
+  //functionClasses.push_back("Exponential");
+	//functionClasses.push_back("PowerLaw");
+	//functionClasses.push_back("Laurent");
 	map<string,string> namingMap;
 	namingMap.insert(pair<string,string>("Bernstein","pol"));
-  namingMap.insert(pair<string,string>("Exponential","exp"));
-	namingMap.insert(pair<string,string>("PowerLaw","pow"));
-	namingMap.insert(pair<string,string>("Laurent","lau"));
+  //namingMap.insert(pair<string,string>("Exponential","exp"));
+	//namingMap.insert(pair<string,string>("PowerLaw","pow"));
+	//namingMap.insert(pair<string,string>("Laurent","lau"));
 
 	// store results here
 
@@ -964,8 +977,8 @@ vector<string> flashggCats_;
 	PdfModelBuilder pdfsModel;
 	RooRealVar *mass = (RooRealVar*)inWS->var("CMS_hzg_mass");
   mass->setRange("full", mgg_low, mgg_high);
-  mass->setRange("left", mgg_low, mgg_blind_low);
-  mass->setRange("right", mgg_blind_high, mgg_high);
+  mass->setRange("range_low", mgg_low, mgg_blind_low);
+  mass->setRange("range_high", mgg_blind_high, mgg_high);
   std:: cout << "[INFO] Got mass from ws " << mass << std::endl;
 	pdfsModel.setObsVar(mass);
 	double upperEnvThreshold = 0.05; // upper threshold on delta(chi2) to include function in envelope (looser than truth function)

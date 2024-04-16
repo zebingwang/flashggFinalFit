@@ -2,8 +2,8 @@
 
 lable='run2'
 #version='UL_run2_01jet'
-version='UL_run2_2jet'
-#version='UL_xingchen_chi2'
+#version='UL_run2_2jet'
+version='UL_xingchen_nll_SB'
 #channel=( ele mu )
 channel='ele'
 Lumi_run2='138'
@@ -58,15 +58,15 @@ ncats=${#cats[@]}
 
 #path_in_bkg="../InputData/two_jet_data_dijet/HZGamma_data_bkg_workspace_$cat.root"
 # sync
-#path_in_bkg="../InputData/xingchen/output_file/HZGamma_data_bkg_workspace_$cat.root"
+path_in_bkg="../InputData/xingchen/output_file/HZGamma_data_bkg_workspace_$cat.root"
 # 01 jet
 #path_in_bkg="../InputData/jet01_run2/HZGamma_data_bkg_workspace_$cat.root"
 # 2 jets
-path_in_bkg="../InputData/jet2_run2/HZGamma_data_bkg_workspace_$cat.root"
+#path_in_bkg="../InputData/jet2_run2/HZGamma_data_bkg_workspace_$cat.root"
 path_out_bkg="$dir_out_bkg/fit_results_${lable}_$cat"
 mkdir $path_out_bkg
 
-#./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
+./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 --sidebandOnly #--chi2fit #--verbose 2 #--runFtestCheckWithToys --sidebandOnly
 
 #./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
 #./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 138 -c 0 --channel ${cat_name}_${cat} --isFlashgg 0 --doBands --massStep 2 #--unblind
@@ -149,8 +149,8 @@ cd $dir_out_sig/Combine_results
 #text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
 #combine datacard_allCats.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n allCats #--freezeParameters allConstrainedNuisances
 #combine datacard_allCats.root -M Significance -t -1 --expectSignal=1 -m 125.0 -n allCats #--freezeParameters allConstrainedNuisances #-v 2
-combine -M MultiDimFit datacard_allCats.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters allConstrainedNuisances -n allCats
-python /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombineallCats.MultiDimFit.mH125.root -o single_scan_allCats --main-label Expected
+#combine -M MultiDimFit datacard_allCats.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters allConstrainedNuisances -n allCats
+#python /afs/cern.ch/work/z/zewang/private/flashggfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombineallCats.MultiDimFit.mH125.root -o single_scan_allCats --main-label Expected
 
 #text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
 #combineCards.py cat0=datacard_cat1.txt cat1=datacard_cat2.txt cat2=datacard_cat3.txt cat3=datacard_cat0.txt  &> datacard_allCats_test.txt

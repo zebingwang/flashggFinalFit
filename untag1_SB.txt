@@ -1,0 +1,109 @@
+./HZGamma_BkgModel_UL_xingchen_nll already exist
+[INFO] got intL and sqrts 0x3590500, 0x6584f20
+[INFO] Got mass from ws 0x67dab00
+[INFO] opened data entries: sumEntries: 19599.5
+RooGaussStepBernstein::ftest_pdf_0_vbf_cat3_bern4[ x=CMS_hzg_mass mean=ftest_pdf_0_vbf_cat3_bern4_mean sigma=ftest_pdf_0_vbf_cat3_bern4_sigma_b4 stepVal=ftest_pdf_0_vbf_cat3_bern4_step_b4 coefficients=(ftest_pdf_0_vbf_cat3_bern4_b0,ftest_pdf_0_vbf_cat3_bern4_b1,ftest_pdf_0_vbf_cat3_bern4_b2,ftest_pdf_0_vbf_cat3_bern4_b3,ftest_pdf_0_vbf_cat3_bern4_b4) ] = 42.8087
+run sideband
+
+  RooFitResult: minimized FCN value: 53443.6, estimated distance to minimum: 9.88155e-05
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  ftest_pdf_0_vbf_cat3_bern4_b0    1.0000e+01
+  ftest_pdf_0_vbf_cat3_bern4_mean    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+  ftest_pdf_0_vbf_cat3_bern4_b1    3.0000e-02    1.5000e+01 +/-  3.00e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern4_b2    3.0000e-02   -4.9801e+00 +/-  1.79e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern4_b3    3.0000e-02    3.3004e+00 +/-  2.11e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern4_b4    3.0000e-02    1.2983e+00 +/-  1.69e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern4_sigma_b4    5.0000e+00    6.0000e+00 +/-  2.19e-02  <none>
+  ftest_pdf_0_vbf_cat3_bern4_step_b4    1.0500e+02    1.0542e+02 +/-  2.88e-01  <none>
+
+[INFO]	 Bernstein 1 0 53443.6 -106887 0
+RooGaussStepBernstein::ftest_pdf_0_vbf_cat3_bern5[ x=CMS_hzg_mass mean=ftest_pdf_0_vbf_cat3_bern5_mean sigma=ftest_pdf_0_vbf_cat3_bern5_sigma_b5 stepVal=ftest_pdf_0_vbf_cat3_bern5_step_b5 coefficients=(ftest_pdf_0_vbf_cat3_bern5_b0,ftest_pdf_0_vbf_cat3_bern5_b1,ftest_pdf_0_vbf_cat3_bern5_b2,ftest_pdf_0_vbf_cat3_bern5_b3,ftest_pdf_0_vbf_cat3_bern5_b4,ftest_pdf_0_vbf_cat3_bern5_b5) ] = 33.2772
+run sideband
+
+  RooFitResult: minimized FCN value: 53443, estimated distance to minimum: 0.000172895
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  ftest_pdf_0_vbf_cat3_bern5_b0    1.0000e+01
+  ftest_pdf_0_vbf_cat3_bern5_mean    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+  ftest_pdf_0_vbf_cat3_bern5_b1    3.0000e-02    1.5000e+01 +/-  1.78e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern5_b2    3.0000e-02   -3.4913e+00 +/-  2.29e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern5_b3    3.0000e-02    6.2558e+00 +/-  2.30e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern5_b4    3.0000e-02   -3.8249e+00 +/-  2.11e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern5_b5    3.0000e-02    4.9443e+00 +/-  1.67e+00  <none>
+  ftest_pdf_0_vbf_cat3_bern5_sigma_b5    5.0000e+00    6.0000e+00 +/-  1.99e-02  <none>
+  ftest_pdf_0_vbf_cat3_bern5_step_b5    1.0500e+02    1.0573e+02 +/-  3.13e-01  <none>
+
+[INFO]  F-test Prob(chi2>chi2(data)) == 0.263873
+[INFO]	 Bernstein 2 53443.6 53443 1.24832 0.263873
+[INFO] Determining Envelope Functions for Family Bernstein, cat 0
+[INFO] Upper end Threshold for highest order function 0.05
+run sideband
+
+  RooFitResult: minimized FCN value: 53443.6, estimated distance to minimum: 9.88155e-05
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  env_pdf_vbf_cat3_bern4_b0    1.0000e+01
+  env_pdf_vbf_cat3_bern4_mean    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+  env_pdf_vbf_cat3_bern4_b1    3.0000e-02    1.5000e+01 +/-  3.00e+00  <none>
+  env_pdf_vbf_cat3_bern4_b2    3.0000e-02   -4.9801e+00 +/-  1.79e+00  <none>
+  env_pdf_vbf_cat3_bern4_b3    3.0000e-02    3.3004e+00 +/-  2.11e+00  <none>
+  env_pdf_vbf_cat3_bern4_b4    3.0000e-02    1.2983e+00 +/-  1.69e+00  <none>
+  env_pdf_vbf_cat3_bern4_sigma_b4    5.0000e+00    6.0000e+00 +/-  2.19e-02  <none>
+  env_pdf_vbf_cat3_bern4_step_b4    1.0500e+02    1.0542e+02 +/-  2.88e-01  <none>
+
+[INFO] 	 Bernstein 1 0 53443.6 -106887 0
+[INFO] Calculating GOF for pdf ext, using 9 fitted parameters
+[INFO] Chi2 in Observed =  3484.65
+[INFO] p-value  =  0
+run sideband
+
+  RooFitResult: minimized FCN value: 53443, estimated distance to minimum: 0.000172895
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+  env_pdf_vbf_cat3_bern5_b0    1.0000e+01
+  env_pdf_vbf_cat3_bern5_mean    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+  env_pdf_vbf_cat3_bern5_b1    3.0000e-02    1.5000e+01 +/-  1.78e+00  <none>
+  env_pdf_vbf_cat3_bern5_b2    3.0000e-02   -3.4913e+00 +/-  2.29e+00  <none>
+  env_pdf_vbf_cat3_bern5_b3    3.0000e-02    6.2558e+00 +/-  2.30e+00  <none>
+  env_pdf_vbf_cat3_bern5_b4    3.0000e-02   -3.8249e+00 +/-  2.11e+00  <none>
+  env_pdf_vbf_cat3_bern5_b5    3.0000e-02    4.9443e+00 +/-  1.67e+00  <none>
+  env_pdf_vbf_cat3_bern5_sigma_b5    5.0000e+00    6.0000e+00 +/-  1.99e-02  <none>
+  env_pdf_vbf_cat3_bern5_step_b5    1.0500e+02    1.0573e+02 +/-  3.13e-01  <none>
+
+[INFO] 	 Bernstein 2 53443.6 53443 1.24832 0.263873
+[INFO] Calculating GOF for pdf ext, using 10 fitted parameters
+[INFO] Chi2 in Observed =  2892.83
+[INFO] p-value  =  0
+13 TeV
+[#0] ERROR:InputArguments -- RooCategory::pdfindex_vbf_cat3:lookupType: no match for index 0
+[#0] ERROR:InputArguments -- RooCategory::pdfindex_vbf_cat3:lookupType: no match for index 0
+// ------------------------------------------------------------------------- //
+[INFO] Created MultiPdf CMS_hgg_vbf_cat3_bkgshape, in Category 0 with a total of 0 pdfs
+RooArgList::store = ()
+[INFO] Best Fit Pdf = 0, /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/Signal
+./HZGamma_SigModel_UL_xingchen_nll already exist
