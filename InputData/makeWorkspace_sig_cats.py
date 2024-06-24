@@ -7,6 +7,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Prepare flashggFinalFit workspace: signal Fit")
 parser.add_argument("-d", "--data", dest="data", type=str, default="./two_jet/data.root", help="path to the input dataset")
 parser.add_argument("-j", "--json", dest="json", type=str, default="./significances/bin_binaries_two_jet.txt", help="path to the input json file")
+parser.add_argument("-c", "--catname", dest="catname", type=str, default="untag", help="name of the category")
 parser.add_argument("-o", "--out", dest="out", type=str, default="./output_file", help="path to the output dir")
 parser.add_argument("-t", "--tree", dest="tree", type=str, default="test", help="name of the tree")
 parser.add_argument("-dm", "--shift", dest="shift", type=float, default=5, help="shift ALP mass")
@@ -28,7 +29,7 @@ json = file_json.readline().split(' ')
 nCat = int(json[0])
 boundaries = list(map(float, json[1:nCat+2]))
 
-cat_name = 'vbf'
+cat_name = args.catname
 
 # Read the input dataset
 ############################
@@ -70,14 +71,16 @@ for c in range(nCat):
 
         for jentry in range(entries):
             nb = mychain.GetEntry(jentry)
-            if mychain.H_mass>170. or mychain.H_mass<105.: continue
+            if mychain.H_mass>=170. or mychain.H_mass<=105.: continue
 
 
             CMS_hzg_mass.setVal(mychain.H_mass + mass_H - 125.0)
-            CMS_hzg_weight.setVal(mychain.weight*mychain.reweight)
+            #CMS_hzg_weight.setVal(mychain.weight*mychain.reweight)
+            CMS_hzg_weight.setVal(mychain.weight)
 
             if mychain.BDT_score > boundaries[c] and mychain.BDT_score <= boundaries[c+1]:
-                data_mass_cats.add(ArgSet,mychain.weight*mychain.reweight)
+                #data_mass_cats.add(ArgSet,mychain.weight*mychain.reweight)
+                data_mass_cats.add(ArgSet,mychain.weight)
 
         data_mass_cats.Print("v")
         #dataset_WithoutWeight.Print("v")

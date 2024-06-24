@@ -482,7 +482,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   pdf->plotOn(plot,NormRange("higgsRange"),Range(semin,semax),LineColor(15),LineWidth(2),FillStyle(1001),VLines());
   pdf->plotOn(plot,NormRange("higgsRange"),Range("higgsRange"),LineColor(kBlue),LineWidth(2),FillStyle(0));
   pdf->plotOn(plotchi2,NormRange("higgsRange"),Range("higgsRange"),LineColor(kBlue),LineWidth(2),FillStyle(0));
-  float chi2_bis= (plotchi2->chiSquare());
+  //float chi2_bis= (plotchi2->chiSquare());
   //int ndof= (pdf->getParameters(*mass))->getSize();
   RooArgSet *allComponents = pdf->getComponents();
   TIterator *vIter = allComponents->createIterator();
@@ -507,6 +507,7 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   //pdf->getObservables(*mh)->Print("V");
   //pdf->plotOn(plot,NormRange("higgsRange"),Range("higgsRange"),LineColor(kBlue),LineWidth(2),FillStyle(0));
   //pdf->plotOn(plot,Range("higgsRange"),LineColor(kBlue),LineWidth(2),FillStyle(0));
+  float chi2_bis= (plotchi2->chiSquare(ndof));
 
   TObject *pdfLeg = plot->getObject(int(plot->numItems()-1));
   if (data) data->plotOn(plot,MarkerStyle(kOpenSquare));
@@ -571,7 +572,8 @@ void Plot(RooRealVar *mass, RooDataSet *data, RooAbsPdf *pdf, pair<double,double
   chi2ndof_latex->SetTextSize(0.035);
   chi2ndof_latex->SetTextAlign(33);
   chi2ndof_latex->SetNDC();
-  chi2ndof_latex->DrawLatex(0.93,0.83,Form("#chi^{2}/n_{d.o.f.}=%.3f/%d",chi2_bis,ndof));
+  //chi2ndof_latex->DrawLatex(0.93,0.83,Form("#chi^{2}/n_{d.o.f.}=%.3f/%d",chi2_bis,ndof));
+  chi2ndof_latex->DrawLatex(0.93,0.83,Form("#chi^{2}/n_{d.o.f.}=%.3f",chi2_bis));
   for (unsigned int i =0 ; i < negWeightBins.size() ; i++){
     TArrow *negBinsArrow = new TArrow(negWeightBins[i],0.0,negWeightBins[i],halfmax/2,0.02,"<>");
     negBinsArrow->SetLineWidth(2.);

@@ -48,7 +48,7 @@ for c in range(nCat):
 
     for jentry in range(entries):
         nb = mychain.GetEntry(jentry)
-        if mychain.H_mass<105. or mychain.H_mass>170.: continue
+        if mychain.H_mass<=105. or mychain.H_mass>=170.: continue
 
         CMS_hzg_mass.setVal(mychain.H_mass)
 

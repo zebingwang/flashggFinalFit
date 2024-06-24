@@ -68,10 +68,10 @@ class PdfModelBuilder {
     RooAbsPdf* getPowerLawStepxGau(string prefix, int order,int cat);
     RooAbsPdf* getExponentialStepxGau(string prefix, int order, int cat);
     RooAbsPdf* getLaurentStepxGau(string prefix, int order, int cat);
-    RooAbsPdf* getBernsteinxZGMCShape(string prefix, int order);
-    RooAbsPdf* getExponentialZGMCShape(string prefix, int order);
-    RooAbsPdf* getPowerLawZGMCShape(string prefix, int order);
-    RooAbsPdf* getLaurentZGMCShape(string prefix, int order);
+    RooAbsPdf* getBernsteinxZGMCShape(string prefix, int order, int cat);
+    RooAbsPdf* getExponentialZGMCShape(string prefix, int order, int cat);
+    RooAbsPdf* getPowerLawZGMCShape(string prefix, int order, int cat);
+    RooAbsPdf* getLaurentZGMCShape(string prefix, int order, int cat);
 
     RooAbsPdf* getKeysPdf(string prefix);
     RooAbsPdf* getPdfFromFile(string &prefix);

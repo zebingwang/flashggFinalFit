@@ -112,6 +112,7 @@ void InitialFit::buildDCBplusGaussian(string name){
     tempFitParams.insert(pair<string,RooRealVar*>(string(a2_dcb->GetName()),a2_dcb));
     
     fitPdfs.insert(pair<int,RooAbsPdf*>(mh,pdf));
+    //fitPdfs.insert(pair<int,RooAbsPdf*>(mh,pdf_dcb)); //bing
     fitParams.insert(pair<int,map<string,RooRealVar*> >(mh,tempFitParams));
   }
 }

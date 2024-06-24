@@ -177,9 +177,10 @@ void SimultaneousFit::buildDCBplusGaussian(string name, bool recursive){
 
     // start defining params
     //RooFormulaVar *dMH = new RooFormulaVar(Form("dMH"),Form("dMH"),"@0-125.0",RooArgList(*MH));
-    RooFormulaVar *dMH = new RooFormulaVar(Form("dMH"),Form("dMH"),"@0-@1",RooArgList(*MH,*mass));//bing
+    RooFormulaVar *dMH = new RooFormulaVar(Form("dMH"),Form("dMH"),"@0",RooArgList(*MH));
+    //RooFormulaVar *dMH = new RooFormulaVar(Form("dMH"),Form("dMH"),"@0-@1",RooArgList(*MH,*mass));//bing
     // the parmas p0, p1, p2 are the params which codify the polynomial dependence of dm_dcb on dMH
-    RooRealVar *dm_dcb_p0 = new RooRealVar(Form("dm_dcb_p0"),Form("dm_dcb_p0"),0.0,-0.1,0.1);
+    RooRealVar *dm_dcb_p0 = new RooRealVar(Form("dm_dcb_p0"),Form("dm_dcb_p0"),0.0,-1.,1.);
     RooRealVar *dm_dcb_p1 = new RooRealVar(Form("dm_dcb_p1"),Form("dm_dcb_p1"),0.0,-0.001,0.001);
     RooRealVar *dm_dcb_p2 = new RooRealVar(Form("dm_dcb_p2"),Form("dm_dcb_p2"),0.0,-0.001,0.001);
     //RooRealVar *dm_dcb_p0 = new RooRealVar(Form("dm_dcb_p0"),Form("dm_dcb_p0"),0.1,-1.0,1.0);//bing
@@ -191,7 +192,7 @@ void SimultaneousFit::buildDCBplusGaussian(string name, bool recursive){
     RooFormulaVar *mean_dcb_order0 = new RooFormulaVar(Form("mean_dcb_order0"),Form("mean_dcb_order0"),"((@0+@1))",RooArgList(*MH,*dm_dcb_order0));
     RooFormulaVar *mean_dcb_order1 = new RooFormulaVar(Form("mean_dcb_order1"),Form("mean_dcb_order1"),"((@0+@1))",RooArgList(*MH,*dm_dcb_order1));
     RooFormulaVar *mean_dcb_order2 = new RooFormulaVar(Form("mean_dcb_order2"),Form("mean_dcb_order2"),"((@0+@1))",RooArgList(*MH,*dm_dcb_order2));
-    RooRealVar *sigma_dcb_p0 = new RooRealVar(Form("sigma_dcb_p0"),Form("sigma_dcb_p0"),1.0,0.1,10.0);
+    RooRealVar *sigma_dcb_p0 = new RooRealVar(Form("sigma_dcb_p0"),Form("sigma_dcb_p0"),2., 1.0, 5.);
     //RooRealVar *sigma_dcb_p0 = new RooRealVar(Form("sigma_dcb_p0"),Form("sigma_dcb_p0"),2.0,0.01,20.0);//bing
     RooRealVar *sigma_dcb_p1 = new RooRealVar(Form("sigma_dcb_p1"),Form("sigma_dcb_p1"),0.0,-0.1,0.1);
     RooRealVar *sigma_dcb_p2 = new RooRealVar(Form("sigma_dcb_p2"),Form("sigma_dcb_p2"),0.0,-0.001,0.001);
@@ -201,27 +202,27 @@ void SimultaneousFit::buildDCBplusGaussian(string name, bool recursive){
     RooPolyVar *sigma_dcb_order1 = new RooPolyVar(Form("sigma_dcb_order1"),Form("sigma_dcb_order1"),*dMH,RooArgList(*sigma_dcb_p0,*sigma_dcb_p1));
     RooPolyVar *sigma_dcb_order2 = new RooPolyVar(Form("sigma_dcb_order2"),Form("sigma_dcb_order2"),*dMH,RooArgList(*sigma_dcb_p0,*sigma_dcb_p1,*sigma_dcb_p2));
 
-    RooRealVar *n1_dcb_p0 = new RooRealVar(Form("n1_dcb_p0"),Form("n1_dcb_p0"),20.,2.00001,500);
+    RooRealVar *n1_dcb_p0 = new RooRealVar(Form("n1_dcb_p0"),Form("n1_dcb_p0"),20.,2.0001,2000.);
     RooRealVar *n1_dcb_p1 = new RooRealVar(Form("n1_dcb_p1"),Form("n1_dcb_p1"),0.0,-0.1,0.1);
     RooRealVar *n1_dcb_p2 = new RooRealVar(Form("n1_dcb_p2"),Form("n1_dcb_p2"),0.0,-0.001,0.001);
     RooPolyVar *n1_dcb_order0 = new RooPolyVar(Form("n1_dcb_order0"),Form("n1_dcb_order0"),*dMH,RooArgList(*n1_dcb_p0));
     RooPolyVar *n1_dcb_order1 = new RooPolyVar(Form("n1_dcb_order1"),Form("n1_dcb_order1"),*dMH,RooArgList(*n1_dcb_p0,*n1_dcb_p1));
     RooPolyVar *n1_dcb_order2 = new RooPolyVar(Form("n1_dcb_order2"),Form("n1_dcb_order2"),*dMH,RooArgList(*n1_dcb_p0,*n1_dcb_p1,*n1_dcb_p2));
 
-    RooRealVar *n2_dcb_p0 = new RooRealVar(Form("n2_dcb_p0"),Form("n2_dcb_p0"),20.,2.00001,500);
+    RooRealVar *n2_dcb_p0 = new RooRealVar(Form("n2_dcb_p0"),Form("n2_dcb_p0"),20.,2.0001,2000.);
     RooRealVar *n2_dcb_p1 = new RooRealVar(Form("n2_dcb_p1"),Form("n2_dcb_p1"),0.0,-0.1,0.1);
     RooRealVar *n2_dcb_p2 = new RooRealVar(Form("n2_dcb_p2"),Form("n2_dcb_p2"),0.0,-0.001,0.001);
     RooPolyVar *n2_dcb_order0 = new RooPolyVar(Form("n2_dcb_order0"),Form("n2_dcb_order0"),*dMH,RooArgList(*n2_dcb_p0));
     RooPolyVar *n2_dcb_order1 = new RooPolyVar(Form("n2_dcb_order1"),Form("n2_dcb_order1"),*dMH,RooArgList(*n2_dcb_p0,*n2_dcb_p1));
     RooPolyVar *n2_dcb_order2 = new RooPolyVar(Form("n2_dcb_order2"),Form("n2_dcb_order2"),*dMH,RooArgList(*n2_dcb_p0,*n2_dcb_p1,*n2_dcb_p2));
 
-    RooRealVar *a1_dcb_p0 = new RooRealVar(Form("a1_dcb_p0"),Form("a1_dcb_p0"),1.,1.0,1.0);
+    RooRealVar *a1_dcb_p0 = new RooRealVar(Form("a1_dcb_p0"),Form("a1_dcb_p0"),0.5, 0.01, 1.);
     RooRealVar *a1_dcb_p1 = new RooRealVar(Form("a1_dcb_p1"),Form("a1_dcb_p1"),0.0,-0.1,0.1);
     RooRealVar *a1_dcb_p2 = new RooRealVar(Form("a1_dcb_p2"),Form("a1_dcb_p2"),0.0,-0.001,0.001);
     RooPolyVar *a1_dcb_order0 = new RooPolyVar(Form("a1_dcb_order0"),Form("a1_dcb_order0"),*dMH,RooArgList(*a1_dcb_p0));
     RooPolyVar *a1_dcb_order1 = new RooPolyVar(Form("a1_dcb_order1"),Form("a1_dcb_order1"),*dMH,RooArgList(*a1_dcb_p0,*a1_dcb_p1));
     RooPolyVar *a1_dcb_order2 = new RooPolyVar(Form("a1_dcb_order2"),Form("a1_dcb_order2"),*dMH,RooArgList(*a1_dcb_p0,*a1_dcb_p1,*a1_dcb_p2));
-    RooRealVar *a2_dcb_p0 = new RooRealVar(Form("a2_dcb_p0"),Form("a2_dcb_p0"),7.5,7.3,7.7);
+    RooRealVar *a2_dcb_p0 = new RooRealVar(Form("a2_dcb_p0"),Form("a2_dcb_p0"),0.5, 0.01, 1.);
     RooRealVar *a2_dcb_p1 = new RooRealVar(Form("a2_dcb_p1"),Form("a2_dcb_p1"),0.0,-0.1,0.1);
     RooRealVar *a2_dcb_p2 = new RooRealVar(Form("a2_dcb_p2"),Form("a2_dcb_p2"),0.0,-0.001,0.001);
     RooPolyVar *a2_dcb_order0 = new RooPolyVar(Form("a2_dcb_order0"),Form("a2_dcb_order0"),*dMH,RooArgList(*a2_dcb_p0));
@@ -268,7 +269,7 @@ void SimultaneousFit::buildDCBplusGaussian(string name, bool recursive){
     //RooFormulaVar *mean_gaus_order0 = new RooFormulaVar(Form("mean_gaus_order0"),Form("mean_gaus_order0"),"((@0+@1))",RooArgList(*MH,*dm_gaus_order0));
     //RooFormulaVar *mean_gaus_order1 = new RooFormulaVar(Form("mean_gaus_order1"),Form("mean_gaus_order1"),"((@0+@1))",RooArgList(*MH,*dm_gaus_order1));
     //RooFormulaVar *mean_gaus_order2 = new RooFormulaVar(Form("mean_gaus_order2"),Form("mean_gaus_order2"),"((@0+@1))",RooArgList(*MH,*dm_gaus_order2));
-    RooRealVar *sigma_gaus_p0 = new RooRealVar(Form("sigma_gaus_p0"),Form("sigma_gaus_p0"),3.0,2.0,5.0);
+    RooRealVar *sigma_gaus_p0 = new RooRealVar(Form("sigma_gaus_p0"),Form("sigma_gaus_p0"),2.,1.0,3.);
     //RooRealVar *sigma_gaus_p0 = new RooRealVar(Form("sigma_gaus_p0"),Form("sigma_gaus_p0"),0.8,0.01,3.0);//bing
     RooRealVar *sigma_gaus_p1 = new RooRealVar(Form("sigma_gaus_p1"),Form("sigma_gaus_p1"),0.0,-0.1,0.1);
     RooRealVar *sigma_gaus_p2 = new RooRealVar(Form("sigma_gaus_p2"),Form("sigma_gaus_p2"),0.0,-0.001,0.001);
@@ -312,9 +313,14 @@ void SimultaneousFit::buildDCBplusGaussian(string name, bool recursive){
     coeffs_order2->add(*frac_constrained_order2);
 
     // in the end we have three possible PDFs - order 0, order 1 and order 2. The default is to use the order 1 but this can be changed at the runFits function
+    //only use DCB for signal modeling (bing)
     RooAbsPdf *tempPdf_order0 = new RooAddPdf(Form("%s_order0",name.c_str()),Form("%s_order0",name.c_str()),*pdfs_order0,*coeffs_order0,recursive);
     RooAbsPdf *tempPdf_order1 = new RooAddPdf(Form("%s_order1",name.c_str()),Form("%s_order1",name.c_str()),*pdfs_order1,*coeffs_order1,recursive);
     RooAbsPdf *tempPdf_order2 = new RooAddPdf(Form("%s_order2",name.c_str()),Form("%s_order2",name.c_str()),*pdfs_order2,*coeffs_order2,recursive);
+    
+    //RooAbsPdf *tempPdf_order0 = dcb_order0;
+    //RooAbsPdf *tempPdf_order1 = dcb_order1;
+    //RooAbsPdf *tempPdf_order2 = dcb_order2;
 
     allPdfs.insert(pair<int,RooAbsPdf*>(0,tempPdf_order0));
     allPdfs.insert(pair<int,RooAbsPdf*>(1,tempPdf_order1));

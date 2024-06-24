@@ -74,20 +74,20 @@ RooRealVar *intLumi_ = new RooRealVar("IntLumi","hacked int lumi", 1000.);
 
 TRandom3 *RandomGen = new TRandom3();
 
-RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char* ext=""){
+RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char* ext="", int cat=3){
 
-  if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order+3),order+3);//bing
-  //if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order+3),order+3);//bing
+  if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order),order);//bing
+  //if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order),order, cat);//bing
   //if (type=="Bernstein") return pdfsModel.getBernstein(Form("%s_bern%d",ext,order),order);
   //else if (type=="Chebychev") return pdfsModel.getChebychev(Form("%s_cheb%d",ext,order),order);
-  //else if (type=="Exponential") return pdfsModel.getExponentialZGMCShape(Form("%s_exp%d",ext,order+2),order+2);//bing
-  else if (type=="Exponential") return pdfsModel.getExponentialStepxGau(Form("%s_exp%d",ext,order),order,1);//bing
+  //else if (type=="Exponential") return pdfsModel.getExponentialZGMCShape(Form("%s_exp%d",ext,order),order, cat);//bing
+  else if (type=="Exponential") return pdfsModel.getExponentialStepxGau(Form("%s_exp%d",ext,order),order,4);//bing
     //return pdfsModel.getExponentialSingle(Form("%s_exp%d",ext,order),order);
-  //else if (type=="PowerLaw") return pdfsModel.getPowerLawZGMCShape(Form("%s_pow%d",ext,order+2),order+2);//bing
-  else if (type=="PowerLaw") return pdfsModel.getPowerLawStepxGau(Form("%s_pow%d",ext,order),order,1);//bing
+  //else if (type=="PowerLaw") return pdfsModel.getPowerLawZGMCShape(Form("%s_pow%d",ext,order),order, cat);//bing
+  else if (type=="PowerLaw") return pdfsModel.getPowerLawStepxGau(Form("%s_pow%d",ext,order),order,4);//bing
     //return pdfsModel.getPowerLawSingle(Form("%s_pow%d",ext,order),order);
-  //else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order+2),order+2);//bing
-  else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order+1),order+1,1);//bing
+  //else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order),order, cat);//bing
+  else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order),order,4);//bing
     //return pdfsModel.getLaurentSeries(Form("%s_lau%d",ext,order),order);
   else {
     cerr << "[ERROR] -- getPdf() -- type " << type << " not recognised." << endl;
@@ -834,6 +834,7 @@ int main(int argc, char* argv[]){
   string fileName;
   string channelName;
   int ncats;
+  int catID;
   int singleCategory;
   string datfile;
   string outDir;
@@ -852,6 +853,7 @@ vector<string> flashggCats_;
     ("infilename,i", po::value<string>(&fileName),                                              "In file name")
     ("channel", po::value<string>(&channelName),                                              "channel name")
     ("ncats,c", po::value<int>(&ncats)->default_value(5),                                       "Number of categories")
+    ("catID", po::value<int>(&catID)->default_value(3),                                       "Category ID")
     ("singleCat", po::value<int>(&singleCategory)->default_value(-1),                           "Run A single Category")
     ("datfile,d", po::value<string>(&datfile)->default_value("dat/fTest.dat"),                  "Right results to datfile for BiasStudy")
     ("outDir,D", po::value<string>(&outDir)->default_value("plots/fTest"),                      "Out directory for plots")
@@ -957,13 +959,13 @@ vector<string> flashggCats_;
 	vector<string> functionClasses;
 	functionClasses.push_back("Bernstein");
   //functionClasses.push_back("Exponential");
-	//functionClasses.push_back("PowerLaw");
-	//functionClasses.push_back("Laurent");
+  //functionClasses.push_back("PowerLaw");
+  //functionClasses.push_back("Laurent");
 	map<string,string> namingMap;
 	namingMap.insert(pair<string,string>("Bernstein","pol"));
   //namingMap.insert(pair<string,string>("Exponential","exp"));
-	//namingMap.insert(pair<string,string>("PowerLaw","pow"));
-	//namingMap.insert(pair<string,string>("Laurent","lau"));
+  //namingMap.insert(pair<string,string>("PowerLaw","pow"));
+  //namingMap.insert(pair<string,string>("Laurent","lau"));
 
 	// store results here
 
@@ -1066,9 +1068,9 @@ vector<string> flashggCats_;
 
 			int counter =0;
 			//	while (prob<0.05){
-			while (prob<0.05 && order < 7){ //FIXME
+			while (prob<0.05 && order <= 7){ //FIXME
         //while (prob<0.05 && order < 4){ //FIXME
-				RooAbsPdf *bkgPdf = getPdf(pdfsModel,*funcType,order,Form("ftest_pdf_%d_%s",cat,ext.c_str()));
+				RooAbsPdf *bkgPdf = getPdf(pdfsModel,*funcType,order,Form("ftest_pdf_%d_%s",cat,ext.c_str()), catID);
 				if (!bkgPdf){
 					// assume this order is not allowed
 					order++;
@@ -1126,7 +1128,7 @@ vector<string> flashggCats_;
 
 				while (prob<upperEnvThreshold){
 					//RooAbsPdf *bkgPdf = getPdf(pdfsModel,*funcType,order,Form("env_pdf_%d_%s",cat,ext.c_str()));
-          RooAbsPdf *bkgPdf = getPdf(pdfsModel,*funcType,order,Form("env_pdf_%s",ext.c_str()));//bing
+          RooAbsPdf *bkgPdf = getPdf(pdfsModel,*funcType,order,Form("env_pdf_%s",ext.c_str()), catID);//bing
 					if (!bkgPdf ){
 						// assume this order is not allowed
 						if (order >6) { std::cout << " [WARNING] could not add ] " << std::endl; break ;}

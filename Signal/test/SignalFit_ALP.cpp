@@ -967,7 +967,7 @@ int main(int argc, char *argv[]){
     if(useSSF_){
     // right vertex
     if (verbose_) std::cout << "[INFO] preapraing initialfit RV, massList size "<< massList_.size() << std::endl;
-    int maxOrder = 1;
+    int maxOrder = 0;
     if( (proc=="testBBH" || proc=="testTHQ" || proc=="testTHW") ) maxOrder=0;
     SimultaneousFit simultaneousFitRV(mass_,MH,mhLow_,mhHigh_,skipMasses_,binnedFit_,nBins_,massList_,cat,proc,Form("%s/rv",plotDir_.c_str()), /*maxOrder of MH depende of RooPolyVars*/ maxOrder);
     simultaneousFitRV.setVerbosity(verbose_);

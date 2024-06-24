@@ -1,4 +1,5 @@
 cat=0
-truth=Bernstein:1:pol1
-paul=Bernstein:1:pol1
+truth=Bernstein:4:pol4
+paul=Bernstein:3:pol3
+paul=Bernstein:4:pol4
 
