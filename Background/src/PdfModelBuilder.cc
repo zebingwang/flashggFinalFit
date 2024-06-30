@@ -1297,7 +1297,8 @@ RooAbsPdf* PdfModelBuilder::getLaurentStepxGau(string prefix, int order, int cat
 RooAbsPdf* PdfModelBuilder::getBernsteinxZGMCShape(string prefix, int order, int cat){
   
   //bing add ZGMCShape
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
@@ -1377,7 +1378,8 @@ RooAbsPdf* PdfModelBuilder::getBernsteinxZGMCShape(string prefix, int order, int
 
 RooAbsPdf* PdfModelBuilder::getExponentialZGMCShape(string prefix, int order, int cat){
   //bing add ZGMCShape
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
@@ -1491,7 +1493,8 @@ RooAbsPdf* PdfModelBuilder::getExponentialZGMCShape(string prefix, int order, in
 RooAbsPdf* PdfModelBuilder::getPowerLawZGMCShape(string prefix, int order, int cat){
   
   //bing add ZGMCShape
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
@@ -1603,7 +1606,8 @@ RooAbsPdf* PdfModelBuilder::getPowerLawZGMCShape(string prefix, int order, int c
 RooAbsPdf* PdfModelBuilder::getLaurentZGMCShape(string prefix, int order, int cat){
  
   //bing add ZGMCShape
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");

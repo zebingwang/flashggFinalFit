@@ -76,18 +76,18 @@ TRandom3 *RandomGen = new TRandom3();
 
 RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char* ext="", int cat=3){
 
-  if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order),order);//bing
-  //if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order),order, cat);//bing
+  //if (type=="Bernstein") return pdfsModel.getBernsteinStepxGau(Form("%s_bern%d",ext,order),order);//bing
+  if (type=="Bernstein") return pdfsModel.getBernsteinxZGMCShape(Form("%s_bern%d",ext,order),order, cat);//bing
   //if (type=="Bernstein") return pdfsModel.getBernstein(Form("%s_bern%d",ext,order),order);
   //else if (type=="Chebychev") return pdfsModel.getChebychev(Form("%s_cheb%d",ext,order),order);
-  //else if (type=="Exponential") return pdfsModel.getExponentialZGMCShape(Form("%s_exp%d",ext,order),order, cat);//bing
-  else if (type=="Exponential") return pdfsModel.getExponentialStepxGau(Form("%s_exp%d",ext,order),order,4);//bing
+  else if (type=="Exponential") return pdfsModel.getExponentialZGMCShape(Form("%s_exp%d",ext,order),order, cat);//bing
+  //else if (type=="Exponential") return pdfsModel.getExponentialStepxGau(Form("%s_exp%d",ext,order),order,4);//bing
     //return pdfsModel.getExponentialSingle(Form("%s_exp%d",ext,order),order);
-  //else if (type=="PowerLaw") return pdfsModel.getPowerLawZGMCShape(Form("%s_pow%d",ext,order),order, cat);//bing
-  else if (type=="PowerLaw") return pdfsModel.getPowerLawStepxGau(Form("%s_pow%d",ext,order),order,4);//bing
+  else if (type=="PowerLaw") return pdfsModel.getPowerLawZGMCShape(Form("%s_pow%d",ext,order),order, cat);//bing
+  //else if (type=="PowerLaw") return pdfsModel.getPowerLawStepxGau(Form("%s_pow%d",ext,order),order,4);//bing
     //return pdfsModel.getPowerLawSingle(Form("%s_pow%d",ext,order),order);
-  //else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order),order, cat);//bing
-  else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order),order,4);//bing
+  else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order),order, cat);//bing
+  //else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order),order,4);//bing
     //return pdfsModel.getLaurentSeries(Form("%s_lau%d",ext,order),order);
   else {
     cerr << "[ERROR] -- getPdf() -- type " << type << " not recognised." << endl;
@@ -958,14 +958,14 @@ vector<string> flashggCats_;
 
 	vector<string> functionClasses;
 	functionClasses.push_back("Bernstein");
-  //functionClasses.push_back("Exponential");
-  //functionClasses.push_back("PowerLaw");
-  //functionClasses.push_back("Laurent");
+  functionClasses.push_back("Exponential");
+  functionClasses.push_back("PowerLaw");
+  functionClasses.push_back("Laurent");
 	map<string,string> namingMap;
 	namingMap.insert(pair<string,string>("Bernstein","pol"));
-  //namingMap.insert(pair<string,string>("Exponential","exp"));
-  //namingMap.insert(pair<string,string>("PowerLaw","pow"));
-  //namingMap.insert(pair<string,string>("Laurent","lau"));
+  namingMap.insert(pair<string,string>("Exponential","exp"));
+  namingMap.insert(pair<string,string>("PowerLaw","pow"));
+  namingMap.insert(pair<string,string>("Laurent","lau"));
 
 	// store results here
 

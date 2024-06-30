@@ -1,5 +1,12 @@
 cat=0
-truth=Bernstein:4:pol4
-paul=Bernstein:3:pol3
+truth=Bernstein:5:pol5
+truth=Exponential:3:exp3
+truth=Laurent:2:lau2
+truth=PowerLaw:3:pow3
 paul=Bernstein:4:pol4
+paul=Bernstein:5:pol5
+paul=Bernstein:6:pol6
+paul=Exponential:5:exp5
+paul=Laurent:2:lau2
+paul=PowerLaw:5:pow5
 
