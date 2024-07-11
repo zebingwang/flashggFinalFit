@@ -4,8 +4,9 @@ lable='run2'
 #version='UL_run2_01jet'
 #version='UL_run2_2jet'
 #version='UL_xingchen_nll_SB'
-version='UL_run2_01jet_corefunction_v2_SB'
-#version='UL_run2_01jet_corefunction_v2'
+#version='UL_run2_01jet_corefunction_v2_SB'
+#version='UL_run2_01jet_corefunction_fromMC_cat3_100'
+version='UL_run2_01jet_corefunction_v2'
 #version='UL_run2_01jet_corefunction_v2_allcat'
 #version='UL_run2_01jet_conv'
 #channel=( ele mu )
@@ -38,7 +39,7 @@ cd ./InputData/
 #python makeWorkspace_sig_cats.py -t zero_to_one_jet -d /eos/user/z/zewang/HZGamma_data/run2UL/skimmed_ntuples/sig/zero_to_one_jet_run2.root -j ./significances/bin_binaries_01_jet_run2.txt -o ./jet01_run2 
 #python makeWorkspace_sig_cats_refit.py -t zero_to_one_jet -d /eos/user/z/zewang/HZGamma_data/run2UL/skimmed_ntuples/sig/zero_to_one_jet_run2_refit.root -j ./significances/bin_binaries_01_jet_run2.txt -o ./jet01_run2_refit -c ele
 
-#python makeWorkspace_data_cats_corefunc.py -t zero_to_one_jet -d /eos/user/z/zewang/HZGamma_data/run2UL_data_Normalizing/data_zero_to_one_jet.root -j ./significances_01jetCoreFunc/bin_binaries_01_jet_run2.txt -o ./jet01_run2_CoreFunc_v2 
+#python makeWorkspace_data_cats_corefunc.py -t zero_to_one_jet -d /eos/user/z/zewang/HZGamma_data/run2UL_data_Normalizing/data_zero_to_one_jet.root -j ./significances_01jetCoreFunc/bin_binaries_01_jet_run2.txt -o ./jet01_run2_CoreFunc_v2
 #python makeWorkspace_sig_cats.py -t zero_to_one_jet -d /eos/user/z/zewang/HZGamma_data/run2UL/skimmed_ntuples_v1/sig/zero_to_one_jet_run2.root -j ./significances_01jetCoreFunc/bin_binaries_01_jet_run2.txt -o ./jet01_run2_CoreFunc_v2 -c untag
 
 cd ../
@@ -61,7 +62,7 @@ cat_name='untag'
 cat='cat3'
 #cats=( 'cat0_mu' 'cat1_mu' 'cat2_mu' 'cat3_mu' 'cat0_mu_refit' 'cat1_mu_refit' 'cat2_mu_refit' 'cat3_mu_refit' ) 
 #cats=( 'cat0' 'cat1' 'cat2' 'cat3' ) 
-cats=( 'cat0' 'cat1' 'cat2' 'cat3' ) 
+#cats=( 'cat0' 'cat1' 'cat2' 'cat3' ) 
 #cats=( 'cat3' ) 
 ncats=${#cats[@]}
 
@@ -78,7 +79,7 @@ mkdir $path_out_bkg
 
 #./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 #--sidebandOnly #--chi2fit #--verbose 2 #--runFtestCheckWithToys --sidebandOnly
 
-#./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 --catID -1 #--sidebandOnly #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
+#./bin/fTest_ALP_turnOn -i $path_in_bkg --saveMultiPdf $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -D $path_out_bkg/HZGmassInde_fTest -c 1 --channel ${cat_name}_${cat} --isFlashgg 0 --isData 0 -f data, --mhLow 105 --mhHigh 170  --mhLowBlind 122 --mhHighBlind 128 --catID 3 #--sidebandOnly #--chi2fit #--verbose 2 #--runFtestCheckWithToys #--sidebandOnly
 #./bin/makeBkgPlots_ALP -b $path_out_bkg/CMS-HGG_mva_13TeV_multipdf_$cat.root -d $path_out_bkg/BkgPlots -o $path_out_bkg/BkgPlots.root -S 13 --isMultiPdf --useBinnedData --mhVal 125.0 --mhLow 105 --mhHigh 170 --mhLowBlind 122 --mhHighBlind 128 --intLumi 138 -c 0 --channel ${cat_name}_${cat} --isFlashgg 0 --doBands --massStep 2 #--unblind
 
 cd ../Signal/
@@ -116,18 +117,18 @@ for ((iCat=0; iCat<$ncats; iCat++))
   ###sed -i "21,41d" $path_out_bkg/datacard_ALPmass${massList[$iBin]}.txt
 done
 
-cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
-#cats=( 'cat3' )
+#cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
+cats=( 'cat1' )
 ncats=${#cats[@]}
 
 mkdir "$dir_out_sig/Combine_results"
 
-#for ((iCat=0; iCat<$ncats; iCat++))
-#    do
+for ((iCat=0; iCat<$ncats; iCat++))
+    do
 
-#    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
-#    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
-#done
+    cp $dir_out_sig/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_sigfit_data_ggh_${cats[$iCat]}.root $dir_out_sig/Combine_results
+    cp ../Background/HZGamma_BkgModel_${version}/fit_results_${lable}_${cats[$iCat]}/CMS-HGG_mva_13TeV_multipdf_${cats[$iCat]}.root $dir_out_sig/Combine_results
+done
 
 cd $dir_out_sig/Combine_results
 
@@ -137,9 +138,9 @@ for ((iCat=0; iCat<$ncats; iCat++))
     text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
 
     #combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
-    #combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} #--freezeParameters allConstrainedNuisances
+    combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} --freezeParameters pdfindex_untag_cat1   #--freezeParameters allConstrainedNuisances
 
-    combine -M MultiDimFit datacard_${cats[$iCat]}.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 6 --algo grid --points 50 --robustFit 1 --setParameters MH=125 --saveNLL --freezeParameters MH -n ${cats[$iCat]} --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.2 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=1 
+    #combine -M MultiDimFit datacard_${cats[$iCat]}.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 6 --algo grid --points 50 --robustFit 1 --setParameters MH=125 --saveNLL --freezeParameters MH -n ${cats[$iCat]} --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.2 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=1 
     #python /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombine${cats[$iCat]}.MultiDimFit.mH125.root -o single_scan_${cats[$iCat]} --main-label Expected
     #combine -M MultiDimFit datacard_${cats[$iCat]}.root -m 125 -t -1 --expectSignal=1 --setParameters MH=125 --freezeParameters MH -n bestfit_${cats[$iCat]} --saveNLL --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 0 --cminDefaultMinimizerTolerance 0.2 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints
     
@@ -156,12 +157,12 @@ done
 #combine datacard_$cat.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 #combine datacard_$cat.root -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n $cat
 
-combineCards.py cat0=datacard_cat0.txt cat1=datacard_cat1.txt cat2=datacard_cat2.txt cat3=datacard_cat3.txt &> datacard_allCats.txt
+#combineCards.py cat0=datacard_cat0.txt cat1=datacard_cat1.txt cat2=datacard_cat2.txt cat3=datacard_cat3.txt &> datacard_allCats.txt
 #combineCards.py cat0=datacard_cat2.txt cat1=datacard_cat3.txt cat2=datacard_cat0.txt cat3=datacard_cat1.txt &> datacard_allCats.txt
-text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
+#text2workspace.py datacard_allCats.txt -m 125 -o datacard_allCats.root
 #combine datacard_allCats.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n allCats #--freezeParameters allConstrainedNuisances
 #combine datacard_allCats.root -M Significance -t -1 --expectSignal=1 -m 125.0 -n allCats #--freezeParameters allConstrainedNuisances #-v 2
-combine -M MultiDimFit datacard_allCats.root --saveNLL -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters MH -n allCats
+#combine -M MultiDimFit datacard_allCats.root --saveNLL -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 5 --algo grid --points 50 --robustFit 1 --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.1 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=2 --setParameters MH=125 --freezeParameters MH -n allCats
 #python /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombineallCats.MultiDimFit.mH125.root -o single_scan_allCats --main-label Expected
 #combine -M MultiDimFit datacard_allCats.root -m 125 -t -1 --expectSignal=1 --setParameters MH=125 --freezeParameters MH -n bestfit_allCats --saveNLL --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 0 --cminDefaultMinimizerTolerance 0.2 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=1 
 

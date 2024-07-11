@@ -633,6 +633,7 @@ RooAbsPdf* PdfModelBuilder::getExponential(string prefix, int order){
 
 RooAbsPdf* PdfModelBuilder::getExponentialStepxGau(string prefix, int order, int cat){
   if(order%2==0) return NULL;
+  if(order > 4) return NULL;
   RooRealVar *mean = new RooRealVar(Form("%s_mean",prefix.c_str()),Form("%s_mean",prefix.c_str()),0.);
   double sigma_exp,sigma_lexp,sigma_hexp;
   double turnon_exp,turnon_lexp,turnon_hexp;
@@ -1297,23 +1298,27 @@ RooAbsPdf* PdfModelBuilder::getLaurentStepxGau(string prefix, int order, int cat
 RooAbsPdf* PdfModelBuilder::getBernsteinxZGMCShape(string prefix, int order, int cat){
   
   //bing add ZGMCShape
-  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_fromMC_01jet_v4.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
   string shapename="";
   if(cat==0){
-    shapename = "CoreShape_ZG_NAF_cat0";
+    //shapename = "CoreShape_ZG_NAF_cat0";
+    shapename = "CoreShape_MC_cat0";
   }
   else if(cat==1){
-    shapename = "CoreShape_ZG_NAF_cat1";
+    //shapename = "CoreShape_ZG_NAF_cat1";
+    shapename = "CoreShape_MC_cat1";
   }
   else if(cat==2){
-    shapename = "CoreShape_ZG_NAF_cat2";
+    //shapename = "CoreShape_ZG_NAF_cat2";
+    shapename = "CoreShape_MC_cat2";
   }
   else if(cat==3){
-    shapename = "CoreShape_ZG_NAF_cat3";
+    //shapename = "CoreShape_ZG_NAF_cat3";
+    shapename = "CoreShape_MC_cat3";
   }
   else if(cat==-1){
     shapename = "CoreShape_ZG_NAF_allcat";
@@ -1344,25 +1349,25 @@ RooAbsPdf* PdfModelBuilder::getBernsteinxZGMCShape(string prefix, int order, int
     RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
     return bernZGMC;
     //return bern;
-  } else if (order==3) {
-	  RooBernsteinFast<3> *bern = new RooBernsteinFast<3>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
-    RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
-    return bernZGMC;
+  //} else if (order==3) {
+	//  RooBernsteinFast<3> *bern = new RooBernsteinFast<3>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
+  //  RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
+  //  return bernZGMC;
     //return bern;
-  } else if (order==4) {
-	  RooBernsteinFast<4> *bern = new RooBernsteinFast<4>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
-    RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
-    return bernZGMC;
+  //} else if (order==4) {
+	//  RooBernsteinFast<4> *bern = new RooBernsteinFast<4>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
+  //  RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
+  //  return bernZGMC;
     //return bern;
-  } else if (order==5) {
-	  RooBernsteinFast<5> *bern = new RooBernsteinFast<5>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
-    RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
-    return bernZGMC;
+  //} else if (order==5) {
+	//  RooBernsteinFast<5> *bern = new RooBernsteinFast<5>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
+  //  RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
+  //  return bernZGMC;
     //return bern;
-  } else if (order==6) {
-    RooBernsteinFast<6> *bern = new RooBernsteinFast<6>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
-    RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
-    return bernZGMC;
+  //} else if (order==6) {
+  //  RooBernsteinFast<6> *bern = new RooBernsteinFast<6>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
+  //  RooEffProd *bernZGMC = new RooEffProd(Form("%s_ZG",prefix.c_str()),Form("%s_ZG",prefix.c_str()), *ZGMCShape, *bern);
+  //  return bernZGMC;
     //return bern;
   //  } else if (order==7) {
   //	RooBernsteinFast<7> *bern = new RooBernsteinFast<7>(prefix.c_str(),prefix.c_str(),*obs_var,*coeffList);
@@ -1378,23 +1383,27 @@ RooAbsPdf* PdfModelBuilder::getBernsteinxZGMCShape(string prefix, int order, int
 
 RooAbsPdf* PdfModelBuilder::getExponentialZGMCShape(string prefix, int order, int cat){
   //bing add ZGMCShape
-  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_fromMC_01jet_v4.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
   string shapename="";
   if(cat==0){
-    shapename = "CoreShape_ZG_NAF_cat0";
+    //shapename = "CoreShape_ZG_NAF_cat0";
+    shapename = "CoreShape_MC_cat0";
   }
   else if(cat==1){
-    shapename = "CoreShape_ZG_NAF_cat1";
+    //shapename = "CoreShape_ZG_NAF_cat1";
+    shapename = "CoreShape_MC_cat1";
   }
   else if(cat==2){
-    shapename = "CoreShape_ZG_NAF_cat2";
+    //shapename = "CoreShape_ZG_NAF_cat2";
+    shapename = "CoreShape_MC_cat2";
   }
   else if(cat==3){
-    shapename = "CoreShape_ZG_NAF_cat3";
+    //shapename = "CoreShape_ZG_NAF_cat3";
+    shapename = "CoreShape_MC_cat3";
   }
   else if(cat==-1){
     shapename = "CoreShape_ZG_NAF_allcat";
@@ -1493,23 +1502,27 @@ RooAbsPdf* PdfModelBuilder::getExponentialZGMCShape(string prefix, int order, in
 RooAbsPdf* PdfModelBuilder::getPowerLawZGMCShape(string prefix, int order, int cat){
   
   //bing add ZGMCShape
-  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_fromMC_01jet_v4.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
   string shapename="";
   if(cat==0){
-    shapename = "CoreShape_ZG_NAF_cat0";
+    //shapename = "CoreShape_ZG_NAF_cat0";
+    shapename = "CoreShape_MC_cat0";
   }
   else if(cat==1){
-    shapename = "CoreShape_ZG_NAF_cat1";
+    //shapename = "CoreShape_ZG_NAF_cat1";
+    shapename = "CoreShape_MC_cat1";
   }
   else if(cat==2){
-    shapename = "CoreShape_ZG_NAF_cat2";
+    //shapename = "CoreShape_ZG_NAF_cat2";
+    shapename = "CoreShape_MC_cat2";
   }
   else if(cat==3){
-    shapename = "CoreShape_ZG_NAF_cat3";
+    //shapename = "CoreShape_ZG_NAF_cat3";
+    shapename = "CoreShape_MC_cat3";
   }
   else if(cat==-1){
     shapename = "CoreShape_ZG_NAF_allcat";
@@ -1606,23 +1619,27 @@ RooAbsPdf* PdfModelBuilder::getPowerLawZGMCShape(string prefix, int order, int c
 RooAbsPdf* PdfModelBuilder::getLaurentZGMCShape(string prefix, int order, int cat){
  
   //bing add ZGMCShape
-  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet.root");
-  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
+  TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_fromMC_01jet_v4.root");
+  //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_01jet_allcat.root");
   //TFile *ZGMC_file = new TFile("/afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/flashggFinalFit/ZGCoreShape/ZGCoreShape_2jet.root");
   RooWorkspace *w = (RooWorkspace *)ZGMC_file->Get("w");
   //RooAbsPdf *ZGMCShape = w->pdf("ZGMCShape");
   string shapename="";
   if(cat==0){
-    shapename = "CoreShape_ZG_NAF_cat0";
+    //shapename = "CoreShape_ZG_NAF_cat0";
+    shapename = "CoreShape_MC_cat0";
   }
   else if(cat==1){
-    shapename = "CoreShape_ZG_NAF_cat1";
+    //shapename = "CoreShape_ZG_NAF_cat1";
+    shapename = "CoreShape_MC_cat1";
   }
   else if(cat==2){
-    shapename = "CoreShape_ZG_NAF_cat2";
+    //shapename = "CoreShape_ZG_NAF_cat2";
+    shapename = "CoreShape_MC_cat2";
   }
   else if(cat==3){
-    shapename = "CoreShape_ZG_NAF_cat3";
+    //shapename = "CoreShape_ZG_NAF_cat3";
+    shapename = "CoreShape_MC_cat3";
   }
   else if(cat==-1){
     shapename = "CoreShape_ZG_NAF_allcat";

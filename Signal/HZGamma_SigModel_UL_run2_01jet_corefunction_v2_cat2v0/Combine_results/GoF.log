@@ -1,0 +1,8 @@
+Cat: cat0 , Method: saturated , number of toys: 500 p_obs: 255.771939282 p_value: 0.522
+Cat: cat0 , Method: KS , number of toys: 500 p_obs: 0.00133116624784 p_value: 0.38
+Cat: cat1 , Method: saturated , number of toys: 500 p_obs: 251.898684148 p_value: 0.606
+Cat: cat1 , Method: KS , number of toys: 500 p_obs: 0.00214131060056 p_value: 0.166
+Cat: cat2 , Method: saturated , number of toys: 500 p_obs: 269.03347445 p_value: 0.304
+Cat: cat2 , Method: KS , number of toys: 500 p_obs: 0.00501053314656 p_value: 0.044
+Cat: cat3 , Method: saturated , number of toys: 500 p_obs: 303.717447886 p_value: 0.036
+Cat: cat3 , Method: KS , number of toys: 500 p_obs: 0.00574309844524 p_value: 0.466

@@ -95,6 +95,12 @@ for c in range(nCat):
 
         getattr(w,'import')(data_mass_cats)
 
+        CMS_hzg_mass.setBins(130)
+        data_mass_cats_hist = data_mass_cats.binnedClone()
+        data_mass_cats_hist.SetNameTitle("ggh_{0}_13TeV_{1}_cat{2}_hist".format(mass_H,cat_name,c), "ggh_{0}_13TeV_{1}_cat{2}_hist".format(mass_H,cat_name,c))
+
+        getattr(w,'import')(data_mass_cats_hist)
+
         w.writeToFile(args.out+"/HZGamma_data_sig_Hm{0}_workspace_cat{1}.root".format(mass_H,c))
         del w
 
