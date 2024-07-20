@@ -88,6 +88,16 @@ RooAbsPdf* getPdf(PdfModelBuilder &pdfsModel, string type, int order, const char
     //return pdfsModel.getPowerLawSingle(Form("%s_pow%d",ext,order),order);
   else if (type=="Laurent") return pdfsModel.getLaurentZGMCShape(Form("%s_lau%d",ext,order),order, cat);//bing
   //else if (type=="Laurent") return pdfsModel.getLaurentStepxGau(Form("%s_lau%d",ext,order),order,4);//bing
+
+  else if (type=="Bernstein_core") return pdfsModel.getBernsteinxZGMCShape(Form("core_%s_bern%d",ext,order),order, cat);//bing
+  else if (type=="Exponential_core") return pdfsModel.getExponentialZGMCShape(Form("core_%s_exp%d",ext,order),order, cat);//bing
+  else if (type=="PowerLaw_core") return pdfsModel.getPowerLawZGMCShape(Form("core_%s_pow%d",ext,order),order, cat);//bing
+  else if (type=="Laurent_core") return pdfsModel.getLaurentZGMCShape(Form("core_%s_lau%d",ext,order),order, cat);//bing
+  else if (type=="Bernstein_conv") return pdfsModel.getBernsteinStepxGau(Form("conv_%s_bern%d",ext,order),order);//bing
+  else if (type=="Exponential_conv") return pdfsModel.getExponentialStepxGau(Form("conv_%s_exp%d",ext,order),order,4);//bing
+  else if (type=="PowerLaw_conv") return pdfsModel.getPowerLawStepxGau(Form("conv_%s_pow%d",ext,order),order,4);//bing
+  else if (type=="Laurent_conv") return pdfsModel.getLaurentStepxGau(Form("conv_%s_lau%d",ext,order),order,4);//bing
+
     //return pdfsModel.getLaurentSeries(Form("%s_lau%d",ext,order),order);
   else {
     cerr << "[ERROR] -- getPdf() -- type " << type << " not recognised." << endl;
@@ -957,15 +967,31 @@ vector<string> flashggCats_;
 	}
 
 	vector<string> functionClasses;
-	functionClasses.push_back("Bernstein");
-  functionClasses.push_back("Exponential");
-  functionClasses.push_back("PowerLaw");
-  functionClasses.push_back("Laurent");
+	//functionClasses.push_back("Bernstein");
+  //functionClasses.push_back("Exponential");
+  //functionClasses.push_back("PowerLaw");
+  //functionClasses.push_back("Laurent");
+  //functionClasses.push_back("Bernstein_core");
+  functionClasses.push_back("Exponential_core");
+  //functionClasses.push_back("PowerLaw_core");
+  //functionClasses.push_back("Laurent_core");
+  functionClasses.push_back("Bernstein_conv");
+  //functionClasses.push_back("Exponential_conv");
+  //functionClasses.push_back("PowerLaw_conv");
+  //functionClasses.push_back("Laurent_conv");
 	map<string,string> namingMap;
-	namingMap.insert(pair<string,string>("Bernstein","pol"));
-  namingMap.insert(pair<string,string>("Exponential","exp"));
-  namingMap.insert(pair<string,string>("PowerLaw","pow"));
-  namingMap.insert(pair<string,string>("Laurent","lau"));
+	//namingMap.insert(pair<string,string>("Bernstein","pol"));
+  //namingMap.insert(pair<string,string>("Exponential","exp"));
+  //namingMap.insert(pair<string,string>("PowerLaw","pow"));
+  //namingMap.insert(pair<string,string>("Laurent","lau"));
+  //namingMap.insert(pair<string,string>("Bernstein_core","pol_core"));
+  namingMap.insert(pair<string,string>("Exponential_core","exp_core"));
+  //namingMap.insert(pair<string,string>("PowerLaw_core","pow_core"));
+  //namingMap.insert(pair<string,string>("Laurent_core","lau_core"));
+  namingMap.insert(pair<string,string>("Bernstein_conv","pol_conv"));
+  //namingMap.insert(pair<string,string>("Exponential_conv","exp_conv"));
+  //namingMap.insert(pair<string,string>("PowerLaw_conv","pow_conv"));
+  //namingMap.insert(pair<string,string>("Laurent_conv","lau_conv"));
 
 	// store results here
 

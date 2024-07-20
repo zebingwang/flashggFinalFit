@@ -5,10 +5,11 @@ lable='run2'
 #version='UL_run2_2jet'
 #version='UL_xingchen_nll_SB'
 #version='UL_run2_01jet_corefunction_v2_SB'
-#version='UL_run2_01jet_corefunction_fromMC_cat3_100'
-version='UL_run2_01jet_corefunction_v2'
+#version='UL_run2_01jet_corefunction_fromMC_cat3_105'
+#version='UL_run2_01jet_corefunction_v2'
 #version='UL_run2_01jet_corefunction_v2_allcat'
 #version='UL_run2_01jet_conv'
+version='UL_run2_01jet_corePconv'
 #channel=( ele mu )
 channel='ele'
 Lumi_run2='138'
@@ -117,8 +118,8 @@ for ((iCat=0; iCat<$ncats; iCat++))
   ###sed -i "21,41d" $path_out_bkg/datacard_ALPmass${massList[$iBin]}.txt
 done
 
-#cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
-cats=( 'cat1' )
+cats=( 'cat0' 'cat1' 'cat2' 'cat3' )
+#cats=( 'cat0' )
 ncats=${#cats[@]}
 
 mkdir "$dir_out_sig/Combine_results"
@@ -138,7 +139,7 @@ for ((iCat=0; iCat<$ncats; iCat++))
     text2workspace.py datacard_${cats[$iCat]}.txt -m 125 -o datacard_${cats[$iCat]}.root
 
     #combine datacard_${cats[$iCat]}.txt -M AsymptoticLimits --run=blind -m 125.0 --rAbsAcc 0.00000001 -n ${cats[$iCat]}
-    combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} --freezeParameters pdfindex_untag_cat1   #--freezeParameters allConstrainedNuisances
+    combine datacard_${cats[$iCat]}.txt -M Significance -t -1 --expectSignal=1 -m 125.0 -n ${cats[$iCat]} #--freezeParameters pdfindex_untag_cat1   #--freezeParameters allConstrainedNuisances
 
     #combine -M MultiDimFit datacard_${cats[$iCat]}.root -m 125 -t -1 --expectSignal=1 --rMin -5 --rMax 6 --algo grid --points 50 --robustFit 1 --setParameters MH=125 --saveNLL --freezeParameters MH -n ${cats[$iCat]} --cminDefaultMinimizerType Minuit2 --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.2 --cminFallbackAlgo Minuit2,0:0.2 --cminFallbackAlgo Minuit2,0:0.4 --X-rtd REMOVE_CONSTANT_ZERO_POINT=1 --X-rtd MINIMIZER_freezeDisassociatedParams --X-rtd MINIMIZER_multiMin_hideConstants --X-rtd MINIMIZER_multiMin_maskConstraints --X-rtd MINIMIZER_multiMin_maskChannels=1 
     #python /afs/cern.ch/work/z/zewang/private/HZGamma/flashggfinalfit/CMSSW_10_2_13/src/CombineHarvester/CombineTools/scripts/plot1DScan.py higgsCombine${cats[$iCat]}.MultiDimFit.mH125.root -o single_scan_${cats[$iCat]} --main-label Expected

@@ -2,7 +2,7 @@ import ROOT as rt
 import os
 
 datafile_path = "./data_01jet.root"
-Corefile_path = "./ZGCoreShape_01jet_allcat.root"
+Corefile_path = "./ZGCoreShape_01jet.root"
 if os.path.exists(datafile_path):
     f = rt.TFile(datafile_path)
     w = f.Get("w")
@@ -114,8 +114,7 @@ def smoothbkg(name="", x=None, mc=None, Data=None, setting=rt.RooKeysPdf.MirrorB
     x.setRange("unblindReg_1",100,120)
     x.setRange("unblindReg_2",130,180)
 
-    Data.plotOn(frame, rt.RooFit.CutRange("unblindReg_1"))
-    Data.plotOn(frame, rt.RooFit.CutRange("unblindReg_2"))
+    Data.plotOn(frame, rt.RooFit.CutRange("unblindReg_1,unblindReg_2"))
     keysPdf.plotOn(frame)
     frame.Draw()
     legend1.AddEntry(Data, "Data", "P")
@@ -145,29 +144,83 @@ def smoothbkg(name="", x=None, mc=None, Data=None, setting=rt.RooKeysPdf.MirrorB
 
     return keysPdf, canv
 
+def smooth_plot(name="", x=None, mc=None, Data=None, keysPdf=None):
+
+    canv = rt.TCanvas(name, name,800,1000)
+    pad1 = rt.TPad(name+"pad1", name+"pad1", 0, 0.5, 1, 1)
+    pad1.Draw()
+    pad2 = rt.TPad(name+"pad2", name+"pad2", 0, 0, 1, 0.5)
+    pad2.Draw()
+    pad1.cd()
+    pad1.SetLeftMargin(0.13)
+    
+    frame = x.frame(rt.RooFit.Title("Kernel Density Estimation with RooKeysPdf"))
+    legend1 = rt.TLegend(0.7, 0.7, 0.9, 0.9)
+
+    # Draw the smooth pdf and data
+    x.setRange("unblindReg_1",100,120)
+    x.setRange("unblindReg_2",130,180)
+
+    Data.plotOn(frame, rt.RooFit.CutRange("unblindReg_1,unblindReg_2"))
+    keysPdf.plotOn(frame)
+    frame.Draw()
+    legend1.AddEntry(Data, "Data", "P")
+    legend1.AddEntry(keysPdf, "Core PDF", "l")
+    legend1.Draw()
+
+    pad1.Update()
+    pad1.Draw()
+
+    pad2.cd()
+    pad2.SetLeftMargin(0.13)
+
+    frame = x.frame(rt.RooFit.Title("Kernel Density Estimation with RooKeysPdf"))
+    legend2 = rt.TLegend(0.7, 0.7, 0.9, 0.9)
+
+    mc.plotOn(frame, rt.RooFit.DrawOption("P"), rt.RooFit.MarkerColor(rt.kRed), rt.RooFit.LineColor(rt.kRed))
+    keysPdf.plotOn(frame)
+    frame.Draw()
+    legend2.AddEntry(mc, "NAF MC", "P")
+    legend2.AddEntry(keysPdf, "Core PDF", "l")
+    legend2.Draw()
+
+    pad2.Update()
+    pad2.Draw()
+    canv.Update()
+    canv.Draw()
+
+    return canv
+
 if os.path.exists(Corefile_path):
     f = rt.TFile(Corefile_path)
     w = f.Get("w")
     w.Print()
+    #print("[DEBUG]:", data)
     #for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3", "ZG_NAF_allcat"]:
     #for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3"]:
-    for cat in ["ZG_NAF_allcat"]:
-        keysPdfs[cat] = w.pdf("{}".format(cat))
+    for cat in ["cat0", "cat1", "cat2", "cat3"]:
+    #for cat in ["ZG_NAF_allcat"]:
+        keysPdfs["ZG_NAF_{}".format(cat)] = w.pdf("{}".format("CoreShape_ZG_NAF_{}".format(cat)))
+        #print("[DEBUG]:", cat, keysPdfs["ZG_NAF_{}".format(cat)])
+        keysPdfs_plots["ZG_NAF_{}".format(cat)] = smooth_plot("ZG_NAF_{}".format(cat), H_mass_ANF, data_ANF["ZG_NAF_{}".format(cat)], data["data_{}".format(cat)], keysPdfs["ZG_NAF_{}".format(cat)])
 else:
     #for cat in ["cat0", "cat1", "cat2", "cat3", "allcat"]:
-    #for cat in ["cat0", "cat1", "cat2", "cat3"]:
-    for cat in ["allcat"]:
+    for cat in ["cat0", "cat1", "cat2", "cat3"]:
+    #for cat in ["allcat"]:
         keysPdfs["ZG_NAF_{}".format(cat)], keysPdfs_plots["ZG_NAF_{}".format(cat)] = smoothbkg("ZG_NAF_{}".format(cat), H_mass_ANF, data_ANF["ZG_NAF_{}".format(cat)], data["data_{}".format(cat)], rt.RooKeysPdf.MirrorBoth, 1.5)
 
     w = rt.RooWorkspace("w", "workspace")
     #for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3", "ZG_NAF_allcat"]:
-    #for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3"]:
-    for cat in ["ZG_NAF_allcat"]:
+    for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3"]:
+    #for cat in ["ZG_NAF_allcat"]:
         getattr(w,'import')(keysPdfs[cat])
     w.Print()
     w.writeToFile(Corefile_path)
 
+#print("[DEBUG]:", keysPdfs_plots)
+
 if keysPdfs_plots:
-    #for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3"]:
-    for cat in ["ZG_NAF_allcat"]:
+    for cat in ["ZG_NAF_cat0", "ZG_NAF_cat1", "ZG_NAF_cat2", "ZG_NAF_cat3"]:
+    #for cat in ["ZG_NAF_allcat"]:
+        #print("[DEBUG]:", keysPdfs_plots[cat])
         keysPdfs_plots[cat].SaveAs('./{}.png'.format(cat))
