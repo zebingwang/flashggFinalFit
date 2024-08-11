@@ -1,0 +1,9 @@
+Executable = runbatch.sh
+Universe = vanilla
+Log = ./runCondor_$(Cluster)_$(Process).log
+Output = ./runCondor_$(Cluster)_$(Process).out
+Error = ./runCondor_$(Cluster)_$(Process).err
++JobFlavour = "workday"
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+Queue

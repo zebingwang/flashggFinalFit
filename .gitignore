@@ -1,4 +1,4 @@
-!/ZGCoreShape
-!ZGCoreShape*.root
 *.root
 *.dat
+!/ZGCoreShape/*
+!ZGCoreShape*.root
